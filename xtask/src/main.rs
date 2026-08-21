@@ -22,25 +22,42 @@ fn main() {
 }
 
 fn introspect() {
-    let token = std::env::var("HARDCOVER_TOKEN").expect("HARDCOVER_TOKEN must be set");
-    let query = graphql_client_introspection_query();
-    let resp: serde_json::Value = reqwest::blocking::Client::new()
-        .post(ENDPOINT)
-        .bearer_auth(token)
-        .header(
-            "User-Agent",
-            "hardcover-cli xtask (+https://github.com/r0adkll/hardcover-cli)",
-        )
-        .json(&serde_json::json!({ "query": query }))
-        .send()
-        .expect("request")
-        .error_for_status()
-        .expect("status")
-        .json()
-        .expect("json");
+    let http = reqwest::blocking::Client::builder()
+        .user_agent("hardcover-cli xtask (+https://github.com/r0adkll/hardcover-cli)")
+        .build()
+        .unwrap();
+    let (source, resp): (&str, serde_json::Value) = match std::env::var("HARDCOVER_TOKEN") {
+        Ok(token) => {
+            let resp = http
+                .post(ENDPOINT)
+                .bearer_auth(token)
+                .json(&serde_json::json!({ "query": graphql_client_introspection_query() }))
+                .send()
+                .expect("request")
+                .error_for_status()
+                .expect("status")
+                .json()
+                .expect("json");
+            ("live introspection", resp)
+        }
+        Err(_) => {
+            eprintln!(
+                "HARDCOVER_TOKEN not set; falling back to {DOCS_SCHEMA_URL} (may lag the live API)"
+            );
+            let resp = http
+                .get(DOCS_SCHEMA_URL)
+                .send()
+                .expect("request")
+                .error_for_status()
+                .expect("status")
+                .json()
+                .expect("json");
+            ("docs repo copy", resp)
+        }
+    };
     assert!(
         resp.get("data").and_then(|d| d.get("__schema")).is_some(),
-        "no __schema in response: {resp}"
+        "no __schema in response from {source}"
     );
     let out = Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("..")
