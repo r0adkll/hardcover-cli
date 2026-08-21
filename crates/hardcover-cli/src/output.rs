@@ -34,14 +34,35 @@ struct Envelope<'a, T: Serialize> {
     meta: serde_json::Value,
 }
 
-pub fn emit<T: Serialize + std::fmt::Debug>(format: Format, value: &T, meta: serde_json::Value, plain: impl Fn(&T) -> String) {
+/// Emit a single entity.
+pub fn emit<T: Serialize>(format: Format, value: &T, meta: serde_json::Value, plain: impl Fn(&T) -> String) {
     match format.resolve() {
-        Format::Json => {
-            let env = Envelope { schema: SCHEMA_VERSION, data: value, meta };
-            println!("{}", serde_json::to_string_pretty(&env).unwrap());
-        }
+        Format::Json => print_envelope(value, meta),
         Format::Ndjson => println!("{}", serde_json::to_string(value).unwrap()),
         Format::Table | Format::Plain => println!("{}", plain(value)),
         Format::Auto => unreachable!(),
     }
+}
+
+/// Emit a collection: JSON wraps the array in the envelope, NDJSON streams one row per line.
+pub fn emit_list<T: Serialize>(format: Format, items: &[T], meta: serde_json::Value, line: impl Fn(&T) -> String) {
+    match format.resolve() {
+        Format::Json => print_envelope(&items, meta),
+        Format::Ndjson => {
+            for item in items {
+                println!("{}", serde_json::to_string(item).unwrap());
+            }
+        }
+        Format::Table | Format::Plain => {
+            for item in items {
+                println!("{}", line(item));
+            }
+        }
+        Format::Auto => unreachable!(),
+    }
+}
+
+fn print_envelope<T: Serialize>(data: &T, meta: serde_json::Value) {
+    let env = Envelope { schema: SCHEMA_VERSION, data, meta };
+    println!("{}", serde_json::to_string_pretty(&env).unwrap());
 }

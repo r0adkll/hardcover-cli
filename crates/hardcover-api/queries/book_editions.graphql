@@ -1,0 +1,12 @@
+query BookEditions($book_id: Int!, $limit: Int!, $offset: Int!) {
+  editions(where: {book_id: {_eq: $book_id}}, order_by: {id: asc}, limit: $limit, offset: $offset) {
+    ...EditionFields
+  }
+}
+fragment EditionFields on editions {
+  id title subtitle book_id isbn_10 isbn_13 asin pages audio_seconds release_date
+  reading_format_id physical_format edition_format
+  language { language }
+  publisher { id name }
+  cached_image
+}

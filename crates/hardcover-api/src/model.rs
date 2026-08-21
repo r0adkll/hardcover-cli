@@ -171,3 +171,70 @@ impl std::str::FromStr for BookIdentifier {
         Ok(BookIdentifier::Slug(s.to_string()))
     }
 }
+
+/// A Book as it appears inside a collection: enough to identify and rank it.
+#[derive(Debug, Clone, Serialize, PartialEq)]
+pub struct BookSummary {
+    pub id: i64,
+    pub slug: String,
+    pub title: String,
+    pub release_year: Option<i64>,
+    pub rating: Option<f64>,
+    pub users_count: i64,
+    pub cover_url: Option<String>,
+}
+
+/// A Book's place in a Series.
+#[derive(Debug, Clone, Serialize, PartialEq)]
+pub struct SeriesEntry {
+    pub position: Option<f64>,
+    pub book: BookSummary,
+}
+
+/// A Book's place in a List.
+#[derive(Debug, Clone, Serialize, PartialEq)]
+pub struct ListEntry {
+    pub position: Option<i64>,
+    pub reason: Option<String>,
+    pub book: BookSummary,
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq)]
+pub struct Edition {
+    pub id: i64,
+    pub book_id: i64,
+    pub title: String,
+    pub subtitle: Option<String>,
+    pub isbn_10: Option<String>,
+    pub isbn_13: Option<String>,
+    pub asin: Option<String>,
+    /// Reading format: physical, audiobook, both, ebook.
+    pub format: Option<String>,
+    /// Publisher-described form, e.g. "Paperback", "Kindle Edition".
+    pub edition_format: Option<String>,
+    pub pages: Option<i64>,
+    pub audio_seconds: Option<i64>,
+    pub release_date: Option<String>,
+    pub language: Option<String>,
+    pub publisher: Option<Publisher>,
+    pub cover_url: Option<String>,
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq)]
+pub struct Publisher {
+    pub id: i64,
+    pub name: Option<String>,
+}
+
+pub(crate) fn reading_format(id: Option<i64>) -> Option<String> {
+    Some(
+        match id? {
+            1 => "physical",
+            2 => "audiobook",
+            3 => "both",
+            4 => "ebook",
+            _ => return None,
+        }
+        .to_string(),
+    )
+}

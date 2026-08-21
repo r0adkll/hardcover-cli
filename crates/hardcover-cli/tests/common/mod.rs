@@ -39,3 +39,22 @@ pub async fn run(server: &MockServer, args: &[&str]) -> (Option<i32>, serde_json
     let stdout = serde_json::from_slice(&out.stdout).unwrap_or(serde_json::Value::Null);
     (out.status.code(), stdout, String::from_utf8_lossy(&out.stderr).into_owned())
 }
+
+/// Run and return raw stdout.
+pub async fn run_raw(server: &MockServer, args: &[&str]) -> String {
+    let uri = server.uri();
+    let args: Vec<String> = args.iter().map(|s| s.to_string()).collect();
+    tokio::task::spawn_blocking(move || {
+        let out = Command::cargo_bin("hardcover")
+            .unwrap()
+            .env("HARDCOVER_TOKEN", "test-token")
+            .env("HARDCOVER_API_URL", uri)
+            .env("HARDCOVER_KEYRING", "mock")
+            .args(&args)
+            .output()
+            .unwrap();
+        String::from_utf8_lossy(&out.stdout).into_owned()
+    })
+    .await
+    .unwrap()
+}

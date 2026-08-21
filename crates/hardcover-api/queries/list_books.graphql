@@ -1,0 +1,8 @@
+query ListBooks($list_id: Int!, $limit: Int!, $offset: Int!) {
+  list_books(where: {list_id: {_eq: $list_id}}, order_by: {position: asc}, limit: $limit, offset: $offset) {
+    position
+    reason
+    book { ...BookSummaryFields }
+  }
+}
+fragment BookSummaryFields on books { id title slug release_year rating users_count cached_image }

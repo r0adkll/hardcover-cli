@@ -28,7 +28,7 @@ impl Client {
         ClientBuilder { base_url: DEFAULT_BASE_URL.to_string(), token: token.into() }
     }
 
-    async fn execute<Q: GraphQLQuery>(&self, variables: Q::Variables) -> Result<Q::ResponseData> {
+    pub(crate) async fn execute<Q: GraphQLQuery>(&self, variables: Q::Variables) -> Result<Q::ResponseData> {
         let body = Q::build_query(variables);
         let resp = self
             .http
