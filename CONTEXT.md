@@ -17,8 +17,8 @@ than any particular user: Books, Editions, Authors, Series, etc. Reading
 Content Data is the scope of the first milestone.
 
 **User Data** — Data owned by the authenticated user: reading status, reviews,
-ratings, lists, progress. Reading one's own User Data is in scope; writing it is a
-future milestone. The CLI never exposes another user's User Data.
+ratings, lists, progress. Reading and changing one's own Library is in scope; reviews,
+lists and journals are not yet. The CLI never exposes or changes another user's User Data.
 
 **Raw Output** — The upstream Hardcover API payload, passed through untouched.
 Opt-in; the default output is the CLI's own stable shape.
@@ -53,7 +53,11 @@ Did Not Finish, Ignored. Named in output as `want_to_read`, `currently_reading`,
 
 **Privacy** — Visibility of a Library entry: Public, Followers, Private.
 
-**Read** — One pass through a Book: start date, finish date, progress.
+**Read** — One pass through a Book: start date, finish date, progress. A Read with no
+finish date is the **open read**; progress updates apply to it.
+
+**Dry Run** — A write command executed without sending the mutation; reports what it
+would have done.
 
 **Search** — Full-text lookup across one entity type at a time (book, author,
 series, character, list, prompt, publisher, user). Distinct from filtering a

@@ -3,7 +3,7 @@ use crate::client::Client;
 use crate::collections::{cover_url, Page};
 use crate::error::{Error, Result};
 use crate::model::*;
-use crate::queries::{library, library_entry_query, Library, LibraryEntryQuery};
+use crate::queries::*;
 
 macro_rules! entry {
     ($e:expr) => {{
@@ -102,5 +102,166 @@ impl Client {
             review,
             reads,
         })
+    }
+}
+
+// ---- writes -----------------------------------------------------------------
+
+macro_rules! read_from {
+    ($r:expr) => {{
+        let r = $r;
+        Read {
+            id: r.id,
+            started_at: r.started_at,
+            finished_at: r.finished_at,
+            paused_at: r.paused_at,
+            progress: r.progress,
+            progress_pages: r.progress_pages,
+            progress_seconds: r.progress_seconds,
+            edition_id: r.edition_id,
+        }
+    }};
+}
+
+/// Hardcover's write actions report failures as an `error` string with a null payload.
+fn action_error(error: Option<String>, what: &str) -> Error {
+    match error {
+        Some(msg) if msg.to_ascii_lowercase().contains("not found") => {
+            Error::NotFound(format!("{what}: {msg}"))
+        }
+        Some(msg) => Error::Upstream(format!("{what}: {msg}")),
+        None => Error::Upstream(format!("{what}: empty response")),
+    }
+}
+
+macro_rules! dates_read_input {
+    ($module:ident, $existing:expr, $u:expr) => {{
+        let (existing, u): (Option<&Read>, &ProgressUpdate) = ($existing, $u);
+        $module::DatesReadInput {
+            id: None,
+            action: None,
+            action_at: None,
+            edition_id: u.edition_id.or(existing.and_then(|r| r.edition_id)),
+            started_at: u
+                .started_at
+                .clone()
+                .or(existing.and_then(|r| r.started_at.clone())),
+            finished_at: u
+                .finished_at
+                .clone()
+                .or(existing.and_then(|r| r.finished_at.clone())),
+            finished_at_precision: None,
+            progress_pages: u.pages.or(existing.and_then(|r| r.progress_pages)),
+            progress_seconds: u.seconds.or(existing.and_then(|r| r.progress_seconds)),
+        }
+    }};
+}
+
+impl Client {
+    /// Shelve a Book. Fails upstream if it is already in the Library.
+    pub async fn library_add(
+        &self,
+        book_id: i64,
+        status: ReadingStatus,
+        rating: Option<f64>,
+    ) -> Result<LibraryEntry> {
+        let out = self
+            .execute::<InsertUserBook>(insert_user_book::Variables {
+                book_id,
+                status_id: status.id(),
+                rating,
+            })
+            .await?
+            .insert_user_book
+            .ok_or_else(|| Error::Upstream("insert_user_book: no payload".into()))?;
+        match out.user_book {
+            Some(e) => Ok(entry!(e)),
+            None => Err(action_error(out.error, "add to library")),
+        }
+    }
+
+    pub async fn library_set_status(
+        &self,
+        entry_id: i64,
+        status: ReadingStatus,
+    ) -> Result<LibraryEntry> {
+        let out = self
+            .execute::<UpdateUserBookStatus>(update_user_book_status::Variables {
+                id: entry_id,
+                status_id: status.id(),
+            })
+            .await?
+            .update_user_book
+            .ok_or_else(|| Error::Upstream("update_user_book: no payload".into()))?;
+        match out.user_book {
+            Some(e) => Ok(entry!(e)),
+            None => Err(action_error(out.error, "set status")),
+        }
+    }
+
+    /// `None` clears the rating.
+    pub async fn library_set_rating(
+        &self,
+        entry_id: i64,
+        rating: Option<f64>,
+    ) -> Result<LibraryEntry> {
+        let out = self
+            .execute::<UpdateUserBookRating>(update_user_book_rating::Variables {
+                id: entry_id,
+                rating,
+            })
+            .await?
+            .update_user_book
+            .ok_or_else(|| Error::Upstream("update_user_book: no payload".into()))?;
+        match out.user_book {
+            Some(e) => Ok(entry!(e)),
+            None => Err(action_error(out.error, "set rating")),
+        }
+    }
+
+    /// Start a new Read on a Library entry.
+    pub async fn read_start(&self, entry_id: i64, update: ProgressUpdate) -> Result<Read> {
+        let read = dates_read_input!(insert_user_book_read, None, &update);
+        let out = self
+            .execute::<InsertUserBookRead>(insert_user_book_read::Variables {
+                user_book_id: entry_id,
+                read,
+            })
+            .await?
+            .insert_user_book_read
+            .ok_or_else(|| Error::Upstream("insert_user_book_read: no payload".into()))?;
+        match out.user_book_read {
+            Some(r) => Ok(read_from!(r)),
+            None => Err(action_error(out.error, "start read")),
+        }
+    }
+
+    /// Update an existing Read. Upstream replaces the whole record, so unset fields are
+    /// carried over from `existing` rather than wiped.
+    pub async fn read_update(&self, existing: &Read, update: ProgressUpdate) -> Result<Read> {
+        let read = dates_read_input!(update_user_book_read, Some(existing), &update);
+        let out = self
+            .execute::<UpdateUserBookRead>(update_user_book_read::Variables {
+                id: existing.id,
+                read,
+            })
+            .await?
+            .update_user_book_read
+            .ok_or_else(|| Error::Upstream("update_user_book_read: no payload".into()))?;
+        match out.user_book_read {
+            Some(r) => Ok(read_from!(r)),
+            None => Err(action_error(out.error, "update read")),
+        }
+    }
+
+    /// Remove a Book from the Library entirely (entry, reads, rating, review).
+    pub async fn library_remove(&self, entry_id: i64) -> Result<()> {
+        let out = self
+            .execute::<DeleteUserBook>(delete_user_book::Variables { id: entry_id })
+            .await?;
+        match out.delete_user_book.and_then(|d| d.id) {
+            Some(_) => Ok(()),
+            None => Err(Error::NotFound(format!("library entry {entry_id}"))),
+        }
     }
 }

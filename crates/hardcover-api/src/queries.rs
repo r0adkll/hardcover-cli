@@ -168,3 +168,51 @@ pub struct Library;
     response_derives = "Debug, Clone"
 )]
 pub struct LibraryEntryQuery;
+
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "schema.json",
+    query_path = "queries/library_writes.graphql",
+    response_derives = "Debug, Clone"
+)]
+pub struct InsertUserBook;
+
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "schema.json",
+    query_path = "queries/library_writes.graphql",
+    response_derives = "Debug, Clone"
+)]
+pub struct UpdateUserBookStatus;
+
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "schema.json",
+    query_path = "queries/library_writes.graphql",
+    response_derives = "Debug, Clone"
+)]
+pub struct UpdateUserBookRating;
+
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "schema.json",
+    query_path = "queries/library_writes.graphql",
+    response_derives = "Debug, Clone"
+)]
+pub struct InsertUserBookRead;
+
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "schema.json",
+    query_path = "queries/library_writes.graphql",
+    response_derives = "Debug, Clone"
+)]
+pub struct UpdateUserBookRead;
+
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "schema.json",
+    query_path = "queries/library_writes.graphql",
+    response_derives = "Debug, Clone"
+)]
+pub struct DeleteUserBook;

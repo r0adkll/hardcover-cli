@@ -80,3 +80,15 @@ pub async fn respond_op(server: &MockServer, op: &str, fixture_name: &str) {
         .mount(server)
         .await;
 }
+
+/// Serve `fixture` for any request whose body mentions the named GraphQL mutation.
+pub async fn respond_mut(server: &MockServer, op: &str, fixture_name: &str) {
+    Mock::given(method("POST"))
+        .and(path("/v1/graphql"))
+        .and(body_string_contains(format!("mutation {op}")))
+        .respond_with(
+            ResponseTemplate::new(200).set_body_raw(fixture(fixture_name), "application/json"),
+        )
+        .mount(server)
+        .await;
+}

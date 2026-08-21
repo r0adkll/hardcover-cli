@@ -43,7 +43,24 @@ hardcover library show iron-gold --format json      # reads, progress %, rating,
 else's library through this tool. `status` values: `want_to_read`, `currently_reading`,
 `read`, `paused`, `did_not_finish`, `ignored` (`--status` also accepts `reading`, `dnf`, `want`).
 
+## Writing to the library
+
+Only do this when the human has asked for it. Each write returns `before`/`after`:
+
+```sh
+hardcover library set-status mistborn-the-final-empire currently_reading --format json
+hardcover library progress mistborn-the-final-empire --pages 120 --format json
+hardcover library progress mistborn-the-final-empire --finished today --format json
+hardcover library rate mistborn-the-final-empire 4.5 --format json
+hardcover library remove mistborn-the-final-empire --dry-run --format json   # preview first
+```
+
+- Add `--dry-run` to preview: `data.dry_run` is `true` and `data.planned` shows the intent.
+- Check `data.after` rather than assuming success; Hardcover applies side effects
+  (e.g. rating → status becomes `read`).
+- `remove` is the only destructive command; prefer `set-status … ignored` if the human
+  just wants a book hidden.
+
 ## Not available yet
 
-Changing the user's library (setting status, progress, ratings, reviews, lists) —
-planned as the next milestone. `prompt books` is not exposed to API tokens upstream.
+Reviews, lists, journals, and other users' data. `prompt books` is not exposed to API tokens upstream.

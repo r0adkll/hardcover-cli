@@ -23,6 +23,10 @@ pub struct Cli {
     #[arg(long, global = true)]
     pub raw: bool,
 
+    /// For commands that write: show what would change without sending any mutation.
+    #[arg(long, global = true)]
+    pub dry_run: bool,
+
     /// Do not retry rate-limited requests; fail immediately with `rate_limited`.
     #[arg(long, global = true)]
     pub no_retry: bool,
@@ -180,4 +184,35 @@ pub enum LibraryCommand {
     },
     /// Your entry for one book (by id, slug, or ISBN), including reads and review.
     Show { identifier: BookIdentifier },
+    /// Shelve a book or move it to another status. Adds the book if it isn't in your library.
+    SetStatus {
+        identifier: BookIdentifier,
+        status: ReadingStatus,
+    },
+    /// Rate a book 0.5–5 in half-star steps (`0` clears). Adds the book as `read` if absent.
+    Rate {
+        identifier: BookIdentifier,
+        rating: f64,
+    },
+    /// Record progress on your current read; starts one if none is open.
+    Progress {
+        identifier: BookIdentifier,
+        /// Pages read so far.
+        #[arg(long, conflicts_with = "seconds")]
+        pages: Option<i64>,
+        /// Seconds listened so far (audiobooks).
+        #[arg(long)]
+        seconds: Option<i64>,
+        /// Start date (YYYY-MM-DD); defaults to today when starting a new read.
+        #[arg(long)]
+        started: Option<String>,
+        /// Mark the read finished on this date (YYYY-MM-DD), or `today`.
+        #[arg(long)]
+        finished: Option<String>,
+        /// Edition being read.
+        #[arg(long)]
+        edition: Option<i64>,
+    },
+    /// Remove a book from your library entirely (status, reads, rating and review).
+    Remove { identifier: BookIdentifier },
 }

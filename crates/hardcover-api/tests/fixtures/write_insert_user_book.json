@@ -1,0 +1,40 @@
+{
+    "data": {
+        "insert_user_book": {
+            "id": 17689556,
+            "error": null,
+            "user_book": {
+                "id": 17689556,
+                "book_id": 1,
+                "status_id": 1,
+                "rating": null,
+                "owned": false,
+                "read_count": 0,
+                "privacy_setting_id": 1,
+                "has_review": false,
+                "reviewed_at": null,
+                "first_read_date": null,
+                "last_read_date": null,
+                "date_added": "2026-08-21",
+                "updated_at": "2026-08-21T17:17:31.250697+00:00",
+                "edition_id": 25224958,
+                "book": {
+                    "id": 1,
+                    "title": "Lord Peter Views the Body",
+                    "slug": "lord-peter-views-the-body",
+                    "release_year": 198,
+                    "rating": 3.844827586206897,
+                    "users_count": 55,
+                    "cached_image": {
+                        "id": 2720287,
+                        "url": "https://assets.hardcover.app/external_data/60951398/fcce59736371385c33cab5dd4b5fc478fac17dd6.jpeg",
+                        "color": "#bdcacb",
+                        "width": 98,
+                        "height": 157,
+                        "color_name": "Beige"
+                    }
+                }
+            }
+        }
+    }
+}

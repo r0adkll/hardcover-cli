@@ -1,0 +1,18 @@
+{
+    "data": {
+        "insert_user_book_read": {
+            "id": 6412678,
+            "error": null,
+            "user_book_read": {
+                "id": 6412678,
+                "started_at": "2026-08-21",
+                "finished_at": null,
+                "paused_at": null,
+                "progress": 17.36111111111111,
+                "progress_pages": 50,
+                "progress_seconds": null,
+                "edition_id": 25224958
+            }
+        }
+    }
+}

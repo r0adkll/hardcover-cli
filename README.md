@@ -47,6 +47,10 @@ Every request requires a token; Hardcover has no anonymous access.
 | `user show <username>` | A public profile |
 | `library list [--status want_to_read\|currently_reading\|read\|paused\|did_not_finish\|ignored] [--owned]` | **Your** shelved books, most recently updated first, with `status`, `rating`, `privacy` |
 | `library show <id\|slug\|isbn>` | Your entry for one book, including every read (dates, progress) and your review |
+| `library set-status <book> <status>` | Shelve or move a book; adds it if absent |
+| `library rate <book> <0.5–5>` | Rate in half stars (`0` clears); adds as `read` if absent |
+| `library progress <book> --pages N \| --seconds N [--started D] [--finished D\|today]` | Update the open read, or start one |
+| `library remove <book>` | Delete your entry (status, reads, rating, review) |
 | `whoami` / `login` / `logout` | Credential management |
 | `schema` | Machine-readable description of every command, argument, format and error code |
 
@@ -76,6 +80,16 @@ Errors go to stderr as `{"error": {"code": "...", "message": "..."}}`:
 | `rate_limited` | 5 | upstream limit; includes `retry_after_secs` |
 | `network_error`, `upstream_error` | 6 | transport or API failure |
 
+### Writes
+
+Every `library` write returns `{action, before, after}` (full entries, so a caller can
+verify what changed) and accepts `--dry-run`, which reports `planned` without sending any
+mutation. Writes are idempotent where the API allows; there is deliberately no `--yes`
+gate — an agent that always passes it is protected by nothing, so the before/after
+contract is the safeguard instead. Note two upstream behaviours: rating a book marks it
+`read`, and read updates replace the whole read record (the CLI carries existing dates
+over so they aren't wiped).
+
 Rate-limited requests are retried with backoff (honouring `Retry-After`) up to 3 attempts;
 `--no-retry` disables that.
 
@@ -98,7 +112,8 @@ Using this tool means agreeing to Hardcover's
 no training of public or commercial models on the data, and user-owned data (libraries,
 reviews, ratings) only on behalf of a consenting user. This CLI exposes **content data**
 (books, editions, authors, series, lists, prompts, public profiles) and, read-only, **your own
-library** — never another user's. Writing to your library is a planned milestone.
+library** — never another user's — and lets you change your own entries. It never writes
+on behalf of anyone but the token's owner.
 
 ## Development
 

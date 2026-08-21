@@ -1,0 +1,9 @@
+{
+    "data": {
+        "update_user_book": {
+            "id": 999999999,
+            "error": "Record not found. Was it deleted?",
+            "user_book": null
+        }
+    }
+}

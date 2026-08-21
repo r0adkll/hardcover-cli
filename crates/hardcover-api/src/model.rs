@@ -482,3 +482,13 @@ pub struct Read {
     pub progress_seconds: Option<i64>,
     pub edition_id: Option<i64>,
 }
+
+/// Fields to set on a Read. `None` leaves a field untouched on update.
+#[derive(Debug, Clone, Default, PartialEq)]
+pub struct ProgressUpdate {
+    pub pages: Option<i64>,
+    pub seconds: Option<i64>,
+    pub started_at: Option<String>,
+    pub finished_at: Option<String>,
+    pub edition_id: Option<i64>,
+}
