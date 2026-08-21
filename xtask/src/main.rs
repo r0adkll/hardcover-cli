@@ -66,7 +66,7 @@ fn introspect() {
     let after = serde_json::to_string(&resp).unwrap();
     std::fs::write(&out, &after).expect("write schema");
     println!(
-        "{} {}",
+        "{} {} ({source})",
         if before == after {
             "unchanged"
         } else {
