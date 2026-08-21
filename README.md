@@ -14,6 +14,7 @@ $ hardcover series books kingkiller-chronicle --all --format ndjson
 ## Install
 
 ```sh
+brew install r0adkll/tap/hardcover-cli        # macOS / Linux
 cargo install --git https://github.com/r0adkll/hardcover-cli hardcover-cli
 ```
 
