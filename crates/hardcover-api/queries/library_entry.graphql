@@ -1,0 +1,9 @@
+query LibraryEntryQuery($user_id: Int!, $book_id: Int!) {
+  user_books(where: {user_id: {_eq: $user_id}, book_id: {_eq: $book_id}}, limit: 1) {
+    id book_id status_id rating owned read_count privacy_setting_id has_review reviewed_at
+    first_read_date last_read_date date_added updated_at edition_id
+    book { id title slug release_year rating users_count cached_image }
+    review
+    user_book_reads(order_by: {id: asc}) { id started_at finished_at paused_at progress progress_pages progress_seconds edition_id }
+  }
+}

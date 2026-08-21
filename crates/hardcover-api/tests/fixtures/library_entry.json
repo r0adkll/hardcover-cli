@@ -1,0 +1,61 @@
+{
+    "data": {
+        "user_books": [
+            {
+                "id": 6951323,
+                "book_id": 427678,
+                "status_id": 3,
+                "rating": 3.5,
+                "owned": false,
+                "read_count": 1,
+                "privacy_setting_id": 1,
+                "has_review": false,
+                "review": null,
+                "reviewed_at": "2025-03-28T02:33:51.415",
+                "first_read_date": "2026-08-18",
+                "last_read_date": "2026-08-18",
+                "date_added": "2026-08-18",
+                "updated_at": "2026-08-18T09:04:46.382808+00:00",
+                "edition_id": 30447170,
+                "book": {
+                    "id": 427678,
+                    "title": "Iron Gold",
+                    "slug": "iron-gold",
+                    "release_year": 2018,
+                    "rating": 4.073542210617928,
+                    "users_count": 3108,
+                    "cached_image": {
+                        "id": 1880333,
+                        "url": "https://assets.hardcover.app/edition/17101586/fc907b5ac7e2ad5cbed835a3ba21ec56b342407e.jpeg",
+                        "color": "#f4f2f0",
+                        "width": 329,
+                        "height": 500,
+                        "color_name": "Beige"
+                    }
+                },
+                "user_book_reads": [
+                    {
+                        "id": 2626228,
+                        "started_at": null,
+                        "finished_at": null,
+                        "paused_at": null,
+                        "progress": 1.9230769230769231,
+                        "progress_pages": 12,
+                        "progress_seconds": null,
+                        "edition_id": 30447170
+                    },
+                    {
+                        "id": 5042874,
+                        "started_at": null,
+                        "finished_at": "2026-08-18",
+                        "paused_at": null,
+                        "progress": 100,
+                        "progress_pages": 624,
+                        "progress_seconds": null,
+                        "edition_id": 30447170
+                    }
+                ]
+            }
+        ]
+    }
+}

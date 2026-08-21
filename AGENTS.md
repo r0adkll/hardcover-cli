@@ -32,9 +32,18 @@ hardcover book show 9780765311788 --format json
 # Who is this author, what have they written
 hardcover author show brandon-sanderson --format json
 hardcover author books brandon-sanderson --limit 50 --format ndjson
+
+
+# What is the human currently reading?
+hardcover library list --status currently_reading --format json
+hardcover library show iron-gold --format json      # reads, progress %, rating, review
 ```
+
+`library` is always the authenticated user's own data; there is no way to read someone
+else's library through this tool. `status` values: `want_to_read`, `currently_reading`,
+`read`, `paused`, `did_not_finish`, `ignored` (`--status` also accepts `reading`, `dnf`, `want`).
 
 ## Not available yet
 
-Reading or changing the user's own library (reading status, ratings, reviews, lists) —
-planned as a later milestone. `prompt books` is not exposed to API tokens upstream.
+Changing the user's library (setting status, progress, ratings, reviews, lists) —
+planned as the next milestone. `prompt books` is not exposed to API tokens upstream.

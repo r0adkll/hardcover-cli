@@ -2,6 +2,7 @@
 mod client;
 mod collections;
 mod error;
+mod library;
 pub mod model;
 mod queries;
 mod scalars;

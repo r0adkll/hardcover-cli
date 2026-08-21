@@ -45,6 +45,8 @@ Every request requires a token; Hardcover has no anonymous access.
 | `edition show <id>` | One edition |
 | `prompt show <id\|slug>` | A community prompt |
 | `user show <username>` | A public profile |
+| `library list [--status want_to_read\|currently_reading\|read\|paused\|did_not_finish\|ignored] [--owned]` | **Your** shelved books, most recently updated first, with `status`, `rating`, `privacy` |
+| `library show <id\|slug\|isbn>` | Your entry for one book, including every read (dates, progress) and your review |
 | `whoami` / `login` / `logout` | Credential management |
 | `schema` | Machine-readable description of every command, argument, format and error code |
 
@@ -61,7 +63,7 @@ and `meta.resolved_by` says which form matched.
 ```
 
 Collections accept `--limit`, `--offset`, and `--all` (pages until exhausted or `--max-rows`,
-default 1000; `meta.truncated` is `true` if the cap was hit). `ndjson` streams one bare object
+default 1000, `0` = unlimited; `meta.truncated` is `true` if the cap was hit). `ndjson` streams one bare object
 per line and is the natural partner of `--all`. `--raw` prints the upstream GraphQL payload instead.
 
 Errors go to stderr as `{"error": {"code": "...", "message": "..."}}`:
@@ -94,9 +96,9 @@ The token itself is only ever stored in the OS keychain.
 Using this tool means agreeing to Hardcover's
 [API terms](https://docs.hardcover.app/api/getting-started/): backend/personal use only,
 no training of public or commercial models on the data, and user-owned data (libraries,
-reviews, ratings) only on behalf of a consenting user. This CLI currently exposes only
-**content data** (books, editions, authors, series, lists, prompts, public profiles);
-reading and writing your own library is a planned milestone.
+reviews, ratings) only on behalf of a consenting user. This CLI exposes **content data**
+(books, editions, authors, series, lists, prompts, public profiles) and, read-only, **your own
+library** — never another user's. Writing to your library is a planned milestone.
 
 ## Development
 

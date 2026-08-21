@@ -3,7 +3,7 @@ use crate::credentials;
 use crate::error::CliError;
 use crate::output::{self, Format};
 use crate::paging::collect;
-use hardcover_api::model::{BookSummary, Resolved, User};
+use hardcover_api::model::{BookSummary, LibraryFilter, Resolved, User};
 use hardcover_api::{Client, RetryPolicy};
 use serde::Serialize;
 
@@ -289,6 +289,63 @@ pub async fn run(cli: Cli) -> Result<(), CliError> {
                 )
             });
         }
+        Command::Library { command } => match command {
+            LibraryCommand::List {
+                status,
+                owned,
+                page,
+            } => {
+                let filter = LibraryFilter {
+                    status,
+                    owned: owned.then_some(true),
+                };
+                let c = collect(&page, |p| client.library(filter.clone(), p)).await?;
+                let mut meta = c.meta();
+                meta["status"] = status
+                    .map(|s| serde_json::json!(s))
+                    .unwrap_or(serde_json::Value::Null);
+                meta["owned"] = serde_json::json!(owned);
+                ctx.emit_list(&c.items, meta, |e| {
+                    format!(
+                        "{:<18} {:>4}  {}",
+                        e.status.as_str(),
+                        e.rating.map(|r| format!("{r}")).unwrap_or_default(),
+                        summary_line(&e.book)
+                    )
+                });
+            }
+            LibraryCommand::Show { identifier } => {
+                let r = client.resolve_book(&identifier).await?;
+                let d = client.library_entry(r.id).await?;
+                ctx.emit(
+                    &d,
+                    serde_json::json!({ "resolved_by": r.resolved_by }),
+                    |d| {
+                        let mut lines = vec![format!(
+                            "{} — {}{} ({} read{})",
+                            d.entry.book.title,
+                            d.entry.status.as_str(),
+                            d.entry
+                                .rating
+                                .map(|r| format!(", rated {r}"))
+                                .unwrap_or_default(),
+                            d.entry.read_count,
+                            if d.entry.read_count == 1 { "" } else { "s" }
+                        )];
+                        for read in &d.reads {
+                            lines.push(format!(
+                                "  read #{}: {} → {}  {}%",
+                                read.id,
+                                read.started_at.as_deref().unwrap_or("?"),
+                                read.finished_at.as_deref().unwrap_or("…"),
+                                read.progress.map(|p| p.round() as i64).unwrap_or(0)
+                            ));
+                        }
+                        lines.join("\n")
+                    },
+                );
+            }
+        },
         Command::User {
             command: UserCommand::Show { username },
         } => {

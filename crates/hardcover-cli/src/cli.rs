@@ -2,7 +2,7 @@
 use crate::output::Format;
 use crate::paging::PageArgs;
 use clap::{Parser, Subcommand};
-use hardcover_api::model::{BookIdentifier, Identifier, SearchType};
+use hardcover_api::model::{BookIdentifier, Identifier, ReadingStatus, SearchType};
 
 /// Command-line client for Hardcover.app, built for agents first.
 ///
@@ -90,6 +90,11 @@ pub enum Command {
         #[command(subcommand)]
         command: UserCommand,
     },
+    /// Your library: the books you've shelved, with status, rating and reads.
+    Library {
+        #[command(subcommand)]
+        command: LibraryCommand,
+    },
     /// Describe this CLI for programmatic consumers: commands, arguments, formats, error codes.
     Schema,
 }
@@ -158,4 +163,21 @@ pub enum ListCommand {
         #[command(flatten)]
         page: PageArgs,
     },
+}
+
+#[derive(Subcommand)]
+pub enum LibraryCommand {
+    /// List your library, most recently updated first.
+    List {
+        /// Only this reading status: want_to_read, currently_reading, read, paused, did_not_finish, ignored.
+        #[arg(long)]
+        status: Option<ReadingStatus>,
+        /// Only books you own.
+        #[arg(long)]
+        owned: bool,
+        #[command(flatten)]
+        page: PageArgs,
+    },
+    /// Your entry for one book (by id, slug, or ISBN), including reads and review.
+    Show { identifier: BookIdentifier },
 }

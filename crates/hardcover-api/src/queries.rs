@@ -152,3 +152,19 @@ pub struct ListIdBySlug;
     response_derives = "Debug, Clone"
 )]
 pub struct PromptIdBySlug;
+
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "schema.json",
+    query_path = "queries/library.graphql",
+    response_derives = "Debug, Clone"
+)]
+pub struct Library;
+
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "schema.json",
+    query_path = "queries/library_entry.graphql",
+    response_derives = "Debug, Clone"
+)]
+pub struct LibraryEntryQuery;

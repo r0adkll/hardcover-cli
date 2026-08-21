@@ -565,7 +565,7 @@ dependencies = [
 
 [[package]]
 name = "hardcover-api"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "graphql_client",
  "reqwest",
@@ -578,7 +578,7 @@ dependencies = [
 
 [[package]]
 name = "hardcover-cli"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "assert_cmd",
  "clap",

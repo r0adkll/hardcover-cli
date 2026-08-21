@@ -17,7 +17,8 @@ than any particular user: Books, Editions, Authors, Series, etc. Reading
 Content Data is the scope of the first milestone.
 
 **User Data** — Data owned by the authenticated user: reading status, reviews,
-ratings, lists, progress. Reading and writing User Data is a future milestone.
+ratings, lists, progress. Reading one's own User Data is in scope; writing it is a
+future milestone. The CLI never exposes another user's User Data.
 
 **Raw Output** — The upstream Hardcover API payload, passed through untouched.
 Opt-in; the default output is the CLI's own stable shape.
@@ -47,7 +48,10 @@ are categories of Tag.
 Reading Status, optional Rating and Review, and zero or more Reads.
 
 **Reading Status** — One of: Want to Read, Currently Reading, Read, Paused,
-Did Not Finish, Ignored.
+Did Not Finish, Ignored. Named in output as `want_to_read`, `currently_reading`,
+`read`, `paused`, `did_not_finish`, `ignored`.
+
+**Privacy** — Visibility of a Library entry: Public, Followers, Private.
 
 **Read** — One pass through a Book: start date, finish date, progress.
 

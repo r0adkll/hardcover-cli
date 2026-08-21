@@ -53,6 +53,7 @@ pub struct Client {
     token: String,
     retry: RetryPolicy,
     raw: Option<std::sync::Arc<std::sync::Mutex<Vec<serde_json::Value>>>>,
+    pub(crate) me_id: std::sync::Arc<std::sync::Mutex<Option<i64>>>,
 }
 
 pub struct ClientBuilder {
@@ -323,6 +324,7 @@ impl ClientBuilder {
             token: self.token,
             retry: self.retry,
             raw: self.capture_raw.then(Default::default),
+            me_id: Default::default(),
         }
     }
 }

@@ -359,3 +359,126 @@ pub struct UserProfile {
     pub image_url: Option<String>,
     pub created_at: String,
 }
+
+/// Where a Book sits in the user's Library. Stable string names for agents, ids for round-tripping.
+#[derive(Debug, Clone, Copy, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "snake_case")]
+pub enum ReadingStatus {
+    WantToRead,
+    CurrentlyReading,
+    Read,
+    Paused,
+    DidNotFinish,
+    Ignored,
+}
+
+impl ReadingStatus {
+    pub const ALL: [ReadingStatus; 6] = [
+        ReadingStatus::WantToRead,
+        ReadingStatus::CurrentlyReading,
+        ReadingStatus::Read,
+        ReadingStatus::Paused,
+        ReadingStatus::DidNotFinish,
+        ReadingStatus::Ignored,
+    ];
+
+    pub fn from_id(id: i64) -> Option<Self> {
+        Self::ALL.into_iter().find(|s| s.id() == id)
+    }
+
+    pub fn id(self) -> i64 {
+        match self {
+            ReadingStatus::WantToRead => 1,
+            ReadingStatus::CurrentlyReading => 2,
+            ReadingStatus::Read => 3,
+            ReadingStatus::Paused => 4,
+            ReadingStatus::DidNotFinish => 5,
+            ReadingStatus::Ignored => 6,
+        }
+    }
+
+    pub fn as_str(self) -> &'static str {
+        match self {
+            ReadingStatus::WantToRead => "want_to_read",
+            ReadingStatus::CurrentlyReading => "currently_reading",
+            ReadingStatus::Read => "read",
+            ReadingStatus::Paused => "paused",
+            ReadingStatus::DidNotFinish => "did_not_finish",
+            ReadingStatus::Ignored => "ignored",
+        }
+    }
+}
+
+impl std::str::FromStr for ReadingStatus {
+    type Err = String;
+    fn from_str(s: &str) -> std::result::Result<Self, String> {
+        Ok(match s.to_ascii_lowercase().replace('-', "_").as_str() {
+            "want_to_read" | "want" | "wtr" | "tbr" => ReadingStatus::WantToRead,
+            "currently_reading" | "reading" | "current" => ReadingStatus::CurrentlyReading,
+            "read" | "finished" | "done" => ReadingStatus::Read,
+            "paused" => ReadingStatus::Paused,
+            "did_not_finish" | "dnf" => ReadingStatus::DidNotFinish,
+            "ignored" => ReadingStatus::Ignored,
+            other => return Err(format!("unknown reading status: {other} (want_to_read, currently_reading, read, paused, did_not_finish, ignored)")),
+        })
+    }
+}
+
+pub(crate) fn privacy_name(id: i64) -> &'static str {
+    match id {
+        1 => "public",
+        2 => "followers",
+        3 => "private",
+        _ => "unknown",
+    }
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct LibraryFilter {
+    pub status: Option<ReadingStatus>,
+    pub owned: Option<bool>,
+}
+
+/// One Book in the user's Library.
+#[derive(Debug, Clone, Serialize, PartialEq)]
+pub struct LibraryEntry {
+    pub id: i64,
+    pub book: BookSummary,
+    pub status: ReadingStatus,
+    pub status_id: i64,
+    pub rating: Option<f64>,
+    pub owned: bool,
+    pub read_count: i64,
+    pub privacy: &'static str,
+    pub privacy_id: i64,
+    pub has_review: bool,
+    pub reviewed_at: Option<String>,
+    pub first_read_date: Option<String>,
+    pub last_read_date: Option<String>,
+    pub date_added: String,
+    pub updated_at: Option<String>,
+    pub edition_id: Option<i64>,
+}
+
+/// A Library entry plus the things only worth fetching one at a time.
+#[derive(Debug, Clone, Serialize, PartialEq)]
+pub struct LibraryEntryDetail {
+    #[serde(flatten)]
+    pub entry: LibraryEntry,
+    pub review: Option<String>,
+    pub reads: Vec<Read>,
+}
+
+/// One pass through a Book.
+#[derive(Debug, Clone, Serialize, PartialEq)]
+pub struct Read {
+    pub id: i64,
+    pub started_at: Option<String>,
+    pub finished_at: Option<String>,
+    pub paused_at: Option<String>,
+    /// Percent complete, 0–100.
+    pub progress: Option<f64>,
+    pub progress_pages: Option<i64>,
+    pub progress_seconds: Option<i64>,
+    pub edition_id: Option<i64>,
+}

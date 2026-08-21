@@ -15,7 +15,7 @@ pub struct PageArgs {
     /// Keep paging until the collection is exhausted or --max-rows is reached.
     #[arg(long)]
     pub all: bool,
-    /// Safety cap for --all; `meta.truncated` is true when it is hit.
+    /// Safety cap for --all; `meta.truncated` is true when it is hit. 0 means unlimited.
     #[arg(long, default_value_t = 1000)]
     pub max_rows: i64,
 }
@@ -52,7 +52,8 @@ where
     let mut offset = args.offset;
     let mut truncated = false;
     loop {
-        let remaining_cap = if args.all {
+        let unlimited = args.max_rows <= 0;
+        let remaining_cap = if args.all && !unlimited {
             args.max_rows - items.len() as i64
         } else {
             args.limit
@@ -68,7 +69,7 @@ where
         if !args.all || got < limit {
             break;
         }
-        if items.len() as i64 >= args.max_rows {
+        if !unlimited && items.len() as i64 >= args.max_rows {
             truncated = true;
             break;
         }

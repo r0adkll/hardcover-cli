@@ -1,0 +1,102 @@
+{
+    "data": {
+        "user_books": [
+            {
+                "id": 6968754,
+                "book_id": 427876,
+                "status_id": 2,
+                "rating": null,
+                "owned": false,
+                "read_count": 0,
+                "privacy_setting_id": 1,
+                "has_review": false,
+                "reviewed_at": "2025-03-29T14:29:01.656039",
+                "first_read_date": null,
+                "last_read_date": null,
+                "date_added": "2026-08-20",
+                "updated_at": "2026-08-21T03:41:11.380911+00:00",
+                "edition_id": 30586984,
+                "book": {
+                    "id": 427876,
+                    "title": "Dark Age",
+                    "slug": "dark-age",
+                    "release_year": 2019,
+                    "rating": 4.406067677946324,
+                    "users_count": 2512,
+                    "cached_image": {
+                        "id": 2690331,
+                        "url": "https://assets.hardcover.app/editions/30399300/3644584410675518.jpg",
+                        "color": "#9b6b17",
+                        "width": 631,
+                        "height": 960,
+                        "color_name": "Brown"
+                    }
+                }
+            },
+            {
+                "id": 6951323,
+                "book_id": 427678,
+                "status_id": 3,
+                "rating": 3.5,
+                "owned": false,
+                "read_count": 1,
+                "privacy_setting_id": 1,
+                "has_review": false,
+                "reviewed_at": "2025-03-28T02:33:51.415",
+                "first_read_date": "2026-08-18",
+                "last_read_date": "2026-08-18",
+                "date_added": "2026-08-18",
+                "updated_at": "2026-08-18T09:04:46.382808+00:00",
+                "edition_id": 30447170,
+                "book": {
+                    "id": 427678,
+                    "title": "Iron Gold",
+                    "slug": "iron-gold",
+                    "release_year": 2018,
+                    "rating": 4.073542210617928,
+                    "users_count": 3108,
+                    "cached_image": {
+                        "id": 1880333,
+                        "url": "https://assets.hardcover.app/edition/17101586/fc907b5ac7e2ad5cbed835a3ba21ec56b342407e.jpeg",
+                        "color": "#f4f2f0",
+                        "width": 329,
+                        "height": 500,
+                        "color_name": "Beige"
+                    }
+                }
+            },
+            {
+                "id": 17324683,
+                "book_id": 1479284,
+                "status_id": 3,
+                "rating": null,
+                "owned": false,
+                "read_count": 1,
+                "privacy_setting_id": 1,
+                "has_review": false,
+                "reviewed_at": null,
+                "first_read_date": "2026-05-01",
+                "last_read_date": "2026-05-01",
+                "date_added": "2026-08-12",
+                "updated_at": "2026-08-12T11:18:57.385993+00:00",
+                "edition_id": 31526761,
+                "book": {
+                    "id": 1479284,
+                    "title": "Arcana Academy",
+                    "slug": "arcana-academy",
+                    "release_year": 2025,
+                    "rating": 3.8376623376623376,
+                    "users_count": 428,
+                    "cached_image": {
+                        "id": 4980403,
+                        "url": "https://assets.hardcover.app/editions/31526761/8b405e36-dda4-4099-bb04-e8cda65b5b90.jpg",
+                        "color": "#896117",
+                        "width": 1875,
+                        "height": 2850,
+                        "color_name": "Brown"
+                    }
+                }
+            }
+        ]
+    }
+}
