@@ -366,6 +366,31 @@ pub async fn run(cli: Cli) -> Result<(), CliError> {
                     WriteResult::line,
                 );
             }
+            LibraryCommand::Review {
+                identifier,
+                text,
+                spoilers,
+            } => {
+                let text = match text {
+                    Some(t) => t,
+                    None => {
+                        use std::io::Read as _;
+                        let mut buf = String::new();
+                        std::io::stdin()
+                            .read_to_string(&mut buf)
+                            .map_err(|e| CliError::usage(e.to_string()))?;
+                        buf
+                    }
+                };
+                let (out, r) =
+                    ops::review(&client, &identifier, text.trim_end(), spoilers, ctx.dry_run)
+                        .await?;
+                ctx.emit(
+                    &out,
+                    serde_json::json!({ "resolved_by": r.resolved_by }),
+                    WriteResult::line,
+                );
+            }
             LibraryCommand::Remove { identifier } => {
                 let (out, r) = ops::remove(&client, &identifier, ctx.dry_run).await?;
                 ctx.emit(

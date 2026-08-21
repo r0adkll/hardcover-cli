@@ -17,7 +17,7 @@ than any particular user: Books, Editions, Authors, Series, etc. Reading
 Content Data is the scope of the first milestone.
 
 **User Data** — Data owned by the authenticated user: reading status, reviews,
-ratings, lists, progress. Reading and changing one's own Library is in scope; reviews,
+ratings, lists, progress. Reading and changing one's own Library, including Reviews, is in scope;
 lists and journals are not yet. The CLI never exposes or changes another user's User Data.
 
 **Raw Output** — The upstream Hardcover API payload, passed through untouched.
@@ -52,6 +52,10 @@ Did Not Finish, Ignored. Named in output as `want_to_read`, `currently_reading`,
 `read`, `paused`, `did_not_finish`, `ignored`.
 
 **Privacy** — Visibility of a Library entry: Public, Followers, Private.
+
+**Review** — The user's written opinion of a Book, attached to its Library entry. Authored
+as Markdown; Hardcover also keeps a rendered HTML form. Optionally flagged as containing
+spoilers.
 
 **Read** — One pass through a Book: start date, finish date, progress. A Read with no
 finish date is the **open read**; progress updates apply to it.

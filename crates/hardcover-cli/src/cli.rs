@@ -223,6 +223,16 @@ pub enum LibraryCommand {
         #[arg(long)]
         edition: Option<i64>,
     },
+    /// Write or replace your review of a shelved book (Markdown). Reads stdin when --text is absent.
+    Review {
+        identifier: BookIdentifier,
+        /// Review text (Markdown). Omit to read from stdin.
+        #[arg(long)]
+        text: Option<String>,
+        /// Mark the review as containing spoilers.
+        #[arg(long)]
+        spoilers: bool,
+    },
     /// Remove a book from your library entirely (status, reads, rating and review).
     Remove { identifier: BookIdentifier },
 }

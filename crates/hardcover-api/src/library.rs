@@ -28,6 +28,9 @@ macro_rules! entry {
             privacy: privacy_name(e.privacy_setting_id),
             privacy_id: e.privacy_setting_id,
             has_review: e.has_review,
+            review: e.review_markdown.filter(|r| !r.is_empty()),
+            review_html: e.review,
+            review_has_spoilers: Some(e.review_has_spoilers),
             reviewed_at: e.reviewed_at,
             first_read_date: e.first_read_date,
             last_read_date: e.last_read_date,
@@ -82,7 +85,6 @@ impl Client {
             .into_iter()
             .next()
             .ok_or_else(|| Error::NotFound(format!("book {book_id} is not in your library")))?;
-        let review = e.review.clone();
         let reads = e
             .user_book_reads
             .iter()
@@ -99,7 +101,6 @@ impl Client {
             .collect();
         Ok(LibraryEntryDetail {
             entry: entry!(e),
-            review,
             reads,
         })
     }
@@ -216,6 +217,29 @@ impl Client {
         match out.user_book {
             Some(e) => Ok(entry!(e)),
             None => Err(action_error(out.error, "set rating")),
+        }
+    }
+
+    /// Write (or replace) the review on a Library entry. Markdown in; Hardcover renders HTML.
+    /// Clearing is not supported by the API's update action as far as we've verified.
+    pub async fn library_set_review(
+        &self,
+        entry_id: i64,
+        markdown: Option<&str>,
+        spoilers: bool,
+    ) -> Result<LibraryEntry> {
+        let out = self
+            .execute::<UpdateUserBookReview>(update_user_book_review::Variables {
+                id: entry_id,
+                review_markdown: markdown.map(str::to_owned),
+                spoilers,
+            })
+            .await?
+            .update_user_book
+            .ok_or_else(|| Error::Upstream("update_user_book: no payload".into()))?;
+        match out.user_book {
+            Some(e) => Ok(entry!(e)),
+            None => Err(action_error(out.error, "set review")),
         }
     }
 

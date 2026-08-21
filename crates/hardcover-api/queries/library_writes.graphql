@@ -1,11 +1,11 @@
 mutation InsertUserBook($book_id: Int!, $status_id: Int!, $rating: numeric) {
-  insert_user_book(object: {book_id: $book_id, status_id: $status_id, rating: $rating}) { id error user_book { id book_id status_id rating owned read_count privacy_setting_id has_review reviewed_at first_read_date last_read_date date_added updated_at edition_id book { id title slug release_year rating users_count cached_image } } }
+  insert_user_book(object: {book_id: $book_id, status_id: $status_id, rating: $rating}) { id error user_book { id book_id status_id rating owned read_count privacy_setting_id has_review reviewed_at review_markdown review review_has_spoilers first_read_date last_read_date date_added updated_at edition_id book { id title slug release_year rating users_count cached_image } } }
 }
 mutation UpdateUserBookStatus($id: Int!, $status_id: Int!) {
-  update_user_book(id: $id, object: {status_id: $status_id}) { id error user_book { id book_id status_id rating owned read_count privacy_setting_id has_review reviewed_at first_read_date last_read_date date_added updated_at edition_id book { id title slug release_year rating users_count cached_image } } }
+  update_user_book(id: $id, object: {status_id: $status_id}) { id error user_book { id book_id status_id rating owned read_count privacy_setting_id has_review reviewed_at review_markdown review review_has_spoilers first_read_date last_read_date date_added updated_at edition_id book { id title slug release_year rating users_count cached_image } } }
 }
 mutation UpdateUserBookRating($id: Int!, $rating: numeric) {
-  update_user_book(id: $id, object: {rating: $rating}) { id error user_book { id book_id status_id rating owned read_count privacy_setting_id has_review reviewed_at first_read_date last_read_date date_added updated_at edition_id book { id title slug release_year rating users_count cached_image } } }
+  update_user_book(id: $id, object: {rating: $rating}) { id error user_book { id book_id status_id rating owned read_count privacy_setting_id has_review reviewed_at review_markdown review review_has_spoilers first_read_date last_read_date date_added updated_at edition_id book { id title slug release_year rating users_count cached_image } } }
 }
 mutation InsertUserBookRead($user_book_id: Int!, $read: DatesReadInput!) {
   insert_user_book_read(user_book_id: $user_book_id, user_book_read: $read) { id error user_book_read { id started_at finished_at paused_at progress progress_pages progress_seconds edition_id } }
@@ -15,4 +15,9 @@ mutation UpdateUserBookRead($id: Int!, $read: DatesReadInput!) {
 }
 mutation DeleteUserBook($id: Int!) {
   delete_user_book(id: $id) { id }
+}
+mutation UpdateUserBookReview($id: Int!, $review_markdown: String, $spoilers: Boolean!) {
+  update_user_book(id: $id, object: {review_markdown: $review_markdown, review_has_spoilers: $spoilers}) {
+    id error user_book { id book_id status_id rating owned read_count privacy_setting_id has_review reviewed_at review_markdown review review_has_spoilers first_read_date last_read_date date_added updated_at edition_id book { id title slug release_year rating users_count cached_image } }
+  }
 }

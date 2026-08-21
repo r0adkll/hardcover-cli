@@ -44,7 +44,11 @@ pub fn emit<T: Serialize>(
     match format.resolve() {
         Format::Json => print_envelope(value, meta),
         Format::Ndjson => println!("{}", serde_json::to_string(value).unwrap()),
-        Format::Table | Format::Plain => println!("{}", plain(value)),
+        Format::Table => println!(
+            "{}",
+            crate::table::render_entity(&serde_json::to_value(value).unwrap())
+        ),
+        Format::Plain => println!("{}", plain(value)),
         Format::Auto => unreachable!(),
     }
 }
@@ -63,7 +67,14 @@ pub fn emit_list<T: Serialize>(
                 println!("{}", serde_json::to_string(item).unwrap());
             }
         }
-        Format::Table | Format::Plain => {
+        Format::Table => {
+            let rows: Vec<serde_json::Value> = items
+                .iter()
+                .map(|i| serde_json::to_value(i).unwrap())
+                .collect();
+            println!("{}", crate::table::render_rows(&rows));
+        }
+        Format::Plain => {
             for item in items {
                 println!("{}", line(item));
             }

@@ -452,6 +452,11 @@ pub struct LibraryEntry {
     pub privacy: &'static str,
     pub privacy_id: i64,
     pub has_review: bool,
+    /// The review as written (Markdown).
+    pub review: Option<String>,
+    /// Hardcover's rendered HTML of the review.
+    pub review_html: Option<String>,
+    pub review_has_spoilers: Option<bool>,
     pub reviewed_at: Option<String>,
     pub first_read_date: Option<String>,
     pub last_read_date: Option<String>,
@@ -465,7 +470,6 @@ pub struct LibraryEntry {
 pub struct LibraryEntryDetail {
     #[serde(flatten)]
     pub entry: LibraryEntry,
-    pub review: Option<String>,
     pub reads: Vec<Read>,
 }
 

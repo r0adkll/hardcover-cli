@@ -60,6 +60,7 @@ hardcover library set-status mistborn-the-final-empire currently_reading --forma
 hardcover library progress mistborn-the-final-empire --pages 120 --format json
 hardcover library progress mistborn-the-final-empire --finished today --format json
 hardcover library rate mistborn-the-final-empire 4.5 --format json
+hardcover library review mistborn-the-final-empire --text "Loved the heist structure." --format json
 hardcover library remove mistborn-the-final-empire --dry-run --format json   # preview first
 ```
 
@@ -71,4 +72,4 @@ hardcover library remove mistborn-the-final-empire --dry-run --format json   # p
 
 ## Not available yet
 
-Reviews, lists, journals, and other users' data. `prompt books` is not exposed to API tokens upstream.
+Clearing a review, lists/journal writes, and other users' data (by design). `prompt books` is not exposed to API tokens upstream.

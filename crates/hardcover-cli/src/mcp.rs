@@ -160,6 +160,16 @@ pub struct ProgressParams {
 }
 
 #[derive(Deserialize, schemars::JsonSchema)]
+pub struct ReviewParams {
+    pub identifier: String,
+    /// Review text in Markdown. Replaces any existing review.
+    pub text: String,
+    /// Mark as containing spoilers.
+    pub spoilers: Option<bool>,
+    pub dry_run: Option<bool>,
+}
+
+#[derive(Deserialize, schemars::JsonSchema)]
 pub struct RemoveParams {
     pub identifier: String,
     pub dry_run: Option<bool>,
@@ -415,6 +425,16 @@ impl Hardcover {
         };
         write_tool!(self, p.identifier, p.dry_run, |c, i, d| ops::progress(
             c, &i, prog, d
+        ))
+    }
+
+    #[tool(
+        description = "Write or replace the user's review (Markdown) of a book already in their library. Supports dry_run."
+    )]
+    async fn library_review(&self, Parameters(p): Parameters<ReviewParams>) -> ToolResult {
+        let spoilers = p.spoilers.unwrap_or(false);
+        write_tool!(self, p.identifier, p.dry_run, |c, i, d| ops::review(
+            c, &i, &p.text, spoilers, d
         ))
     }
 

@@ -109,18 +109,14 @@ async fn after_write(
     read: Option<&Read>,
 ) -> Result<Option<LibraryEntryDetail>, CliError> {
     let fetched = entry_or_none(client, book_id).await?;
-    let (mut reads, review) = fetched.map(|f| (f.reads, f.review)).unwrap_or_default();
+    let mut reads = fetched.map(|f| f.reads).unwrap_or_default();
     if let Some(r) = read {
         match reads.iter_mut().find(|x| x.id == r.id) {
             Some(slot) => *slot = r.clone(),
             None => reads.push(r.clone()),
         }
     }
-    Ok(Some(LibraryEntryDetail {
-        entry,
-        review,
-        reads,
-    }))
+    Ok(Some(LibraryEntryDetail { entry, reads }))
 }
 
 pub fn validate_rating(r: f64) -> Result<Option<f64>, CliError> {
@@ -297,6 +293,31 @@ pub async fn remove(
         out.planned = Some(serde_json::json!({ "delete_entry_id": entry_id }));
     } else {
         client.library_remove(entry_id).await?;
+    }
+    Ok((out, r))
+}
+
+pub async fn review(
+    client: &Client,
+    ident: &BookIdentifier,
+    markdown: &str,
+    spoilers: bool,
+    dry_run: bool,
+) -> Result<(WriteResult, ResolvedBook), CliError> {
+    if markdown.trim().is_empty() {
+        return Err(CliError::usage("review text is empty"));
+    }
+    let r = client.resolve_book(ident).await?;
+    let before = client.library_entry(r.id).await?; // must already be shelved
+    let entry_id = before.entry.id;
+    let mut out = WriteResult::new("reviewed", dry_run, Some(before));
+    if dry_run {
+        out.planned = Some(serde_json::json!({ "review": markdown, "spoilers": spoilers }));
+    } else {
+        let updated = client
+            .library_set_review(entry_id, Some(markdown), spoilers)
+            .await?;
+        out.after = after_write(client, r.id, updated, None).await?;
     }
     Ok((out, r))
 }

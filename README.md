@@ -87,6 +87,7 @@ Every request requires a token; Hardcover has no anonymous access.
 | `library set-status <book> <status>` | Shelve or move a book; adds it if absent |
 | `library rate <book> <0.5–5>` | Rate in half stars (`0` clears); adds as `read` if absent |
 | `library progress <book> --pages N \| --seconds N [--started D] [--finished D\|today]` | Update the open read, or start one |
+| `library review <book> [--text MD \| stdin] [--spoilers]` | Write or replace your review (Markdown); book must be shelved |
 | `library remove <book>` | Delete your entry (status, reads, rating, review) |
 | `whoami` / `login` / `logout` | Credential management |
 | `schema` | Machine-readable description of every command, argument, format and error code |
@@ -100,6 +101,8 @@ and `meta.resolved_by` says which form matched.
 ## Output
 
 `--format auto|json|ndjson|table|plain` (default `auto`: JSON when stdout is not a terminal).
+`table` renders aligned columns (collections) or field/value rows (single entities) from the
+same fields as `json`; nested objects collapse to their name/title, long text is truncated.
 
 ```jsonc
 { "schema": "hardcover-cli/1", "data": { ... }, "meta": { "resolved_by": "slug" } }
@@ -127,7 +130,9 @@ mutation. Writes are idempotent where the API allows; there is deliberately no `
 gate — an agent that always passes it is protected by nothing, so the before/after
 contract is the safeguard instead. Note two upstream behaviours: rating a book marks it
 `read`, and read updates replace the whole read record (the CLI carries existing dates
-over so they aren't wiped).
+over so they aren't wiped). Reviews can be written and replaced but the update action
+doesn't clear one (verified: empty string is ignored) — delete the entry or clear it on
+hardcover.app.
 
 Rate-limited requests are retried with backoff (honouring `Retry-After`) up to 3 attempts;
 `--no-retry` disables that.

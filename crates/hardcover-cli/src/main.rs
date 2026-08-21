@@ -10,6 +10,7 @@ mod output;
 mod paging;
 mod schema;
 mod skills;
+mod table;
 
 use clap::Parser;
 use std::process::ExitCode;

@@ -5,7 +5,7 @@ query Library($user_id: Int!, $status_ids: [Int!]!, $owned: [Boolean!]!, $limit:
     limit: $limit
     offset: $offset
   ) {
-    id book_id status_id rating owned read_count privacy_setting_id has_review reviewed_at
+    id book_id status_id rating owned read_count privacy_setting_id has_review reviewed_at review_markdown review review_has_spoilers
     first_read_date last_read_date date_added updated_at edition_id
     book { id title slug release_year rating users_count cached_image }
   }

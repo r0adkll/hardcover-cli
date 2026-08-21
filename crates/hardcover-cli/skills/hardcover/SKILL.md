@@ -13,7 +13,7 @@ exposes its catalog and the authenticated user's own library.
 - **MCP tools** (preferred when available): `search`, `book_show`, `book_editions`,
   `author_show`, `author_books`, `series_show`, `series_books`, `list_show`, `list_books`,
   `edition_show`, `prompt_show`, `user_show`, `whoami`, `library_list`, `library_show`,
-  `library_set_status`, `library_rate`, `library_progress`, `library_remove`.
+  `library_set_status`, `library_rate`, `library_progress`, `library_review`, `library_remove`.
 - **CLI**: same names with spaces (`hardcover book show …`). Always add `--format json`.
   `hardcover schema --format json` describes every command and error code.
 
@@ -55,7 +55,7 @@ change anyone else's. Reading status values: `want_to_read`, `currently_reading`
 
 ## Writes
 
-`library_set_status`, `library_rate`, `library_progress`, `library_remove` change real data.
+`library_set_status`, `library_rate`, `library_progress`, `library_review`, `library_remove` change real data.
 - Only write when the human asked for it; preview with `dry_run: true` when unsure.
 - Every write returns `{action, before, after}` — check `after`, don't assume.
 - Hardcover side effects: rating a book marks it `read`; progress updates the open read

@@ -216,3 +216,11 @@ pub struct UpdateUserBookRead;
     response_derives = "Debug, Clone"
 )]
 pub struct DeleteUserBook;
+
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "schema.json",
+    query_path = "queries/library_writes.graphql",
+    response_derives = "Debug, Clone"
+)]
+pub struct UpdateUserBookReview;
