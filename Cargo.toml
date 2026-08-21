@@ -4,7 +4,7 @@ members = ["crates/hardcover-api", "crates/hardcover-cli", "xtask"]
 default-members = ["crates/hardcover-api", "crates/hardcover-cli"]
 
 [workspace.package]
-version = "0.4.0"
+version = "0.4.1"
 edition = "2021"
 rust-version = "1.88"
 license = "MIT OR Apache-2.0"
