@@ -1,0 +1,3 @@
+query PromptById($id: Int!) {
+  prompts_by_pk(id: $id) { id question slug description answers_count books_count users_count user { id username } }
+}

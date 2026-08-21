@@ -1,0 +1,3 @@
+query AuthorById($id: Int!) {
+  authors_by_pk(id: $id) { id name slug bio born_year death_year books_count users_count cached_image }
+}

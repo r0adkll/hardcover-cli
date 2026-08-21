@@ -3,7 +3,7 @@ use crate::error::CliError;
 use crate::output::{emit, emit_list, Format};
 use crate::paging::collect;
 use crate::credentials;
-use hardcover_api::model::{BookSummary, User};
+use hardcover_api::model::{BookSummary, Resolved, User};
 use hardcover_api::Client;
 
 fn make_client(token: String, api_url: &Option<String>) -> Client {
@@ -16,6 +16,15 @@ fn make_client(token: String, api_url: &Option<String>) -> Client {
 
 fn user_line(u: &User) -> String {
     format!("{} (#{})", u.username, u.id)
+}
+
+fn resolved_meta(r: &Resolved) -> serde_json::Value {
+    serde_json::json!({ "resolved_by": r.resolved_by })
+}
+
+fn with_resolved(mut meta: serde_json::Value, r: &Resolved) -> serde_json::Value {
+    meta["resolved_by"] = serde_json::json!(r.resolved_by);
+    meta
 }
 
 fn summary_line(b: &BookSummary) -> String {
@@ -89,27 +98,60 @@ pub async fn run(cli: Cli) -> Result<(), CliError> {
             }
         },
         Command::Author { command } => match command {
-            AuthorCommand::Books { id, page } => {
-                let c = collect(&page, |p| client.author_books(id, p)).await?;
-                emit_list(format, &c.items, c.meta(), summary_line);
+            AuthorCommand::Show { identifier } => {
+                let r = client.resolve_author(&identifier).await?;
+                let a = client.author(r.id).await?;
+                emit(format, &a, resolved_meta(&r), |a| format!("{} (#{}, {}) — {} books", a.name, a.id, a.slug, a.books_count));
+            }
+            AuthorCommand::Books { identifier, page } => {
+                let r = client.resolve_author(&identifier).await?;
+                let c = collect(&page, |p| client.author_books(r.id, p)).await?;
+                emit_list(format, &c.items, with_resolved(c.meta(), &r), summary_line);
             }
         },
         Command::Series { command } => match command {
-            SeriesCommand::Books { id, page } => {
-                let c = collect(&page, |p| client.series_books(id, p)).await?;
-                emit_list(format, &c.items, c.meta(), |e| {
+            SeriesCommand::Show { identifier } => {
+                let r = client.resolve_series(&identifier).await?;
+                let x = client.series(r.id).await?;
+                emit(format, &x, resolved_meta(&r), |x| format!("{} (#{}, {}) — {} books", x.name, x.id, x.slug, x.books_count));
+            }
+            SeriesCommand::Books { identifier, page } => {
+                let r = client.resolve_series(&identifier).await?;
+                let c = collect(&page, |p| client.series_books(r.id, p)).await?;
+                emit_list(format, &c.items, with_resolved(c.meta(), &r), |e| {
                     format!("{:>5}  {}", e.position.map(|p| p.to_string()).unwrap_or_default(), summary_line(&e.book))
                 });
             }
         },
         Command::List { command } => match command {
-            ListCommand::Books { id, page } => {
-                let c = collect(&page, |p| client.list_books(id, p)).await?;
-                emit_list(format, &c.items, c.meta(), |e| {
+            ListCommand::Show { identifier } => {
+                let r = client.resolve_list(&identifier).await?;
+                let l = client.list(r.id).await?;
+                emit(format, &l, resolved_meta(&r), |l| format!("{} (#{}) by {} — {} books", l.name, l.id, l.owner.username, l.books_count));
+            }
+            ListCommand::Books { identifier, page } => {
+                let r = client.resolve_list(&identifier).await?;
+                let c = collect(&page, |p| client.list_books(r.id, p)).await?;
+                emit_list(format, &c.items, with_resolved(c.meta(), &r), |e| {
                     format!("{:>5}  {}", e.position.map(|p| p.to_string()).unwrap_or_default(), summary_line(&e.book))
                 });
             }
         },
+        Command::Edition { command: EditionCommand::Show { id } } => {
+            let e = client.edition(id).await?;
+            emit(format, &e, none(), |e| {
+                format!("{} (#{}) {} {}", e.title, e.id, e.isbn_13.as_deref().or(e.isbn_10.as_deref()).unwrap_or("-"), e.edition_format.as_deref().unwrap_or(""))
+            });
+        }
+        Command::Prompt { command: PromptCommand::Show { identifier } } => {
+            let r = client.resolve_prompt(&identifier).await?;
+            let p = client.prompt(r.id).await?;
+            emit(format, &p, resolved_meta(&r), |p| format!("{} (#{}, {}) — {} answers", p.question, p.id, p.slug, p.answers_count));
+        }
+        Command::User { command: UserCommand::Show { username } } => {
+            let u = client.user_by_username(&username).await?;
+            emit(format, &u, none(), |u| format!("{} (#{}) — {} books", u.username, u.id, u.books_count));
+        }
     }
     Ok(())
 }

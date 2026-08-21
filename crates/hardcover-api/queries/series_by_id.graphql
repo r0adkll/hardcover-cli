@@ -1,0 +1,3 @@
+query SeriesById($id: Int!) {
+  series_by_pk(id: $id) { id name slug description is_completed books_count primary_books_count author { id name slug } }
+}

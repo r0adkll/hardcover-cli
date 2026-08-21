@@ -1,0 +1,5 @@
+query UserByUsername($username: citext!) {
+  users(where: {username: {_eq: $username}}, limit: 1) {
+    id username name bio location flair pro books_count followers_count followed_users_count cached_image created_at
+  }
+}

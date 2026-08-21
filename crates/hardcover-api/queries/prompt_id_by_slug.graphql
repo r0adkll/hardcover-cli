@@ -1,0 +1,1 @@
+query PromptIdBySlug($slug: String!) { prompts(where: {slug: {_eq: $slug}}, limit: 1) { id } }

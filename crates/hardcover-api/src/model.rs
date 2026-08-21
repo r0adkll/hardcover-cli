@@ -238,3 +238,113 @@ pub(crate) fn reading_format(id: Option<i64>) -> Option<String> {
         .to_string(),
     )
 }
+
+/// Identifier for entities addressed by numeric id or slug (everything except Books,
+/// which also accept ISBNs — see [`BookIdentifier`]).
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum Identifier {
+    Id(i64),
+    Slug(String),
+}
+
+impl std::str::FromStr for Identifier {
+    type Err = String;
+    fn from_str(s: &str) -> std::result::Result<Self, String> {
+        let s = s.trim();
+        if let Some(rest) = s.strip_prefix("id:") {
+            return rest.parse().map(Identifier::Id).map_err(|_| format!("not a numeric id: {rest}"));
+        }
+        if let Some(rest) = s.strip_prefix("slug:") {
+            return Ok(Identifier::Slug(rest.to_string()));
+        }
+        if s.is_empty() {
+            return Err("empty identifier".into());
+        }
+        if s.chars().all(|c| c.is_ascii_digit()) {
+            return s.parse().map(Identifier::Id).map_err(|e| e.to_string());
+        }
+        Ok(Identifier::Slug(s.to_string()))
+    }
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
+pub struct Resolved {
+    pub id: i64,
+    pub resolved_by: ResolvedBy,
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq)]
+pub struct Author {
+    pub id: i64,
+    pub slug: String,
+    pub name: String,
+    pub bio: Option<String>,
+    pub born_year: Option<i64>,
+    pub death_year: Option<i64>,
+    pub books_count: i64,
+    pub users_count: i64,
+    pub image_url: Option<String>,
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq)]
+pub struct Series {
+    pub id: i64,
+    pub slug: String,
+    pub name: String,
+    pub description: Option<String>,
+    pub is_completed: Option<bool>,
+    pub books_count: i64,
+    /// Books in the main sequence (excludes novellas, companions, etc.).
+    pub primary_books_count: Option<i64>,
+    pub author: Option<Contributor>,
+}
+
+/// Minimal reference to a user as owner of something.
+#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
+pub struct UserRef {
+    pub id: i64,
+    pub username: String,
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq)]
+pub struct List {
+    pub id: i64,
+    pub slug: Option<String>,
+    pub name: String,
+    pub description: Option<String>,
+    pub books_count: i64,
+    pub followers_count: Option<i64>,
+    pub likes_count: i64,
+    pub ranked: bool,
+    pub featured: bool,
+    pub owner: UserRef,
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq)]
+pub struct Prompt {
+    pub id: i64,
+    pub slug: String,
+    pub question: String,
+    pub description: String,
+    pub answers_count: i64,
+    pub books_count: i64,
+    pub users_count: i64,
+    pub owner: UserRef,
+}
+
+/// A user's public profile.
+#[derive(Debug, Clone, Serialize, PartialEq)]
+pub struct UserProfile {
+    pub id: i64,
+    pub username: String,
+    pub name: Option<String>,
+    pub bio: Option<String>,
+    pub location: Option<String>,
+    pub flair: Option<String>,
+    pub pro: bool,
+    pub books_count: i64,
+    pub followers_count: i64,
+    pub followed_users_count: i64,
+    pub image_url: Option<String>,
+    pub created_at: String,
+}

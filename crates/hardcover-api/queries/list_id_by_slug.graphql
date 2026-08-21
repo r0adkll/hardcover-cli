@@ -1,0 +1,1 @@
+query ListIdBySlug($slug: String!) { lists(where: {slug: {_eq: $slug}}, limit: 1) { id } }

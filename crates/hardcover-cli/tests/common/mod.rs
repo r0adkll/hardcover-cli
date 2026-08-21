@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 use assert_cmd::Command;
-use wiremock::matchers::{body_partial_json, method, path};
+use wiremock::matchers::{body_partial_json, body_string_contains, method, path};
 use wiremock::{Mock, MockServer, ResponseTemplate};
 
 pub fn fixture(name: &str) -> String {
@@ -57,4 +57,14 @@ pub async fn run_raw(server: &MockServer, args: &[&str]) -> String {
     })
     .await
     .unwrap()
+}
+
+/// Serve `fixture` for any request whose body mentions the named GraphQL operation.
+pub async fn respond_op(server: &MockServer, op: &str, fixture_name: &str) {
+    Mock::given(method("POST"))
+        .and(path("/v1/graphql"))
+        .and(body_string_contains(format!("query {op}")))
+        .respond_with(ResponseTemplate::new(200).set_body_raw(fixture(fixture_name), "application/json"))
+        .mount(server)
+        .await;
 }

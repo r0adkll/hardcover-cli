@@ -2,7 +2,7 @@
 use crate::output::Format;
 use crate::paging::PageArgs;
 use clap::{Parser, Subcommand};
-use hardcover_api::model::{BookIdentifier, SearchType};
+use hardcover_api::model::{BookIdentifier, Identifier, SearchType};
 
 /// Command-line client for Hardcover.app, built for agents first.
 ///
@@ -67,6 +67,39 @@ pub enum Command {
         #[command(subcommand)]
         command: ListCommand,
     },
+    /// Editions: specific published forms of a book.
+    Edition {
+        #[command(subcommand)]
+        command: EditionCommand,
+    },
+    /// Prompts: community questions answered with books.
+    Prompt {
+        #[command(subcommand)]
+        command: PromptCommand,
+    },
+    /// Users: public profiles.
+    User {
+        #[command(subcommand)]
+        command: UserCommand,
+    },
+}
+
+#[derive(Subcommand)]
+pub enum EditionCommand {
+    /// Show one edition by id.
+    Show { id: i64 },
+}
+
+#[derive(Subcommand)]
+pub enum PromptCommand {
+    /// Show one prompt by id or slug.
+    Show { identifier: Identifier },
+}
+
+#[derive(Subcommand)]
+pub enum UserCommand {
+    /// Show a user's public profile by username.
+    Show { username: String },
 }
 
 #[derive(Subcommand)]
@@ -83,9 +116,11 @@ pub enum BookCommand {
 
 #[derive(Subcommand)]
 pub enum AuthorCommand {
+    /// Show an author by id or slug.
+    Show { identifier: Identifier },
     /// List an author's books, most-shelved first.
     Books {
-        id: i64,
+        identifier: Identifier,
         #[command(flatten)]
         page: PageArgs,
     },
@@ -93,9 +128,11 @@ pub enum AuthorCommand {
 
 #[derive(Subcommand)]
 pub enum SeriesCommand {
+    /// Show a series by id or slug.
+    Show { identifier: Identifier },
     /// List the books in a series in position order.
     Books {
-        id: i64,
+        identifier: Identifier,
         #[command(flatten)]
         page: PageArgs,
     },
@@ -103,9 +140,11 @@ pub enum SeriesCommand {
 
 #[derive(Subcommand)]
 pub enum ListCommand {
+    /// Show a list by id or slug.
+    Show { identifier: Identifier },
     /// List the books in a list in position order.
     Books {
-        id: i64,
+        identifier: Identifier,
         #[command(flatten)]
         page: PageArgs,
     },

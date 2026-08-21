@@ -1,0 +1,3 @@
+query ListById($id: Int!) {
+  lists_by_pk(id: $id) { id name slug description books_count followers_count likes_count ranked featured user { id username } }
+}

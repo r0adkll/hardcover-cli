@@ -1,6 +1,7 @@
 //! Typed client for the Hardcover.app API.
 mod client;
 mod collections;
+mod shows;
 mod error;
 pub mod model;
 mod queries;
