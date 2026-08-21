@@ -1,0 +1,136 @@
+{
+    "data": {
+        "books_by_pk": {
+            "id": 1,
+            "title": "Lord Peter Views the Body",
+            "subtitle": null,
+            "slug": "lord-peter-views-the-body",
+            "description": "Consists of the following short stories -\r\n\"The Abominable History of the Man with Copper Fingers\": An artist's jealous nature leads to an investigation of his mistress' disappearance.\r\n\"The Entertaining Episode of the Article in Question\": A grammatical mistake in French unmasks a clever criminal.\r\n\"The Fascinating Problem of Uncle Meleager's Will\": The disposal of a dead man's fortune depends on his penchant for cross-word puzzles.\r\n\"The Fantastic Horror of the Cat in the Bag\": A high-speed chase and a lost bag converge with a gruesome discovery.\r\n\"The Unprincipled Affair of the Practical Joker\": A lady pleads for Lord Peter's help in retrieving a valuable necklace, and more importantly, a portrait with an indiscreet inscription.\r\n\"The Undignified Melodrama of the Bone of Contention\": Lord Peter, visiting friends in the country, sees a ghostly carriage, hears rumors of an odd will, and deduces that foul play is afoot.\r\n\"The Vindictive Story of the Footsteps That Ran\": Lord Peter deduces the whereabouts of a cleverly hidden murder weapon.\r\n\"The Bibulous Business of a Matter of Taste\": Lord Peter's famous palate is the deciding factor in acquiring wartime intelligence.\r\n\"The Learned Adventure of the Dragon's Head\": Viscount St. George appears as a boy as Lord Peter uses clues from a rare book to find a treasure.\r\n\"The Piscatorial Farce of the Stolen Stomach\": Involving several Scotsmen, a digestive organ, and a handful of diamonds.\r\n\"The Unsolved Puzzle of the Man with No Face\": Which ends with Wimsey letting a murderer go free, at least partially because he is a good painter.\r\n\"The Adventurous Exploit of the Cave of Ali Baba\": Lord Peter infiltrates a den of ruthless thieves; notable for unusual technology.",
+            "pages": 288,
+            "release_date": "0198-01-01",
+            "release_year": 198,
+            "rating": 3.844827586206897,
+            "ratings_count": 29,
+            "reviews_count": 4,
+            "users_count": 55,
+            "cached_image": {
+                "id": 2720287,
+                "url": "https://assets.hardcover.app/external_data/60951398/fcce59736371385c33cab5dd4b5fc478fac17dd6.jpeg",
+                "color": "#bdcacb",
+                "width": 98,
+                "height": 157,
+                "color_name": "Beige"
+            },
+            "cached_tags": {
+                "Tag": [
+                    {
+                        "tag": "Plot driven",
+                        "count": 1,
+                        "tagSlug": "plot-driven",
+                        "category": "Tag",
+                        "categorySlug": "tag",
+                        "spoilerRatio": 0.0
+                    },
+                    {
+                        "tag": "Weak Character Development",
+                        "count": 1,
+                        "tagSlug": "weak-character-development",
+                        "category": "Tag",
+                        "categorySlug": "tag",
+                        "spoilerRatio": 0.0
+                    }
+                ],
+                "Mood": [],
+                "Genre": [
+                    {
+                        "tag": "Mystery",
+                        "count": 2,
+                        "tagSlug": "mystery",
+                        "category": "Genre",
+                        "categorySlug": "genre",
+                        "spoilerRatio": 0.0
+                    },
+                    {
+                        "tag": "Classics",
+                        "count": 1,
+                        "tagSlug": "classics",
+                        "category": "Genre",
+                        "categorySlug": "genre",
+                        "spoilerRatio": 0.0
+                    },
+                    {
+                        "tag": "Fiction",
+                        "count": 1,
+                        "tagSlug": "fiction",
+                        "category": "Genre",
+                        "categorySlug": "genre",
+                        "spoilerRatio": 0.0
+                    },
+                    {
+                        "tag": "Detective and mystery stories",
+                        "count": 1,
+                        "tagSlug": "detective-and-mystery-stories",
+                        "category": "Genre",
+                        "categorySlug": "genre",
+                        "spoilerRatio": 0.0
+                    },
+                    {
+                        "tag": "Fantasy",
+                        "count": 1,
+                        "tagSlug": "fantasy",
+                        "category": "Genre",
+                        "categorySlug": "genre",
+                        "spoilerRatio": 0.0
+                    },
+                    {
+                        "tag": "Magic",
+                        "count": 1,
+                        "tagSlug": "magic",
+                        "category": "Genre",
+                        "categorySlug": "genre",
+                        "spoilerRatio": 0.0
+                    }
+                ],
+                "Content Warning": []
+            },
+            "cached_contributors": [
+                {
+                    "author": {
+                        "id": 154428,
+                        "slug": "dorothy-l-sayers",
+                        "name": "Dorothy L. Sayers",
+                        "image": {
+                            "id": 33774,
+                            "url": "https://assets.hardcover.app/authors/154428/6460155-L.jpg",
+                            "color": "#b1b1b1",
+                            "width": 270,
+                            "height": 311,
+                            "color_name": "Silver"
+                        }
+                    },
+                    "contribution": null
+                }
+            ],
+            "default_cover_edition_id": 25224958,
+            "book_series": [
+                {
+                    "position": 0,
+                    "series": {
+                        "id": 6572,
+                        "name": "Lord Peter Wimsey",
+                        "slug": "lord-peter-wimsey"
+                    }
+                }
+            ],
+            "contributions": [
+                {
+                    "author": {
+                        "id": 154428,
+                        "name": "Dorothy L. Sayers",
+                        "slug": "dorothy-l-sayers"
+                    }
+                }
+            ]
+        }
+    }
+}
