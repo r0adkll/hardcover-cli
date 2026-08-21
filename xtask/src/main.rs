@@ -3,13 +3,19 @@ use std::path::Path;
 
 const SCHEMA_PATH: &str = "crates/hardcover-api/schema.json";
 const ENDPOINT: &str = "https://api.hardcover.app/v1/graphql";
+/// Public copy maintained in Hardcover's docs repo. Lags the live API, so it is only a
+/// fallback for when no token is available.
+const DOCS_SCHEMA_URL: &str =
+    "https://raw.githubusercontent.com/hardcoverapp/hardcover-docs/main/schema.json";
 
 fn main() {
     let task = std::env::args().nth(1).unwrap_or_default();
     match task.as_str() {
         "introspect" => introspect(),
         _ => {
-            eprintln!("usage: cargo xtask introspect\n\n  introspect   re-fetch the GraphQL schema into {SCHEMA_PATH} (needs HARDCOVER_TOKEN)");
+            eprintln!(
+                "usage: cargo xtask introspect\n\n  introspect   refresh {SCHEMA_PATH} by live introspection (HARDCOVER_TOKEN),\n               or from Hardcover's public docs copy when no token is set"
+            );
             std::process::exit(2);
         }
     }
