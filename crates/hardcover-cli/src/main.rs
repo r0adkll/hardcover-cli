@@ -4,6 +4,7 @@ mod credentials;
 mod error;
 mod output;
 mod paging;
+mod schema;
 
 use clap::Parser;
 use std::process::ExitCode;

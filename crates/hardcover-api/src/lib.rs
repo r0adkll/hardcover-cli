@@ -7,6 +7,6 @@ pub mod model;
 mod queries;
 mod scalars;
 
-pub use client::{Client, ClientBuilder, DEFAULT_BASE_URL};
+pub use client::{Client, ClientBuilder, RetryPolicy, DEFAULT_BASE_URL};
 pub use collections::Page;
 pub use error::{Error, Result};

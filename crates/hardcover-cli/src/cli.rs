@@ -19,6 +19,14 @@ pub struct Cli {
     #[arg(long, global = true, env = "HARDCOVER_TOKEN", hide_env_values = true)]
     pub token: Option<String>,
 
+    /// Emit the upstream API payload(s) instead of the CLI's own output shape.
+    #[arg(long, global = true)]
+    pub raw: bool,
+
+    /// Do not retry rate-limited requests; fail immediately with `rate_limited`.
+    #[arg(long, global = true)]
+    pub no_retry: bool,
+
     /// API base URL (testing only).
     #[arg(long, global = true, env = "HARDCOVER_API_URL", hide = true)]
     pub api_url: Option<String>,
@@ -82,6 +90,8 @@ pub enum Command {
         #[command(subcommand)]
         command: UserCommand,
     },
+    /// Describe this CLI for programmatic consumers: commands, arguments, formats, error codes.
+    Schema,
 }
 
 #[derive(Subcommand)]

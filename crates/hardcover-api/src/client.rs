@@ -11,32 +11,78 @@ const USER_AGENT: &str = concat!(
     " (+https://github.com/r0adkll/hardcover-cli)"
 );
 
+/// How to retry requests rejected with HTTP 429. `Retry-After` is always honoured
+/// when present; otherwise delay grows exponentially from `base_delay`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct RetryPolicy {
+    /// Total attempts including the first. `1` disables retrying.
+    pub max_attempts: u32,
+    pub base_delay: std::time::Duration,
+    pub max_delay: std::time::Duration,
+}
+
+impl Default for RetryPolicy {
+    fn default() -> Self {
+        Self { max_attempts: 3, base_delay: std::time::Duration::from_millis(500), max_delay: std::time::Duration::from_secs(60) }
+    }
+}
+
+impl RetryPolicy {
+    pub fn none() -> Self {
+        Self { max_attempts: 1, ..Self::default() }
+    }
+}
+
 #[derive(Debug, Clone)]
 pub struct Client {
     http: reqwest::Client,
     base_url: String,
     token: String,
+    retry: RetryPolicy,
+    raw: Option<std::sync::Arc<std::sync::Mutex<Vec<serde_json::Value>>>>,
 }
 
 pub struct ClientBuilder {
     base_url: String,
     token: String,
+    retry: RetryPolicy,
+    capture_raw: bool,
 }
 
 impl Client {
     pub fn builder(token: impl Into<String>) -> ClientBuilder {
-        ClientBuilder { base_url: DEFAULT_BASE_URL.to_string(), token: token.into() }
+        ClientBuilder { base_url: DEFAULT_BASE_URL.to_string(), token: token.into(), retry: RetryPolicy::default(), capture_raw: false }
+    }
+
+    /// Upstream payloads captured since the last call, oldest first. Empty unless
+    /// the client was built with `capture_raw(true)`.
+    pub fn take_raw(&self) -> Vec<serde_json::Value> {
+        self.raw.as_ref().map(|r| std::mem::take(&mut *r.lock().unwrap())).unwrap_or_default()
     }
 
     pub(crate) async fn execute<Q: GraphQLQuery>(&self, variables: Q::Variables) -> Result<Q::ResponseData> {
         let body = Q::build_query(variables);
-        let resp = self
-            .http
-            .post(format!("{}/v1/graphql", self.base_url))
-            .bearer_auth(&self.token)
-            .json(&body)
-            .send()
-            .await?;
+        let mut attempt = 0u32;
+        let resp = loop {
+            attempt += 1;
+            let resp = self
+                .http
+                .post(format!("{}/v1/graphql", self.base_url))
+                .bearer_auth(&self.token)
+                .json(&body)
+                .send()
+                .await?;
+            if resp.status() != StatusCode::TOO_MANY_REQUESTS || attempt >= self.retry.max_attempts {
+                break resp;
+            }
+            let retry_after = retry_after_secs(&resp);
+            let backoff = self.retry.base_delay.saturating_mul(2u32.saturating_pow(attempt - 1));
+            let delay = retry_after
+                .map(std::time::Duration::from_secs)
+                .unwrap_or(backoff)
+                .min(self.retry.max_delay);
+            tokio::time::sleep(delay).await;
+        };
         match resp.status() {
             StatusCode::UNAUTHORIZED => return Err(Error::InvalidToken),
             StatusCode::FORBIDDEN => {
@@ -48,17 +94,15 @@ impl Client {
                     _ => Error::Upstream(body.to_string()),
                 });
             }
-            StatusCode::TOO_MANY_REQUESTS => {
-                let retry_after_secs = resp
-                    .headers()
-                    .get("retry-after")
-                    .and_then(|v| v.to_str().ok())
-                    .and_then(|v| v.parse().ok());
-                return Err(Error::RateLimited { retry_after_secs });
-            }
+            StatusCode::TOO_MANY_REQUESTS => return Err(Error::RateLimited { retry_after_secs: retry_after_secs(&resp) }),
             _ => {}
         }
-        let parsed: Response<Q::ResponseData> = resp.json().await?;
+        let raw: serde_json::Value = resp.json().await?;
+        if let Some(sink) = &self.raw {
+            sink.lock().unwrap().push(raw.clone());
+        }
+        let parsed: Response<Q::ResponseData> =
+            serde_json::from_value(raw).map_err(|e| Error::Upstream(format!("unexpected response shape: {e}")))?;
         if let Some(errors) = parsed.errors.filter(|e| !e.is_empty()) {
             return Err(Error::Upstream(
                 errors.iter().map(|e| e.message.clone()).collect::<Vec<_>>().join("; "),
@@ -163,12 +207,29 @@ impl ClientBuilder {
         self
     }
 
+    pub fn retry(mut self, policy: RetryPolicy) -> Self {
+        self.retry = policy;
+        self
+    }
+
+    /// Keep a copy of every upstream payload, retrievable via [`Client::take_raw`].
+    pub fn capture_raw(mut self, on: bool) -> Self {
+        self.capture_raw = on;
+        self
+    }
+
     pub fn build(self) -> Client {
         let http = reqwest::Client::builder()
             .user_agent(USER_AGENT)
             .build()
             .expect("reqwest client");
-        Client { http, base_url: self.base_url, token: self.token }
+        Client {
+            http,
+            base_url: self.base_url,
+            token: self.token,
+            retry: self.retry,
+            raw: self.capture_raw.then(Default::default),
+        }
     }
 }
 
@@ -189,4 +250,8 @@ fn hit_from_document(doc: &serde_json::Value) -> Option<SearchHit> {
         label,
         document: doc.clone(),
     })
+}
+
+fn retry_after_secs(resp: &reqwest::Response) -> Option<u64> {
+    resp.headers().get("retry-after").and_then(|v| v.to_str().ok()).and_then(|v| v.parse().ok())
 }
