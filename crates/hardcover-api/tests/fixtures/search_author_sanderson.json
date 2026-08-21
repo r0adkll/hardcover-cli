@@ -1,0 +1,2094 @@
+{
+    "data": {
+        "search": {
+            "ids": [
+                204214,
+                138186,
+                140871
+            ],
+            "query": "sanderson",
+            "query_type": "author",
+            "page": 1,
+            "per_page": 3,
+            "results": {
+                "facet_counts": [],
+                "found": 144,
+                "hits": [
+                    {
+                        "document": {
+                            "alternate_names": [],
+                            "books": [
+                                "Mistborn: The Final Empire",
+                                "The Way of Kings",
+                                "The Well of Ascension",
+                                "The Hero of Ages",
+                                "Words of Radiance"
+                            ],
+                            "books_count": 262,
+                            "id": "204214",
+                            "image": {
+                                "color": "#6f1c0f",
+                                "color_name": "Brown",
+                                "height": 1000,
+                                "id": 6948605,
+                                "url": "https://assets.hardcover.app/author/204214/aa7250c9-0529-4c95-882f-6c9975634b21.jpg",
+                                "width": 1000
+                            },
+                            "name": "Brandon Sanderson",
+                            "name_personal": "Brandon Sanderson",
+                            "series_ids": [
+                                1038,
+                                137143,
+                                185084,
+                                180057,
+                                62307,
+                                180062,
+                                180063,
+                                205548,
+                                198090,
+                                182774,
+                                182779,
+                                72345,
+                                182778,
+                                102294,
+                                102293,
+                                77604,
+                                182772,
+                                72554,
+                                254385,
+                                255369,
+                                174796,
+                                90585,
+                                89575,
+                                89538,
+                                89504,
+                                65236,
+                                65233,
+                                65234,
+                                206154,
+                                65235,
+                                66059,
+                                89545,
+                                89546,
+                                61154,
+                                89510,
+                                89547,
+                                65609,
+                                65610,
+                                123681,
+                                103320,
+                                90587,
+                                222406,
+                                159653,
+                                128613,
+                                132107,
+                                127443,
+                                86658,
+                                275562,
+                                92124,
+                                177349,
+                                128614,
+                                89502,
+                                128587,
+                                89544,
+                                128615,
+                                136843,
+                                275714,
+                                110081,
+                                110077,
+                                80527,
+                                137103,
+                                132032,
+                                132033,
+                                112291,
+                                112292,
+                                182956,
+                                182963,
+                                182957,
+                                142112,
+                                216625,
+                                174784,
+                                167477,
+                                144782,
+                                145236,
+                                145362,
+                                145051,
+                                145076,
+                                145706,
+                                147458,
+                                147208,
+                                148435,
+                                188617,
+                                188618,
+                                132105,
+                                175084,
+                                183432,
+                                249799,
+                                155736,
+                                180772,
+                                185762,
+                                1008,
+                                259587,
+                                259614,
+                                186650,
+                                185778,
+                                186214,
+                                186216,
+                                181052,
+                                156127,
+                                171096,
+                                185916,
+                                5498,
+                                155735,
+                                186099,
+                                262730,
+                                185984,
+                                186003,
+                                186008,
+                                186010,
+                                186035,
+                                186514,
+                                186516,
+                                277056,
+                                186123,
+                                186131,
+                                186184,
+                                186181,
+                                186221,
+                                8090,
+                                156130,
+                                7666,
+                                101205,
+                                101207,
+                                101208,
+                                112290,
+                                111360,
+                                117218,
+                                186630,
+                                186582,
+                                186651,
+                                171024,
+                                176324,
+                                182183,
+                                182184,
+                                182185,
+                                148437,
+                                171479,
+                                189526,
+                                190726,
+                                188978,
+                                184639,
+                                184642,
+                                201223,
+                                184656,
+                                188977,
+                                188976,
+                                189185,
+                                189183,
+                                283314,
+                                190725,
+                                189541,
+                                115550,
+                                190294,
+                                201227,
+                                282411,
+                                192439,
+                                193550,
+                                193553,
+                                193556,
+                                193568,
+                                193576,
+                                193585,
+                                193591,
+                                193592,
+                                193594,
+                                193595,
+                                193596,
+                                174048,
+                                193551,
+                                193563,
+                                193570,
+                                193593,
+                                193567,
+                                193575,
+                                193583,
+                                193589,
+                                193549,
+                                193557,
+                                193560,
+                                193564,
+                                193561,
+                                1088,
+                                1052,
+                                189859,
+                                190727,
+                                189861,
+                                189413,
+                                132034,
+                                201225,
+                                203022,
+                                5452,
+                                12088,
+                                268773,
+                                252359,
+                                206150,
+                                996,
+                                184582,
+                                174046,
+                                186119,
+                                193558,
+                                66087,
+                                186654,
+                                185760,
+                                186085,
+                                189642,
+                                185971,
+                                186523,
+                                189858,
+                                284033,
+                                186537,
+                                186601,
+                                185761,
+                                186539,
+                                186508,
+                                186600,
+                                186033,
+                                184583,
+                                186471,
+                                193581,
+                                189048,
+                                193554,
+                                193571,
+                                190293,
+                                193577,
+                                193565,
+                                193555,
+                                193562,
+                                193586,
+                                193552,
+                                193588,
+                                193580,
+                                193582,
+                                193569,
+                                193574,
+                                193548,
+                                193559,
+                                193572,
+                                193573,
+                                193590,
+                                193578,
+                                193579,
+                                193587,
+                                193566,
+                                198418,
+                                201929,
+                                202575,
+                                200615,
+                                209724,
+                                237899,
+                                203019,
+                                206139,
+                                206138,
+                                206133,
+                                206147,
+                                206160,
+                                175825,
+                                215305,
+                                279007,
+                                997,
+                                146798,
+                                256955,
+                                256956,
+                                999,
+                                285419,
+                                213405,
+                                213442,
+                                72559,
+                                10001,
+                                215312,
+                                215315,
+                                215325,
+                                5497,
+                                5612,
+                                216624,
+                                10825,
+                                39616,
+                                220821,
+                                220873,
+                                221011,
+                                290159,
+                                290160,
+                                222392,
+                                222394,
+                                265601,
+                                265606,
+                                249258,
+                                66064,
+                                227646,
+                                293387,
+                                293386,
+                                251571
+                            ],
+                            "series_names": [
+                                "The Reckoners",
+                                "Coeur d'Acier",
+                                "Romans Secrets",
+                                "Stormlight Archive",
+                                "Die Sturmlicht-Chroniken",
+                                "Secret Projects Series",
+                                "The Cosmere Series",
+                                "K\u00f6dszerzet",
+                                "Mistborn Era 1",
+                                "5 of 6) [Dramatized Adaptation] (The Stormlight Archive",
+                                "3 of 6) [Dramatized Adaptation] (The Stormlight Archive",
+                                "Alcatraz contra los bibliotecarios malvados",
+                                "4 of 6) [Dramatized Adaptation] (The Stormlight Archive",
+                                "\u0420\u043e\u0436\u0434\u0435\u043d\u043d\u044b\u0439 \u0442\u0443\u043c\u0430\u043d\u043e\u043c",
+                                "\u0420\u043e\u0436\u0434\u0435\u043d\u043d\u044b\u0439 \u0442\u0443\u043c\u0430\u043d\u043e\u043c",
+                                "Ritmatik",
+                                "6 of 6) [Dramatized Adaptation] (The Stormlight Archive",
+                                "Red magle",
+                                "Mistborn Adventure Game",
+                                "Hoid's Travails [Dramatized Adaptation]",
+                                "Mistborn: Ghostbloods",
+                                "Executores",
+                                "Sturmlicht-Chroniken",
+                                "Rytmatysta",
+                                "Archiwum Burzowego \u015awiat\u0142a, #4",
+                                "Mistborn #1",
+                                "Stormlight Archive #3",
+                                "Elantris, #1",
+                                "De wrekers",
+                                "Mistborn #1",
+                                "Alcatraz Versus the Evil Librarians",
+                                "Ostatnie Imperium",
+                                "Ostatnie Imperium",
+                                "Les archives de Roshar",
+                                "The Stormlight Archive #4",
+                                "Ostatnie Imperium",
+                                "\u05de\u05dc\u05d7\u05de\u05ea \u05d4\u05e0\u05e4\u05d9\u05dc\u05d9\u05dd",
+                                "\u05d4\u05e2\u05e8\u05e4\u05d9\u05dc\u05d0\u05d9\u05dd - \u05d4\u05e2\u05d9\u05d3\u05df \u05d4\u05e9\u05e0\u05d9",
+                                "White Sand [Dramatized Adaptation]",
+                                "Los Reckoners",
+                                "Os Executores",
+                                "Hoid's Travails",
+                                "Vzh\u016fru k obloze",
+                                "\u039f\u03bc\u03b9\u03c7\u03bb\u03bf\u03b3\u03ad\u03bd\u03bd\u03b7\u03c4\u03bf\u03b9 #3",
+                                "Alcatraz vs the Evil Librarians",
+                                "Archiv Bou\u0159n\u00e9 z\u00e1\u0159e",
+                                "El rithmatista",
+                                "Elantris [Dramatized Adaptation]",
+                                "N\u0103scu\u021bi din cea\u021b\u0103",
+                                "Secret Projets",
+                                "\u039f\u03bc\u03b9\u03c7\u03bb\u03bf\u03b3\u03ad\u03bd\u03bd\u03b7\u03c4\u03bf\u03b9 #2",
+                                "Archiwum Burzowego \u015awiat\u0142a",
+                                "\u039f\u03bc\u03b9\u03c7\u03bb\u03bf\u03b3\u03ad\u03bd\u03bd\u03b7\u03c4\u03bf\u03b9 #1",
+                                "Ostatnie Imperium",
+                                "\u039f\u03bc\u03b9\u03c7\u03bb\u03bf\u03b3\u03ad\u03bd\u03bd\u03b7\u03c4\u03bf\u03b9",
+                                "La Voie des Rois",
+                                " Book 1",
+                                "Le ombre residue. Mistborn. Era due",
+                                "Mistborn Era Due",
+                                "The Stormlight Archive (GraphicAudio)",
+                                "\u041b\u0435\u0433\u0438\u043e\u043d",
+                                "La espada infinita",
+                                "Alcatraz contra los Bibliotecarios malvados",
+                                "\u041a\u044a\u043c \u043d\u0435\u0431\u0435\u0442\u043e",
+                                "\u041a\u044a\u043c \u043d\u0435\u0431\u0435\u0442\u043e",
+                                "2 of 2) [Dramatized Adaptation] (Mistborn",
+                                "Mistborn [Dramatized Adaptation]",
+                                "1 of 2) [Dramatized Adaptation] (Mistborn",
+                                "\u0410\u0440\u0445\u0438\u0432 \u0411\u0443\u0440\u0435\u0441\u0432\u0435\u0442\u0430",
+                                "Mistborn, Era 2: Wax & Wayne",
+                                "\u0425\u0440\u043e\u043d\u0456\u043a\u0438 \u0411\u0443\u0440\u0435\u0441\u0432\u0456\u0442\u043b\u0430",
+                                "The Stormlight Archive (GraphicAudio) #4",
+                                "Sissoylu",
+                                "Gli Eliminatori",
+                                "Alcatraz kontra Bibliotekarze",
+                                "Mistoborn Era Due",
+                                "Le cronache della Folgoluce",
+                                "Alcatraz vs The Evil Librarian",
+                                "Dramatized Adaptation] (Elantris",
+                                "Miglos vaikai",
+                                "M\u015bciciele",
+                                "4 of 6) [Dramatized Adaptation] (Stormlight Archive",
+                                "3 of 6) [Dramatized Adaptation] (Stormlight Archive",
+                                "Alcatraz vs The Evil Librarians",
+                                "Elantris [Dramatized Adaptation]",
+                                "Dramatized Adaptation): A Cosmere Novel (Secret Projects,",
+                                "Vent et v\u00e9rit\u00e9",
+                                "book 1 of 6) (Stormlight Archive #3",
+                                "\u0645\u0647\u200c\u0632\u0627\u062f\u060c",
+                                "7677.113333",
+                                "Infinity Blade",
+                                "Pomstitelia",
+                                "Cosmere Roleplaying Game",
+                                "The Stormlight Archive #3",
+                                "Elantris Series #2",
+                                "Wax and Wayne #3",
+                                " The Mistborn Saga #6",
+                                "Warbreaker [Dramatized Adaptation]",
+                                "El archivo de los reyes",
+                                "Z\u00fa\u010dtovatel\u00e9",
+                                "Secret Projects #2",
+                                "Rithmatist",
+                                "2 of 6) (Stormlight Archive #3",
+                                "Reckoners #3",
+                                "Texas Reckoners",
+                                "The Rithmatist #1",
+                                "The Skyward Series #2.1",
+                                "Wax and Wayne #1",
+                                " The Mistborn Saga #4",
+                                " The Cosmere",
+                                "The Mistborn Saga #3",
+                                "Elantris Series #1",
+                                "The Strata Wars",
+                                "The Mistborn Saga #5",
+                                "Reckoners #1",
+                                "The Skyward Series #2.2",
+                                "The Skyward Series #3.1",
+                                "Secret Projects #3",
+                                "Apocalypse Guard",
+                                "Justici\u00e8re",
+                                "Dark One",
+                                "\u041b\u0435\u0442\u043e\u043f\u0438\u0441\u0438\u0442\u0435 \u043d\u0430 \u0421\u0432\u0435\u0442\u043b\u0438\u043d\u0430\u0442\u0430 \u043d\u0430 \u0411\u0443\u0440\u044f\u0442\u0430",
+                                "\u041c\u044a\u0433\u043b\u043e\u0440\u043e\u0434\u0435\u043d",
+                                "\u041c\u044a\u0433\u043b\u043e\u0440\u043e\u0434\u0435\u043d",
+                                "\u041a\u044a\u043c \u043d\u0435\u0431\u0435\u0442\u043e",
+                                "Wrekers",
+                                "Le Livre des Radieux",
+                                "The Wheel of Time #14",
+                                "Secret Projects #5",
+                                "The Skyward Series #1",
+                                "La Voie Des Rois",
+                                "La guerra de las tormentas",
+                                "The Stormlight Archive, #4",
+                                "\u0414\u0432\u0443\u0440\u043e\u0436\u0434\u0435\u043d\u043d\u044b\u0435",
+                                "\u0414\u0432\u0443\u0440\u043e\u0436\u0434\u0435\u043d\u043d\u044b\u0435",
+                                "The Mistborn Trilogy",
+                                "\u0417-\u0456\u043c\u043b\u0438-\u043d\u0430\u0440\u043e\u0434\u0436\u0435\u043d\u0456",
+                                "Legion #1-3",
+                                "Reckoners #1.5",
+                                "Skyward #2",
+                                "Texas Reckoners series",
+                                "The Skyward Series",
+                                "Steelheart",
+                                "Wax and Wayne",
+                                "Wax and Wayne #2",
+                                "The Mistborn Saga #6",
+                                "Novela Secreta #3",
+                                "Alcatraz vs. the Evil Librarians #6",
+                                "Alcatraz versus the Evil Librarians",
+                                "Skyward #3",
+                                "Texas Reckoners #1",
+                                "Brandon Sanderson's White Sand",
+                                "Alcatraz vs. the Evil Librarians #3",
+                                "Mistborn era 2",
+                                "The Stormlight Archive (Split Volume Edition)",
+                                "The Cosmere",
+                                "Alcatraz Versus the Knights of Crystallia by Brandon Sanderson",
+                                "Bastille vs. the Evil Librarians by Brandon Sanderson",
+                                "Dark One by Brandon Sanderson",
+                                "Tress of the Emerald Sea by Brandon Sanderson",
+                                "Allomancer Jak and the Pits of Eltania",
+                                "Words of Radiance by Brandon Sanderson",
+                                "White Sand by Brandon Sanderson",
+                                " Volume 2 by Julius M. Gopez",
+                                " Brandon Sanderson",
+                                " Julius Gopez",
+                                " Rik Hoskin",
+                                "\u98b6\u5149\u5178\u7c4d",
+                                "The Shattered Lens by Brandon Sanderson",
+                                "Sunreach by Brandon Sanderson",
+                                "The Sunlit Man by Brandon Sanderson",
+                                ", Vol. 3",
+                                "Defiant by Brandon Sanderson",
+                                "The Hero of Ages by Brandon Sanderson",
+                                "Firefight by Brandon Sanderson",
+                                "Rhythm of War by Brandon Sanderson",
+                                "The Scrivener's Bones by Brandon Sanderson",
+                                "Elantris by Brandon Sanderson",
+                                "Stephen Leeds: Death and Faxes by Brandon Sanderson",
+                                "ReDawn by Brandon Sanderson",
+                                "The Frugal Wizard\u2019s Handbook for Surviving Medieval England by Brandon Sanderson",
+                                "Warbreaker",
+                                "White Sand",
+                                "Alcatraz vs. the Evil Librarians #4",
+                                "Alcatraz vs. the Evil Librarians #1",
+                                "Alcatraz vs. the Evil Librarians #2",
+                                "Alcatraz vs. the Evil Librarians #5",
+                                "Alcatraz vs. the Evil Librarians [Dramatized adaptation]",
+                                "Stormlight Archives",
+                                "The Alcatraz vs. The Evil Librarians",
+                                "The Mistborn Saga",
+                                "Skyward Flight",
+                                "The Cosmere Universe",
+                                "Warbreaker [Dramatized Adaptation] (3 Parts)",
+                                "Legi\u00f3n",
+                                "Elantris",
+                                "Dramatized Adaptation] (Mistborn",
+                                "\u98b6\u5149\u5178\u7c4d",
+                                "Secret Projects #1",
+                                "The Emperor's Soul by Brandon Sanderson",
+                                "Os Relatos da Guerra das Tempestades",
+                                "The Stormlight Archive #5",
+                                "B09W46F5LD",
+                                "Reckoners #2",
+                                "The Mistborn Saga #7",
+                                "Legion #4",
+                                "Reckoners #4",
+                                "The Mistborn Saga #4",
+                                "The Stormlight Archive 1",
+                                "The Mistborn Saga #2",
+                                " The Mistborn Saga #7",
+                                "Legion #1",
+                                "The Skyward Series #2",
+                                "The Skyward Series #3",
+                                "Wax and Wayne #4",
+                                "Secret Projects #4",
+                                "Dramatized Adaptation (Mistborn",
+                                "The Mistborn Saga #1",
+                                "Steelheart by Brandon Sanderson",
+                                "Warbreaker #1",
+                                "The Hope of Elantris by Brandon Sanderson",
+                                "Warbreaker by Brandon Sanderson",
+                                "Skyward #1",
+                                "Shadows of Self: A Mistborn Novel by Brandon Sanderson",
+                                "Lux by Brandon Sanderson",
+                                "Arcanum Unbounded by Brandon Sanderson",
+                                "Legion: Skin Deep by Brandon Sanderson",
+                                "Dawnshard by Brandon Sanderson",
+                                "The Dark Talent by Brandon Sanderson",
+                                "Edgedancer by Brandon Sanderson",
+                                "Calamity by Brandon Sanderson",
+                                "Mitosis by Brandon Sanderson",
+                                "Yumi and the Nightmare Painter by Brandon Sanderson",
+                                "The Well of Ascension by Brandon Sanderson",
+                                "Alcatraz Versus the Evil Librarians by Brandon Sanderson",
+                                "Infinity Blade: Awakening by Brandon Sanderson",
+                                "Mistborn: The Final Empire by Brandon Sanderson",
+                                "The Lost Metal by Brandon Sanderson",
+                                "Wind and Truth by Brandon Sanderson",
+                                "The Alloy of Law by Brandon Sanderson",
+                                "The Bands of Mourning by Brandon Sanderson",
+                                "Oathbringer by Brandon Sanderson",
+                                "Cytonic by Brandon Sanderson",
+                                "Die Nebelgeborenen",
+                                "Alcatraz Versus The Evil Librarians",
+                                "Mistborn",
+                                "The Misborn Saga",
+                                "Reckoners",
+                                "Elantris [Dramatized Adaptation] (2 Parts)",
+                                "Dramatized Adaptation] (Alcatraz",
+                                "\u0633\u0647 \u06af\u0627\u0646\u0647 \u0646\u0627\u062c\u06cc\u0627\u0646",
+                                "\u0646\u0627\u062c\u06cc\u0627\u0646",
+                                "vol. 1-3) (White Sand",
+                                "\u5e03\u862d\u767b\u00b7\u5c71\u5fb7\u68ee\u7cbe\u9078\u96c6",
+                                "Fils-des-Brumes",
+                                "The Stormlight Archive (Dramatized Adaptation)",
+                                "Lejyon",
+                                "Mistborn",
+                                "The Stormlight Archive",
+                                "Legion",
+                                "\u041b\u0435\u0442\u043e\u043f\u0438\u0441\u0438\u0442\u0435 \u043d\u0430 \u0441\u0432\u0435\u0442\u043b\u0438\u043d\u0430\u0442\u0430 \u043d\u0430 \u0431\u0443\u0440\u044f\u0442\u0430 #1",
+                                "\u041b\u0435\u0442\u043e\u043f\u0438\u0441\u0438\u0442\u0435 \u043d\u0430 \u0441\u0432\u0435\u0442\u043b\u0438\u043d\u0430\u0442\u0430 \u043d\u0430 \u0431\u0443\u0440\u044f\u0442\u0430 #1",
+                                "Skyward",
+                                "The Way of Kings Book 1, Words of Radiance Book 2, Oathbringer Book 3, Rythm of War",
+                                "F\u0131rt\u0131na\u0131\u015f\u0131\u011f\u0131 Ar\u015fivi",
+                                "The Stormlight Archive #2",
+                                "Secret Projects",
+                                "The Mistborn Saga: The Original Trilogy",
+                                "Alcatraz",
+                                "Alcatraz",
+                                "Magic: The Gathering",
+                                "The Cosmere",
+                                "Alcatraz vs. the Evil Librarians",
+                                "Wax & Wayne",
+                                "Mistborn: Wax & Wayne",
+                                "Mistborn GraphicAudio",
+                                "\u0420\u0438\u0442\u043c\u0430\u0442\u0438\u0441\u0442\u044a\u0442",
+                                "\u0412\u044a\u0437\u043c\u0435\u0437\u0434\u0438\u0442\u0435\u043b\u0438\u0442\u0435",
+                                "Mistborn, Era 1: Original Trilogy",
+                                "The Cosmere (Spanish Edition)",
+                                "El Archivo de las Tormentas",
+                                "Escuadr\u00f3n",
+                                "Nacidos de la bruma",
+                                "\"Mistborn\"",
+                                "\"Stormlight Archives\"",
+                                "Alcatraz vs. the Evil Librarians [Dramatized Adaptation]",
+                                "Alcatraz vs. the Evil Librarians",
+                                "Riftwake",
+                                "Wax & Wayne [Spanish Edition]",
+                                "Trilog\u00eda Original Mistborn",
+                                "Mistborn. Il pozzo dell'ascensione."
+                            ],
+                            "slug": "brandon-sanderson"
+                        },
+                        "highlight": {
+                            "name": {
+                                "matched_tokens": [
+                                    "Sanderson"
+                                ],
+                                "snippet": "Brandon <mark>Sanderson</mark>"
+                            },
+                            "name_personal": {
+                                "matched_tokens": [
+                                    "Sanderson"
+                                ],
+                                "snippet": "Brandon <mark>Sanderson</mark>"
+                            },
+                            "series_names": [
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Reckoners"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Coeur d'Acier"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Romans Secrets"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Stormlight Archive"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Die Sturmlicht-Chroniken"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Secret Projects Series"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Cosmere Series"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "K\u00f6dszerzet"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Mistborn Era 1"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "5 of 6) [Dramatized Adaptation] (The Stormlight Archive"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "3 of 6) [Dramatized Adaptation] (The Stormlight Archive"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Alcatraz contra los bibliotecarios malvados"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "4 of 6) [Dramatized Adaptation] (The Stormlight Archive"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u0420\u043e\u0436\u0434\u0435\u043d\u043d\u044b\u0439 \u0442\u0443\u043c\u0430\u043d\u043e\u043c"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u0420\u043e\u0436\u0434\u0435\u043d\u043d\u044b\u0439 \u0442\u0443\u043c\u0430\u043d\u043e\u043c"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Ritmatik"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "6 of 6) [Dramatized Adaptation] (The Stormlight Archive"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Red magle"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Mistborn Adventure Game"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Hoid's Travails [Dramatized Adaptation]"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Mistborn: Ghostbloods"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Executores"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Sturmlicht-Chroniken"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Rytmatysta"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Archiwum Burzowego \u015awiat\u0142a, #4"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Mistborn #1"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Stormlight Archive #3"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Elantris, #1"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "De wrekers"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Mistborn #1"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Alcatraz Versus the Evil Librarians"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Ostatnie Imperium"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Ostatnie Imperium"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Les archives de Roshar"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Stormlight Archive #4"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Ostatnie Imperium"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u05de\u05dc\u05d7\u05de\u05ea \u05d4\u05e0\u05e4\u05d9\u05dc\u05d9\u05dd"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u05d4\u05e2\u05e8\u05e4\u05d9\u05dc\u05d0\u05d9\u05dd - \u05d4\u05e2\u05d9\u05d3\u05df \u05d4\u05e9\u05e0\u05d9"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "White Sand [Dramatized Adaptation]"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Los Reckoners"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Os Executores"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Hoid's Travails"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Vzh\u016fru k obloze"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u039f\u03bc\u03b9\u03c7\u03bb\u03bf\u03b3\u03ad\u03bd\u03bd\u03b7\u03c4\u03bf\u03b9 #3"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Alcatraz vs the Evil Librarians"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Archiv Bou\u0159n\u00e9 z\u00e1\u0159e"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "El rithmatista"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Elantris [Dramatized Adaptation]"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "N\u0103scu\u021bi din cea\u021b\u0103"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Secret Projets"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u039f\u03bc\u03b9\u03c7\u03bb\u03bf\u03b3\u03ad\u03bd\u03bd\u03b7\u03c4\u03bf\u03b9 #2"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Archiwum Burzowego \u015awiat\u0142a"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u039f\u03bc\u03b9\u03c7\u03bb\u03bf\u03b3\u03ad\u03bd\u03bd\u03b7\u03c4\u03bf\u03b9 #1"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Ostatnie Imperium"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u039f\u03bc\u03b9\u03c7\u03bb\u03bf\u03b3\u03ad\u03bd\u03bd\u03b7\u03c4\u03bf\u03b9"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "La Voie des Rois"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": " Book 1"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Le ombre residue. Mistborn. Era due"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Mistborn Era Due"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Stormlight Archive (GraphicAudio)"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u041b\u0435\u0433\u0438\u043e\u043d"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "La espada infinita"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Alcatraz contra los Bibliotecarios malvados"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u041a\u044a\u043c \u043d\u0435\u0431\u0435\u0442\u043e"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u041a\u044a\u043c \u043d\u0435\u0431\u0435\u0442\u043e"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "2 of 2) [Dramatized Adaptation] (Mistborn"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Mistborn [Dramatized Adaptation]"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "1 of 2) [Dramatized Adaptation] (Mistborn"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u0410\u0440\u0445\u0438\u0432 \u0411\u0443\u0440\u0435\u0441\u0432\u0435\u0442\u0430"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Mistborn, Era 2: Wax & Wayne"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u0425\u0440\u043e\u043d\u0456\u043a\u0438 \u0411\u0443\u0440\u0435\u0441\u0432\u0456\u0442\u043b\u0430"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Stormlight Archive (GraphicAudio) #4"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Sissoylu"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Gli Eliminatori"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Alcatraz kontra Bibliotekarze"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Mistoborn Era Due"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Le cronache della Folgoluce"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Alcatraz vs The Evil Librarian"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Dramatized Adaptation] (Elantris"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Miglos vaikai"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "M\u015bciciele"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "4 of 6) [Dramatized Adaptation] (Stormlight Archive"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "3 of 6) [Dramatized Adaptation] (Stormlight Archive"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Alcatraz vs The Evil Librarians"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Elantris [Dramatized Adaptation]"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Dramatized Adaptation): A Cosmere Novel (Secret Projects,"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Vent et v\u00e9rit\u00e9"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "book 1 of 6) (Stormlight Archive #3"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u0645\u0647\u200c\u0632\u0627\u062f\u060c"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "7677.113333"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Infinity Blade"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Pomstitelia"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Cosmere Roleplaying Game"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Stormlight Archive #3"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Elantris Series #2"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Wax and Wayne #3"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": " The Mistborn Saga #6"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Warbreaker [Dramatized Adaptation]"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "El archivo de los reyes"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Z\u00fa\u010dtovatel\u00e9"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Secret Projects #2"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Rithmatist"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "2 of 6) (Stormlight Archive #3"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Reckoners #3"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Texas Reckoners"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Rithmatist #1"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Skyward Series #2.1"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Wax and Wayne #1"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": " The Mistborn Saga #4"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": " The Cosmere"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Mistborn Saga #3"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Elantris Series #1"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Strata Wars"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Mistborn Saga #5"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Reckoners #1"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Skyward Series #2.2"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Skyward Series #3.1"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Secret Projects #3"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Apocalypse Guard"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Justici\u00e8re"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Dark One"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u041b\u0435\u0442\u043e\u043f\u0438\u0441\u0438\u0442\u0435 \u043d\u0430 \u0421\u0432\u0435\u0442\u043b\u0438\u043d\u0430\u0442\u0430 \u043d\u0430 \u0411\u0443\u0440\u044f\u0442\u0430"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u041c\u044a\u0433\u043b\u043e\u0440\u043e\u0434\u0435\u043d"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u041c\u044a\u0433\u043b\u043e\u0440\u043e\u0434\u0435\u043d"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u041a\u044a\u043c \u043d\u0435\u0431\u0435\u0442\u043e"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Wrekers"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Le Livre des Radieux"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Wheel of Time #14"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Secret Projects #5"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Skyward Series #1"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "La Voie Des Rois"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "La guerra de las tormentas"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Stormlight Archive, #4"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u0414\u0432\u0443\u0440\u043e\u0436\u0434\u0435\u043d\u043d\u044b\u0435"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u0414\u0432\u0443\u0440\u043e\u0436\u0434\u0435\u043d\u043d\u044b\u0435"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Mistborn Trilogy"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u0417-\u0456\u043c\u043b\u0438-\u043d\u0430\u0440\u043e\u0434\u0436\u0435\u043d\u0456"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Legion #1-3"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Reckoners #1.5"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Skyward #2"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Texas Reckoners series"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Skyward Series"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Steelheart"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Wax and Wayne"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Wax and Wayne #2"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Mistborn Saga #6"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Novela Secreta #3"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Alcatraz vs. the Evil Librarians #6"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Alcatraz versus the Evil Librarians"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Skyward #3"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Texas Reckoners #1"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Brandon <mark>Sanderson</mark>'s White Sand"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Alcatraz vs. the Evil Librarians #3"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Mistborn era 2"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Stormlight Archive (Split Volume Edition)"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Cosmere"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Alcatraz Versus the Knights of Crystallia by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Bastille vs. the Evil Librarians by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Dark One by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Tress of the Emerald Sea by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Allomancer Jak and the Pits of Eltania"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Words of Radiance by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "White Sand by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": " Volume 2 by Julius M. Gopez"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": " Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": " Julius Gopez"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": " Rik Hoskin"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u98b6\u5149\u5178\u7c4d"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "The Shattered Lens by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Sunreach by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "The Sunlit Man by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": ", Vol. 3"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Defiant by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "The Hero of Ages by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Firefight by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Rhythm of War by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "The Scrivener's Bones by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Elantris by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Stephen Leeds: Death and Faxes by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "ReDawn by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "The Frugal Wizard\u2019s Handbook for Surviving Medieval England by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Warbreaker"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "White Sand"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Alcatraz vs. the Evil Librarians #4"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Alcatraz vs. the Evil Librarians #1"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Alcatraz vs. the Evil Librarians #2"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Alcatraz vs. the Evil Librarians #5"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Alcatraz vs. the Evil Librarians [Dramatized adaptation]"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Stormlight Archives"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Alcatraz vs. The Evil Librarians"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Mistborn Saga"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Skyward Flight"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Cosmere Universe"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Warbreaker [Dramatized Adaptation] (3 Parts)"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Legi\u00f3n"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Elantris"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Dramatized Adaptation] (Mistborn"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u98b6\u5149\u5178\u7c4d"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Secret Projects #1"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "The Emperor's Soul by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Os Relatos da Guerra das Tempestades"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Stormlight Archive #5"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "B09W46F5LD"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Reckoners #2"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Mistborn Saga #7"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Legion #4"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Reckoners #4"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Mistborn Saga #4"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Stormlight Archive 1"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Mistborn Saga #2"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": " The Mistborn Saga #7"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Legion #1"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Skyward Series #2"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Skyward Series #3"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Wax and Wayne #4"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Secret Projects #4"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Dramatized Adaptation (Mistborn"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Mistborn Saga #1"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Steelheart by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Warbreaker #1"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "The Hope of Elantris by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Warbreaker by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Skyward #1"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Shadows of Self: A Mistborn Novel by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Lux by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Arcanum Unbounded by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Legion: Skin Deep by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Dawnshard by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "The Dark Talent by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Edgedancer by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Calamity by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Mitosis by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Yumi and the Nightmare Painter by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "The Well of Ascension by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Alcatraz Versus the Evil Librarians by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Infinity Blade: Awakening by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Mistborn: The Final Empire by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "The Lost Metal by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Wind and Truth by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "The Alloy of Law by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "The Bands of Mourning by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Oathbringer by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [
+                                        "Sanderson"
+                                    ],
+                                    "snippet": "Cytonic by Brandon <mark>Sanderson</mark>"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Die Nebelgeborenen"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Alcatraz Versus The Evil Librarians"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Mistborn"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Misborn Saga"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Reckoners"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Elantris [Dramatized Adaptation] (2 Parts)"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Dramatized Adaptation] (Alcatraz"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u0633\u0647 \u06af\u0627\u0646\u0647 \u0646\u0627\u062c\u06cc\u0627\u0646"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u0646\u0627\u062c\u06cc\u0627\u0646"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "vol. 1-3) (White Sand"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u5e03\u862d\u767b\u00b7\u5c71\u5fb7\u68ee\u7cbe\u9078\u96c6"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Fils-des-Brumes"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Stormlight Archive (Dramatized Adaptation)"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Lejyon"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Mistborn"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Stormlight Archive"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Legion"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u041b\u0435\u0442\u043e\u043f\u0438\u0441\u0438\u0442\u0435 \u043d\u0430 \u0441\u0432\u0435\u0442\u043b\u0438\u043d\u0430\u0442\u0430 \u043d\u0430 \u0431\u0443\u0440\u044f\u0442\u0430 #1"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u041b\u0435\u0442\u043e\u043f\u0438\u0441\u0438\u0442\u0435 \u043d\u0430 \u0441\u0432\u0435\u0442\u043b\u0438\u043d\u0430\u0442\u0430 \u043d\u0430 \u0431\u0443\u0440\u044f\u0442\u0430 #1"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Skyward"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Way of Kings Book 1, Words of Radiance Book 2, Oathbringer Book 3, Rythm of War"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "F\u0131rt\u0131na\u0131\u015f\u0131\u011f\u0131 Ar\u015fivi"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Stormlight Archive #2"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Secret Projects"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Mistborn Saga: The Original Trilogy"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Alcatraz"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Alcatraz"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Magic: The Gathering"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Cosmere"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Alcatraz vs. the Evil Librarians"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Wax & Wayne"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Mistborn: Wax & Wayne"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Mistborn GraphicAudio"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u0420\u0438\u0442\u043c\u0430\u0442\u0438\u0441\u0442\u044a\u0442"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\u0412\u044a\u0437\u043c\u0435\u0437\u0434\u0438\u0442\u0435\u043b\u0438\u0442\u0435"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Mistborn, Era 1: Original Trilogy"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "The Cosmere (Spanish Edition)"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "El Archivo de las Tormentas"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Escuadr\u00f3n"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Nacidos de la bruma"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\"Mistborn\""
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "\"Stormlight Archives\""
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Alcatraz vs. the Evil Librarians [Dramatized Adaptation]"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Alcatraz vs. the Evil Librarians"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Riftwake"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Wax & Wayne [Spanish Edition]"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Trilog\u00eda Original Mistborn"
+                                },
+                                {
+                                    "matched_tokens": [],
+                                    "snippet": "Mistborn. Il pozzo dell'ascensione."
+                                }
+                            ]
+                        },
+                        "highlights": [
+                            {
+                                "field": "name",
+                                "matched_tokens": [
+                                    "Sanderson"
+                                ],
+                                "snippet": "Brandon <mark>Sanderson</mark>"
+                            },
+                            {
+                                "field": "name_personal",
+                                "matched_tokens": [
+                                    "Sanderson"
+                                ],
+                                "snippet": "Brandon <mark>Sanderson</mark>"
+                            },
+                            {
+                                "field": "series_names",
+                                "indices": [
+                                    151,
+                                    156,
+                                    157,
+                                    158,
+                                    159
+                                ],
+                                "matched_tokens": [
+                                    [
+                                        "Sanderson"
+                                    ],
+                                    [
+                                        "Sanderson"
+                                    ],
+                                    [
+                                        "Sanderson"
+                                    ],
+                                    [
+                                        "Sanderson"
+                                    ],
+                                    [
+                                        "Sanderson"
+                                    ]
+                                ],
+                                "snippets": [
+                                    "Brandon <mark>Sanderson</mark>'s White Sand",
+                                    "Alcatraz Versus the Knights of Crystallia by Brandon <mark>Sanderson</mark>",
+                                    "Bastille vs. the Evil Librarians by Brandon <mark>Sanderson</mark>",
+                                    "Dark One by Brandon <mark>Sanderson</mark>",
+                                    "Tress of the Emerald Sea by Brandon <mark>Sanderson</mark>"
+                                ]
+                            }
+                        ],
+                        "text_match": 578730123365187611,
+                        "text_match_info": {
+                            "best_field_score": "1108091338752",
+                            "best_field_weight": 3,
+                            "fields_matched": 3,
+                            "num_tokens_dropped": 0,
+                            "score": "578730123365187611",
+                            "tokens_matched": 1,
+                            "typo_prefix_score": 0
+                        }
+                    },
+                    {
+                        "document": {
+                            "alternate_names": [],
+                            "books": [
+                                "Don't Hurt Laurie",
+                                "Arch of Bone",
+                                "Rose Red & Snow White",
+                                "Cinderella",
+                                "The Snow Princess"
+                            ],
+                            "books_count": 34,
+                            "id": "138186",
+                            "image": {},
+                            "name": "Ruth Sanderson",
+                            "name_personal": "Ruth Sanderson",
+                            "series_ids": [],
+                            "series_names": [],
+                            "slug": "ruth-sanderson"
+                        },
+                        "highlight": {
+                            "name": {
+                                "matched_tokens": [
+                                    "Sanderson"
+                                ],
+                                "snippet": "Ruth <mark>Sanderson</mark>"
+                            },
+                            "name_personal": {
+                                "matched_tokens": [
+                                    "Sanderson"
+                                ],
+                                "snippet": "Ruth <mark>Sanderson</mark>"
+                            }
+                        },
+                        "highlights": [
+                            {
+                                "field": "name",
+                                "matched_tokens": [
+                                    "Sanderson"
+                                ],
+                                "snippet": "Ruth <mark>Sanderson</mark>"
+                            },
+                            {
+                                "field": "name_personal",
+                                "matched_tokens": [
+                                    "Sanderson"
+                                ],
+                                "snippet": "Ruth <mark>Sanderson</mark>"
+                            }
+                        ],
+                        "text_match": 578730123365187610,
+                        "text_match_info": {
+                            "best_field_score": "1108091338752",
+                            "best_field_weight": 3,
+                            "fields_matched": 2,
+                            "num_tokens_dropped": 0,
+                            "score": "578730123365187610",
+                            "tokens_matched": 1,
+                            "typo_prefix_score": 0
+                        }
+                    },
+                    {
+                        "document": {
+                            "alternate_names": [],
+                            "books": [
+                                "Marvel Encyclopedia",
+                                "The Marvel Comics Encyclopedia: A Complete Guide to the Characters of the Marvel Univers",
+                                "Essential X-Factor, Vol. 4",
+                                "Marvel Chronicle",
+                                "X-Men: The Ultimate Guide"
+                            ],
+                            "books_count": 31,
+                            "id": "140871",
+                            "image": {},
+                            "name": "Peter Sanderson",
+                            "name_personal": "Peter Sanderson",
+                            "series_ids": [
+                                182285
+                            ],
+                            "series_names": [
+                                "Essential Marvel Saga"
+                            ],
+                            "slug": "peter-sanderson"
+                        },
+                        "highlight": {
+                            "name": {
+                                "matched_tokens": [
+                                    "Sanderson"
+                                ],
+                                "snippet": "Peter <mark>Sanderson</mark>"
+                            },
+                            "name_personal": {
+                                "matched_tokens": [
+                                    "Sanderson"
+                                ],
+                                "snippet": "Peter <mark>Sanderson</mark>"
+                            }
+                        },
+                        "highlights": [
+                            {
+                                "field": "name",
+                                "matched_tokens": [
+                                    "Sanderson"
+                                ],
+                                "snippet": "Peter <mark>Sanderson</mark>"
+                            },
+                            {
+                                "field": "name_personal",
+                                "matched_tokens": [
+                                    "Sanderson"
+                                ],
+                                "snippet": "Peter <mark>Sanderson</mark>"
+                            }
+                        ],
+                        "text_match": 578730123365187610,
+                        "text_match_info": {
+                            "best_field_score": "1108091338752",
+                            "best_field_weight": 3,
+                            "fields_matched": 2,
+                            "num_tokens_dropped": 0,
+                            "score": "578730123365187610",
+                            "tokens_matched": 1,
+                            "typo_prefix_score": 0
+                        }
+                    }
+                ],
+                "out_of": 1295528,
+                "page": 1,
+                "request_params": {
+                    "collection_name": "Author_production_1764974976",
+                    "first_q": "sanderson",
+                    "per_page": 3,
+                    "q": "sanderson"
+                },
+                "search_cutoff": false,
+                "search_time_ms": 4
+            }
+        }
+    }
+}

@@ -1,0 +1,5 @@
+query Search($query: String!, $query_type: String!, $page: Int!, $per_page: Int!) {
+  search(query: $query, query_type: $query_type, page: $page, per_page: $per_page) {
+    ids query query_type page per_page results error
+  }
+}

@@ -1,0 +1,77 @@
+{
+    "data": {
+        "editions": [
+            {
+                "id": 759160,
+                "title": "Lord Peter Views the Body",
+                "book_id": 1,
+                "isbn_10": "0060923954",
+                "isbn_13": "9780060923952",
+                "asin": null,
+                "pages": 336,
+                "audio_seconds": null,
+                "release_date": "1928-01-01",
+                "reading_format_id": 1,
+                "physical_format": null,
+                "edition_format": "Paperback",
+                "language": {
+                    "language": "English"
+                },
+                "publisher": {
+                    "id": 130902,
+                    "name": "Payson & Clarke"
+                },
+                "cached_image": {
+                    "id": 844744,
+                    "url": "https://assets.hardcover.app/external_data/59472617/40e85d246a76ef49c6ec14ab202e355e65b2c00a.jpeg",
+                    "color": "#dce7d4",
+                    "width": 98,
+                    "height": 154,
+                    "color_name": "Beige"
+                }
+            },
+            {
+                "id": 2617948,
+                "title": "Lord Peter views the body.",
+                "book_id": 1,
+                "isbn_10": null,
+                "isbn_13": null,
+                "asin": null,
+                "pages": null,
+                "audio_seconds": null,
+                "release_date": "1928-01-01",
+                "reading_format_id": 1,
+                "physical_format": null,
+                "edition_format": null,
+                "language": {
+                    "language": "English"
+                },
+                "publisher": {
+                    "id": 700,
+                    "name": "Victor Gollancz"
+                },
+                "cached_image": {}
+            },
+            {
+                "id": 6443967,
+                "title": "Lord Peter views the body",
+                "book_id": 1,
+                "isbn_10": null,
+                "isbn_13": null,
+                "asin": null,
+                "pages": 317,
+                "audio_seconds": null,
+                "release_date": "1970-01-01",
+                "reading_format_id": 1,
+                "physical_format": null,
+                "edition_format": null,
+                "language": null,
+                "publisher": {
+                    "id": 312,
+                    "name": "Gollancz"
+                },
+                "cached_image": {}
+            }
+        ]
+    }
+}

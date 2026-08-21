@@ -34,10 +34,10 @@ struct Envelope<'a, T: Serialize> {
     meta: serde_json::Value,
 }
 
-pub fn emit<T: Serialize + std::fmt::Debug>(format: Format, value: &T, plain: impl Fn(&T) -> String) {
+pub fn emit<T: Serialize + std::fmt::Debug>(format: Format, value: &T, meta: serde_json::Value, plain: impl Fn(&T) -> String) {
     match format.resolve() {
         Format::Json => {
-            let env = Envelope { schema: SCHEMA_VERSION, data: value, meta: serde_json::json!({}) };
+            let env = Envelope { schema: SCHEMA_VERSION, data: value, meta };
             println!("{}", serde_json::to_string_pretty(&env).unwrap());
         }
         Format::Ndjson => println!("{}", serde_json::to_string(value).unwrap()),

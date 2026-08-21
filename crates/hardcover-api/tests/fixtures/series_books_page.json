@@ -1,0 +1,63 @@
+{
+    "data": {
+        "book_series": [
+            {
+                "position": 0,
+                "book": {
+                    "id": 1,
+                    "title": "Lord Peter Views the Body",
+                    "slug": "lord-peter-views-the-body",
+                    "release_year": 198,
+                    "rating": 3.844827586206897,
+                    "users_count": 55,
+                    "cached_image": {
+                        "id": 2720287,
+                        "url": "https://assets.hardcover.app/external_data/60951398/fcce59736371385c33cab5dd4b5fc478fac17dd6.jpeg",
+                        "color": "#bdcacb",
+                        "width": 98,
+                        "height": 157,
+                        "color_name": "Beige"
+                    }
+                }
+            },
+            {
+                "position": 0,
+                "book": {
+                    "id": 832700,
+                    "title": "Lord Peter Wimsey: The Complete Short Stories",
+                    "slug": "lord-peter-wimsey",
+                    "release_year": 1972,
+                    "rating": 3.25,
+                    "users_count": 7,
+                    "cached_image": {
+                        "id": 6754443,
+                        "url": "https://assets.hardcover.app/edition/30845197/30d23d47a4fb98e9a8b8490f8a9ca271dacadef0.jpeg",
+                        "color": "#737d8d",
+                        "width": 326,
+                        "height": 500,
+                        "color_name": "Purple"
+                    }
+                }
+            },
+            {
+                "position": 0,
+                "book": {
+                    "id": 1130228,
+                    "title": "Lord Peter: The Complete Lord Peter Wimsey Stories",
+                    "slug": "lord-peter-the-complete-lord-peter-wimsey-stories",
+                    "release_year": 1972,
+                    "rating": 5.0,
+                    "users_count": 1,
+                    "cached_image": {
+                        "id": 1664991,
+                        "url": "https://assets.hardcover.app/external_data/60298463/41b029bf2a912b96dc91745f01f506e4db693f27.jpeg",
+                        "color": "#bfc2c6",
+                        "width": 98,
+                        "height": 147,
+                        "color_name": "Pink"
+                    }
+                }
+            }
+        ]
+    }
+}

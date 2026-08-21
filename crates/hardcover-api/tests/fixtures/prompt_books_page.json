@@ -1,0 +1,4 @@
+{
+    "error": "unsupported_operation",
+    "error_description": "Not available to API tokens: prompt_books"
+}

@@ -1,0 +1,22 @@
+{
+    "data": {
+        "authors_by_pk": {
+            "id": 154428,
+            "name": "Dorothy L. Sayers",
+            "slug": "dorothy-l-sayers",
+            "bio": "An English crime writer, poet, playwright, essayist, translator and Christian humanist.",
+            "born_year": null,
+            "death_year": null,
+            "books_count": 129,
+            "users_count": 756,
+            "cached_image": {
+                "id": 33774,
+                "url": "https://assets.hardcover.app/authors/154428/6460155-L.jpg",
+                "color": "#b1b1b1",
+                "width": 270,
+                "height": 311,
+                "color_name": "Silver"
+            }
+        }
+    }
+}

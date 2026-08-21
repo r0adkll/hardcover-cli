@@ -1,0 +1,27 @@
+{
+    "data": {
+        "users": [
+            {
+                "id": 31899,
+                "username": "r0adkll",
+                "name": "Drew Heavner ",
+                "bio": null,
+                "location": "South Carolina",
+                "flair": null,
+                "pro": false,
+                "books_count": 68,
+                "followers_count": 2,
+                "followed_users_count": 1,
+                "cached_image": {
+                    "id": 3455126,
+                    "url": "https://assets.hardcover.app/static/avatars/profile4.png",
+                    "color": "#000000",
+                    "width": 500,
+                    "height": 500,
+                    "color_name": "Black"
+                },
+                "created_at": "2025-03-28T00:49:26.732078+00:00"
+            }
+        ]
+    }
+}

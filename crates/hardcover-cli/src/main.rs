@@ -4,6 +4,7 @@ mod output;
 
 use clap::{Parser, Subcommand};
 use error::CliError;
+use hardcover_api::model::SearchType;
 use hardcover_api::Client;
 use output::Format;
 use std::process::ExitCode;
@@ -38,6 +39,18 @@ enum Command {
     Logout,
     /// Show the authenticated user.
     Whoami,
+    /// Full-text search over one entity type.
+    Search {
+        query: String,
+        /// Entity type: book, author, series, character, list, prompt, publisher, user.
+        #[arg(long = "type", default_value = "book")]
+        query_type: SearchType,
+        /// 1-based page number.
+        #[arg(long, default_value_t = 1)]
+        page: i64,
+        #[arg(long, default_value_t = 25)]
+        per_page: i64,
+    },
     /// Books: works independent of any particular edition.
     Book {
         #[command(subcommand)]
@@ -82,12 +95,12 @@ async fn run(cli: Cli) -> Result<(), CliError> {
             let token = credentials::read_login_token()?;
             let user = make_client(token.clone(), &cli.api_url).me().await?;
             credentials::store(&token)?;
-            output::emit(cli.format, &user, |u| format!("Logged in as {}", user_line(u)));
+            output::emit(cli.format, &user, serde_json::json!({}), |u| format!("Logged in as {}", user_line(u)));
             return Ok(());
         }
         Command::Logout => {
             credentials::clear()?;
-            output::emit(cli.format, &serde_json::json!({ "logged_out": true }), |_| "Logged out".into());
+            output::emit(cli.format, &serde_json::json!({ "logged_out": true }), serde_json::json!({}), |_| "Logged out".into());
             return Ok(());
         }
         _ => {}
@@ -98,13 +111,24 @@ async fn run(cli: Cli) -> Result<(), CliError> {
 
     match cli.command {
         Command::Login | Command::Logout => unreachable!(),
+        Command::Search { query, query_type, page, per_page } => {
+            let r = client.search(&query, query_type, page, per_page).await?;
+            let meta = serde_json::json!({ "page": r.page, "per_page": r.per_page, "found": r.found });
+            output::emit(cli.format, &r, meta, |r| {
+                let mut lines = vec![format!("{} results for \"{}\" ({})", r.found, r.query, r.query_type.as_str())];
+                for h in &r.hits {
+                    lines.push(format!("  #{:<8} {}  [{}]", h.id, h.label, h.slug.as_deref().unwrap_or("-")));
+                }
+                lines.join("\n")
+            });
+        }
         Command::Whoami => {
             let user = client.me().await?;
-            output::emit(cli.format, &user, user_line);
+            output::emit(cli.format, &user, serde_json::json!({}), user_line);
         }
         Command::Book { command: BookCommand::Show { id } } => {
             let book = client.book(id).await?;
-            output::emit(cli.format, &book, |b| {
+            output::emit(cli.format, &book, serde_json::json!({}), |b| {
                 let by = b.contributors.iter().map(|c| c.name.as_str()).collect::<Vec<_>>().join(", ");
                 format!("{} — {} (#{}, {})", b.title, by, b.id, b.slug)
             });

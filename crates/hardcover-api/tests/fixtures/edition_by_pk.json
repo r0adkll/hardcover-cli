@@ -1,0 +1,34 @@
+{
+    "data": {
+        "editions_by_pk": {
+            "id": 25224958,
+            "title": "Lord Peter Views the Body",
+            "subtitle": null,
+            "book_id": 1,
+            "isbn_10": "0450564746",
+            "isbn_13": "9780450564741",
+            "asin": null,
+            "pages": 288,
+            "audio_seconds": null,
+            "release_date": "1928-01-01",
+            "reading_format_id": 1,
+            "physical_format": null,
+            "edition_format": "Kindle Edition",
+            "language": {
+                "language": "English"
+            },
+            "publisher": {
+                "id": 73,
+                "name": "New English Library"
+            },
+            "cached_image": {
+                "id": 2720287,
+                "url": "https://assets.hardcover.app/external_data/60951398/fcce59736371385c33cab5dd4b5fc478fac17dd6.jpeg",
+                "color": "#bdcacb",
+                "width": 98,
+                "height": 157,
+                "color_name": "Beige"
+            }
+        }
+    }
+}

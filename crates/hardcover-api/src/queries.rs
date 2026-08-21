@@ -16,3 +16,11 @@ pub struct BookById;
     response_derives = "Debug, Clone"
 )]
 pub struct Me;
+
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "schema.json",
+    query_path = "queries/search.graphql",
+    response_derives = "Debug, Clone"
+)]
+pub struct Search;

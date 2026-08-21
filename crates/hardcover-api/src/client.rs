@@ -1,6 +1,6 @@
 use crate::error::{Error, Result};
-use crate::model::{Book, Contributor, SeriesMembership, User};
-use crate::queries::{book_by_id, me, BookById, Me};
+use crate::model::{Book, Contributor, SearchHit, SearchResults, SearchType, SeriesMembership, User};
+use crate::queries::{book_by_id, me, search, BookById, Me, Search};
 use reqwest::StatusCode;
 use graphql_client::{GraphQLQuery, Response};
 
@@ -74,6 +74,36 @@ impl Client {
         Ok(User { id: u.id, username: u.username.unwrap_or_default(), name: u.name })
     }
 
+    /// Full-text search over one entity type. Pages are 1-based.
+    pub async fn search(&self, query: &str, query_type: SearchType, page: i64, per_page: i64) -> Result<SearchResults> {
+        let data = self
+            .execute::<Search>(search::Variables {
+                query: query.to_string(),
+                query_type: query_type.as_str().to_string(),
+                page,
+                per_page,
+            })
+            .await?;
+        let out = data.search.ok_or_else(|| Error::Upstream("search returned no payload".into()))?;
+        if let Some(err) = out.error {
+            return Err(Error::Upstream(err));
+        }
+        let results = out.results.unwrap_or_default();
+        let hits: Vec<SearchHit> = results
+            .get("hits")
+            .and_then(|h| h.as_array())
+            .map(|hits| hits.iter().filter_map(|h| hit_from_document(h.get("document")?)).collect())
+            .unwrap_or_default();
+        Ok(SearchResults {
+            query: out.query.unwrap_or_else(|| query.to_string()),
+            query_type,
+            page: out.page.unwrap_or(page),
+            per_page: out.per_page.unwrap_or(per_page),
+            found: results.get("found").and_then(|f| f.as_i64()).unwrap_or(hits.len() as i64),
+            hits,
+        })
+    }
+
     pub async fn book(&self, id: i64) -> Result<Book> {
         let data = self.execute::<BookById>(book_by_id::Variables { id }).await?;
         let b = data.books_by_pk.ok_or_else(|| Error::NotFound(format!("book {id}")))?;
@@ -123,4 +153,23 @@ impl ClientBuilder {
             .expect("reqwest client");
         Client { http, base_url: self.base_url, token: self.token }
     }
+}
+
+fn hit_from_document(doc: &serde_json::Value) -> Option<SearchHit> {
+    // Typesense documents carry ids as strings.
+    let id = match doc.get("id")? {
+        serde_json::Value::String(s) => s.parse().ok()?,
+        v => v.as_i64()?,
+    };
+    let label = ["title", "name", "question", "username"]
+        .iter()
+        .find_map(|k| doc.get(k).and_then(|v| v.as_str()))
+        .unwrap_or_default()
+        .to_string();
+    Some(SearchHit {
+        id,
+        slug: doc.get("slug").and_then(|v| v.as_str()).map(str::to_owned),
+        label,
+        document: doc.clone(),
+    })
 }

@@ -1,0 +1,18 @@
+{
+    "data": {
+        "series_by_pk": {
+            "id": 6572,
+            "name": "Lord Peter Wimsey",
+            "slug": "lord-peter-wimsey",
+            "description": null,
+            "is_completed": null,
+            "books_count": 17,
+            "primary_books_count": 15,
+            "author": {
+                "id": 154428,
+                "name": "Dorothy L. Sayers",
+                "slug": "dorothy-l-sayers"
+            }
+        }
+    }
+}

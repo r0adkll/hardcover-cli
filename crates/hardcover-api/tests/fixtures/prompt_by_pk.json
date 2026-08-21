@@ -1,0 +1,17 @@
+{
+    "data": {
+        "prompts_by_pk": {
+            "id": 1,
+            "question": "What are your favorite books of all time?",
+            "slug": "what-are-your-favorite-books-of-all-time",
+            "description": "When you think back on every book you've ever read, what are some of your favorites? These can be from any time of your life \u2013\u00a0books that resonated with you as a kid, ones that shaped your personality as a teen, or ones that inspired you. Whatever conditions you want. These are your favorites after all.",
+            "answers_count": 18814,
+            "books_count": 6296,
+            "users_count": 3341,
+            "user": {
+                "id": 3,
+                "username": "hardcover"
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "data": {
+        "lists_by_pk": {
+            "id": 301791,
+            "name": "Hardcover Author Spotlight",
+            "slug": "hardcover-author-spotlight",
+            "description": "There are books by Hardcover Spotlight Authors. These are authors that are supporting Hardcover in some way that we want to thank by showcasing their works.\n\nThat support can be by being an active community member, helping with feedback, or contributing financially.",
+            "books_count": 1,
+            "followers_count": 0,
+            "likes_count": 2,
+            "ranked": false,
+            "featured": true,
+            "user": {
+                "id": 3,
+                "username": "hardcover"
+            }
+        }
+    }
+}

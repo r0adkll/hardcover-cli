@@ -1,0 +1,26 @@
+{
+    "data": {
+        "list_books": [
+            {
+                "position": null,
+                "reason": null,
+                "book": {
+                    "id": 644433,
+                    "title": "Space Rogues",
+                    "slug": "space-rogues",
+                    "release_year": 2017,
+                    "rating": 3.3333333333333335,
+                    "users_count": 54,
+                    "cached_image": {
+                        "id": 2934617,
+                        "url": "https://assets.hardcover.app/editions/30623355/228208818104760.jpg",
+                        "color": "#58a9cb",
+                        "width": 1772,
+                        "height": 2773,
+                        "color_name": "Blue"
+                    }
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,54 @@
+{
+    "data": {
+        "books": [
+            {
+                "id": 442321,
+                "title": "Whose Body?",
+                "slug": "whose-body",
+                "release_year": 1923,
+                "rating": 3.4361702127659575,
+                "users_count": 331,
+                "cached_image": {
+                    "id": 1230624,
+                    "url": "https://assets.hardcover.app/external_data/32844695/52a4386a810e02d047017e3e24325b44c9e501d4.jpeg",
+                    "color": "#beaf96",
+                    "width": 303,
+                    "height": 500,
+                    "color_name": "Silver"
+                }
+            },
+            {
+                "id": 341016,
+                "title": "Gaudy Night",
+                "slug": "gaudy-night",
+                "release_year": 1935,
+                "rating": 4.1909090909090905,
+                "users_count": 179,
+                "cached_image": {
+                    "id": 1705906,
+                    "url": "https://assets.hardcover.app/external_data/59723255/896c98e02528b9684055c0d768f2f9420455e2eb.jpeg",
+                    "color": "#d1d1d4",
+                    "width": 128,
+                    "height": 205,
+                    "color_name": "Pink"
+                }
+            },
+            {
+                "id": 70235,
+                "title": "Strong Poison",
+                "slug": "strong-poison",
+                "release_year": 1930,
+                "rating": 4.015873015873016,
+                "users_count": 132,
+                "cached_image": {
+                    "id": 5028126,
+                    "url": "https://assets.hardcover.app/edition/26889200/0f1a76e0cc05d12c39238c1869d96c306b5e10d9.jpeg",
+                    "color": "#d5d1c5",
+                    "width": 293,
+                    "height": 500,
+                    "color_name": "Beige"
+                }
+            }
+        ]
+    }
+}
