@@ -433,7 +433,11 @@ impl Hardcover {
 impl ServerHandler for Hardcover {
     fn get_info(&self) -> ServerInfo {
         ServerInfo::new(ServerCapabilities::builder().enable_tools().build())
-            .with_server_info(Implementation::from_build_env())
+            .with_server_info(Implementation {
+                name: "hardcover".into(),
+                version: env!("CARGO_PKG_VERSION").into(),
+                ..Implementation::from_build_env()
+            })
             .with_instructions(
                 "Hardcover.app book data. Results are {schema, data, meta}; errors are {error: {code, message}} with \
                  codes: auth_required, invalid_token, not_found, rate_limited, usage_error, upstream_error. \
