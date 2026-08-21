@@ -1,6 +1,7 @@
 use crate::error::{Error, Result};
-use crate::model::{Book, Contributor, SeriesMembership};
-use crate::queries::{book_by_id, BookById};
+use crate::model::{Book, Contributor, SeriesMembership, User};
+use crate::queries::{book_by_id, me, BookById, Me};
+use reqwest::StatusCode;
 use graphql_client::{GraphQLQuery, Response};
 
 pub const DEFAULT_BASE_URL: &str = "https://api.hardcover.app";
@@ -36,6 +37,27 @@ impl Client {
             .json(&body)
             .send()
             .await?;
+        match resp.status() {
+            StatusCode::UNAUTHORIZED => return Err(Error::InvalidToken),
+            StatusCode::FORBIDDEN => {
+                let body: serde_json::Value = resp.json().await.unwrap_or_default();
+                return Err(match body.get("error").and_then(|e| e.as_str()) {
+                    Some("insufficient_scope") => Error::InsufficientScope(
+                        body.get("scope").and_then(|s| s.as_str()).unwrap_or("unknown").to_string(),
+                    ),
+                    _ => Error::Upstream(body.to_string()),
+                });
+            }
+            StatusCode::TOO_MANY_REQUESTS => {
+                let retry_after_secs = resp
+                    .headers()
+                    .get("retry-after")
+                    .and_then(|v| v.to_str().ok())
+                    .and_then(|v| v.parse().ok());
+                return Err(Error::RateLimited { retry_after_secs });
+            }
+            _ => {}
+        }
         let parsed: Response<Q::ResponseData> = resp.json().await?;
         if let Some(errors) = parsed.errors.filter(|e| !e.is_empty()) {
             return Err(Error::Upstream(
@@ -43,6 +65,13 @@ impl Client {
             ));
         }
         parsed.data.ok_or_else(|| Error::Upstream("response had no data".into()))
+    }
+
+    /// The authenticated user. Also serves as token verification.
+    pub async fn me(&self) -> Result<User> {
+        let data = self.execute::<Me>(me::Variables {}).await?;
+        let u = data.me.into_iter().next().ok_or(Error::InvalidToken)?;
+        Ok(User { id: u.id, username: u.username.unwrap_or_default(), name: u.name })
     }
 
     pub async fn book(&self, id: i64) -> Result<Book> {

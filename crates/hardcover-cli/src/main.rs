@@ -1,3 +1,4 @@
+mod credentials;
 mod error;
 mod output;
 
@@ -31,6 +32,12 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Command {
+    /// Verify a token and store it in the OS keychain. Reads the token from stdin when not a terminal.
+    Login,
+    /// Remove the stored token from the OS keychain.
+    Logout,
+    /// Show the authenticated user.
+    Whoami,
     /// Books: works independent of any particular edition.
     Book {
         #[command(subcommand)]
@@ -46,6 +53,7 @@ enum BookCommand {
 
 #[tokio::main]
 async fn main() -> ExitCode {
+    credentials::init();
     let cli = Cli::parse();
     match run(cli).await {
         Ok(()) => ExitCode::SUCCESS,
@@ -56,15 +64,44 @@ async fn main() -> ExitCode {
     }
 }
 
-async fn run(cli: Cli) -> Result<(), CliError> {
-    let token = cli.token.ok_or_else(CliError::auth_required)?;
+fn make_client(token: String, api_url: &Option<String>) -> Client {
     let mut builder = Client::builder(token);
-    if let Some(url) = cli.api_url {
+    if let Some(url) = api_url {
         builder = builder.base_url(url);
     }
-    let client = builder.build();
+    builder.build()
+}
+
+fn user_line(u: &hardcover_api::model::User) -> String {
+    format!("{} (#{})", u.username, u.id)
+}
+
+async fn run(cli: Cli) -> Result<(), CliError> {
+    match cli.command {
+        Command::Login => {
+            let token = credentials::read_login_token()?;
+            let user = make_client(token.clone(), &cli.api_url).me().await?;
+            credentials::store(&token)?;
+            output::emit(cli.format, &user, |u| format!("Logged in as {}", user_line(u)));
+            return Ok(());
+        }
+        Command::Logout => {
+            credentials::clear()?;
+            output::emit(cli.format, &serde_json::json!({ "logged_out": true }), |_| "Logged out".into());
+            return Ok(());
+        }
+        _ => {}
+    }
+
+    let token = credentials::resolve(cli.token)?;
+    let client = make_client(token, &cli.api_url);
 
     match cli.command {
+        Command::Login | Command::Logout => unreachable!(),
+        Command::Whoami => {
+            let user = client.me().await?;
+            output::emit(cli.format, &user, user_line);
+        }
         Command::Book { command: BookCommand::Show { id } } => {
             let book = client.book(id).await?;
             output::emit(cli.format, &book, |b| {

@@ -10,6 +10,12 @@ pub struct CliError {
 }
 
 impl CliError {
+    pub fn usage(msg: impl Into<String>) -> Self {
+        Self { code: "usage_error", message: msg.into(), exit: 2 }
+    }
+    pub fn keychain(e: keyring::Error) -> Self {
+        Self { code: "keychain_error", message: e.to_string(), exit: 1 }
+    }
     pub fn auth_required() -> Self {
         Self {
             code: "auth_required",
@@ -25,10 +31,13 @@ impl CliError {
 impl From<hardcover_api::Error> for CliError {
     fn from(e: hardcover_api::Error) -> Self {
         use hardcover_api::Error as E;
-        match e {
-            E::NotFound(m) => Self { code: "not_found", message: m, exit: 4 },
+        match &e {
+            E::InvalidToken => Self { code: "invalid_token", message: e.to_string(), exit: 3 },
+            E::InsufficientScope(_) => Self { code: "insufficient_scope", message: e.to_string(), exit: 3 },
+            E::RateLimited { .. } => Self { code: "rate_limited", message: e.to_string(), exit: 5 },
+            E::NotFound(m) => Self { code: "not_found", message: m.clone(), exit: 4 },
             E::Network(err) => Self { code: "network_error", message: err.to_string(), exit: 6 },
-            E::Upstream(m) => Self { code: "upstream_error", message: m, exit: 6 },
+            E::Upstream(m) => Self { code: "upstream_error", message: m.clone(), exit: 6 },
         }
     }
 }

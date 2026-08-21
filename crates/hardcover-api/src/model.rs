@@ -33,3 +33,10 @@ pub struct SeriesMembership {
     pub name: String,
     pub position: Option<f64>,
 }
+
+#[derive(Debug, Clone, Serialize, PartialEq)]
+pub struct User {
+    pub id: i64,
+    pub username: String,
+    pub name: Option<String>,
+}
