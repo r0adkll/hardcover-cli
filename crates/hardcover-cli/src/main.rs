@@ -3,6 +3,8 @@ mod commands;
 mod config;
 mod credentials;
 mod error;
+mod mcp;
+mod ops;
 mod output;
 mod paging;
 mod schema;

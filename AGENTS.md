@@ -1,5 +1,10 @@
 # Using hardcover-cli as an agent
 
+Two ways in: as **MCP tools** (`hardcover mcp serve` — tool names match the commands
+below with underscores, e.g. `book_show`, `library_set_status`; same JSON, same error
+codes, `dry_run` on writes) or by **running the CLI**. The rest of this file is written
+for the CLI; everything maps 1:1.
+
 Start with `hardcover schema --format json` — it lists every command, argument, output
 format and error code, generated from the same source as `--help`.
 

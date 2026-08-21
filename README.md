@@ -20,6 +20,28 @@ cargo install --git https://github.com/r0adkll/hardcover-cli hardcover-cli
 Prebuilt binaries for macOS, Linux and Windows are attached to each
 [GitHub release](https://github.com/r0adkll/hardcover-cli/releases) with shell/PowerShell installers.
 
+## MCP server
+
+The same commands are available as MCP tools for Claude Desktop, Claude Code, Cursor and
+other MCP clients:
+
+```sh
+hardcover login                 # once
+hardcover mcp serve             # stdio transport; what the client launches
+```
+
+Claude Code: `claude mcp add hardcover -- hardcover mcp serve`.
+Claude Desktop / generic config:
+
+```json
+{ "mcpServers": { "hardcover": { "command": "hardcover", "args": ["mcp", "serve"] } } }
+```
+
+Tools mirror the commands (`search`, `book_show`, `author_books`, `library_list`,
+`library_set_status`, …) and return the same `{schema, data, meta}` JSON as structured
+content; failures are tool errors carrying the same `error.code` values. Write tools take
+`dry_run: true`; `library_remove` is flagged destructive so clients can confirm.
+
 ## Authenticate
 
 Create a personal access token at <https://hardcover.app/account/api>, then:
@@ -53,6 +75,7 @@ Every request requires a token; Hardcover has no anonymous access.
 | `library remove <book>` | Delete your entry (status, reads, rating, review) |
 | `whoami` / `login` / `logout` | Credential management |
 | `schema` | Machine-readable description of every command, argument, format and error code |
+| `mcp serve` | Run as an MCP server over stdio (see above) |
 
 Identifiers: all-digit → id, ISBN-10/13 (hyphens OK) → ISBN, otherwise slug.
 Force a form with `id:`, `slug:` or `isbn:` prefixes. Output always carries both `id` and `slug`,

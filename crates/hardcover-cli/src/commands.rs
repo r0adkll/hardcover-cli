@@ -1,12 +1,10 @@
 use crate::cli::*;
 use crate::credentials;
 use crate::error::CliError;
+use crate::ops::{self, WriteResult};
 use crate::output::{self, Format};
 use crate::paging::collect;
-use hardcover_api::model::{
-    BookSummary, LibraryEntryDetail, LibraryFilter, ProgressUpdate, Read, ReadingStatus, Resolved,
-    User,
-};
+use hardcover_api::model::{BookSummary, LibraryFilter, Resolved, User};
 use hardcover_api::{Client, RetryPolicy};
 use serde::Serialize;
 
@@ -59,144 +57,6 @@ impl Ctx<'_> {
             println!("{}", serde_json::to_string_pretty(&value).unwrap());
         }
     }
-}
-
-/// Every write reports what it did and the entry before and after, so callers can verify.
-#[derive(Serialize)]
-struct WriteResult {
-    action: &'static str,
-    dry_run: bool,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    planned: Option<serde_json::Value>,
-    before: Option<LibraryEntryDetail>,
-    after: Option<LibraryEntryDetail>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    read: Option<Read>,
-}
-
-impl WriteResult {
-    fn line(&self) -> String {
-        let name = |e: &Option<LibraryEntryDetail>| {
-            e.as_ref()
-                .map(|e| e.entry.book.title.clone())
-                .unwrap_or_default()
-        };
-        let title = if self.before.is_some() {
-            name(&self.before)
-        } else {
-            name(&self.after)
-        };
-        let state = |e: &Option<LibraryEntryDetail>| {
-            e.as_ref()
-                .map(|e| {
-                    format!(
-                        "{}{}",
-                        e.entry.status.as_str(),
-                        e.entry.rating.map(|r| format!(" ★{r}")).unwrap_or_default()
-                    )
-                })
-                .unwrap_or_else(|| "not in library".into())
-        };
-        let mut s = format!(
-            "{}{}: {} → {}",
-            if self.dry_run { "[dry-run] " } else { "" },
-            self.action,
-            state(&self.before),
-            state(&self.after)
-        );
-        if let Some(p) = &self.planned {
-            s = format!("{s}  planned {p}");
-        }
-        if let Some(r) = &self.read {
-            s.push_str(&format!(
-                "  read #{} {}%",
-                r.id,
-                r.progress.map(|p| p.round() as i64).unwrap_or(0)
-            ));
-        }
-        if !title.is_empty() {
-            s = format!("{title} — {s}");
-        }
-        s
-    }
-}
-
-async fn entry_or_none(
-    client: &Client,
-    book_id: i64,
-) -> Result<Option<LibraryEntryDetail>, CliError> {
-    match client.library_entry(book_id).await {
-        Ok(e) => Ok(Some(e)),
-        Err(hardcover_api::Error::NotFound(_)) => Ok(None),
-        Err(e) => Err(e.into()),
-    }
-}
-
-/// Hardcover's reads lag its writes, so a re-fetch right after a mutation can be stale.
-/// The mutation response is authoritative for the entry (and the touched read); the
-/// re-fetch only supplies what the mutation didn't return (other reads, review).
-async fn after_write(
-    client: &Client,
-    book_id: i64,
-    entry: hardcover_api::model::LibraryEntry,
-    read: Option<&Read>,
-) -> Result<Option<LibraryEntryDetail>, CliError> {
-    let fetched = entry_or_none(client, book_id).await?;
-    let (mut reads, review) = fetched.map(|f| (f.reads, f.review)).unwrap_or_default();
-    if let Some(r) = read {
-        match reads.iter_mut().find(|x| x.id == r.id) {
-            Some(slot) => *slot = r.clone(),
-            None => reads.push(r.clone()),
-        }
-    }
-    Ok(Some(LibraryEntryDetail {
-        entry,
-        review,
-        reads,
-    }))
-}
-
-fn validate_rating(r: f64) -> Result<Option<f64>, CliError> {
-    if r == 0.0 {
-        return Ok(None);
-    }
-    if !(0.5..=5.0).contains(&r) || (r * 2.0).fract() != 0.0 {
-        return Err(CliError::usage(format!(
-            "rating must be 0.5–5 in half-star steps, or 0 to clear (got {r})"
-        )));
-    }
-    Ok(Some(r))
-}
-
-fn today() -> String {
-    // Date-only, UTC; good enough for "started today" without pulling in chrono.
-    let secs = std::time::SystemTime::now()
-        .duration_since(std::time::UNIX_EPOCH)
-        .unwrap()
-        .as_secs() as i64;
-    let days = secs.div_euclid(86_400);
-    // civil-from-days (Howard Hinnant)
-    let z = days + 719_468;
-    let era = z.div_euclid(146_097);
-    let doe = z - era * 146_097;
-    let yoe = (doe - doe / 1460 + doe / 36_524 - doe / 146_096) / 365;
-    let y = yoe + era * 400;
-    let doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
-    let mp = (5 * doy + 2) / 153;
-    let d = doy - (153 * mp + 2) / 5 + 1;
-    let m = if mp < 10 { mp + 3 } else { mp - 9 };
-    let y = if m <= 2 { y + 1 } else { y };
-    format!("{y:04}-{m:02}-{d:02}")
-}
-
-fn date_arg(v: Option<String>) -> Option<String> {
-    v.map(|d| {
-        if d.eq_ignore_ascii_case("today") {
-            today()
-        } else {
-            d
-        }
-    })
 }
 
 fn none() -> serde_json::Value {
@@ -284,6 +144,11 @@ pub async fn run(cli: Cli) -> Result<(), CliError> {
 
     match cli.command {
         Command::Schema | Command::Login | Command::Logout => unreachable!(),
+        Command::Mcp {
+            command: McpCommand::Serve,
+        } => {
+            crate::mcp::serve(client.clone()).await?;
+        }
         Command::Whoami => {
             let user = client.me().await?;
             ctx.emit(&user, none(), user_line);
@@ -458,26 +323,7 @@ pub async fn run(cli: Cli) -> Result<(), CliError> {
                 });
             }
             LibraryCommand::SetStatus { identifier, status } => {
-                let r = client.resolve_book(&identifier).await?;
-                let before = entry_or_none(&client, r.id).await?;
-                let action = if before.is_some() { "updated" } else { "added" };
-                let mut out = WriteResult {
-                    action,
-                    dry_run: ctx.dry_run,
-                    planned: None,
-                    before,
-                    after: None,
-                    read: None,
-                };
-                if ctx.dry_run {
-                    out.planned = Some(serde_json::json!({ "status": status }));
-                } else {
-                    let updated = match &out.before {
-                        Some(b) => client.library_set_status(b.entry.id, status).await?,
-                        None => client.library_add(r.id, status, None).await?,
-                    };
-                    out.after = after_write(&client, r.id, updated, None).await?;
-                }
+                let (out, r) = ops::set_status(&client, &identifier, status, ctx.dry_run).await?;
                 ctx.emit(
                     &out,
                     serde_json::json!({ "resolved_by": r.resolved_by }),
@@ -485,35 +331,7 @@ pub async fn run(cli: Cli) -> Result<(), CliError> {
                 );
             }
             LibraryCommand::Rate { identifier, rating } => {
-                let rating = validate_rating(rating)?;
-                let r = client.resolve_book(&identifier).await?;
-                let before = entry_or_none(&client, r.id).await?;
-                let action = if before.is_some() {
-                    "rated"
-                } else {
-                    "added_and_rated"
-                };
-                let mut out = WriteResult {
-                    action,
-                    dry_run: ctx.dry_run,
-                    planned: None,
-                    before,
-                    after: None,
-                    read: None,
-                };
-                if ctx.dry_run {
-                    out.planned = Some(serde_json::json!({ "rating": rating }));
-                } else {
-                    match &out.before {
-                        Some(b) => client.library_set_rating(b.entry.id, rating).await?,
-                        None => {
-                            client
-                                .library_add(r.id, ReadingStatus::Read, rating)
-                                .await?
-                        }
-                    };
-                    out.after = entry_or_none(&client, r.id).await?;
-                }
+                let (out, r) = ops::rate(&client, &identifier, rating, ctx.dry_run).await?;
                 ctx.emit(
                     &out,
                     serde_json::json!({ "resolved_by": r.resolved_by }),
@@ -528,65 +346,14 @@ pub async fn run(cli: Cli) -> Result<(), CliError> {
                 finished,
                 edition,
             } => {
-                if pages.is_none() && seconds.is_none() && finished.is_none() && started.is_none() {
-                    return Err(CliError::usage(
-                        "give at least one of --pages, --seconds, --started, --finished",
-                    ));
-                }
-                let r = client.resolve_book(&identifier).await?;
-                let before = entry_or_none(&client, r.id).await?;
-                let open_read = before.as_ref().and_then(|b| {
-                    b.reads
-                        .iter()
-                        .rev()
-                        .find(|x| x.finished_at.is_none())
-                        .cloned()
-                });
-                let action = match (&before, &open_read) {
-                    (None, _) => "added_and_started_read",
-                    (Some(_), None) => "started_read",
-                    (Some(_), Some(_)) => "updated_read",
-                };
-                let mut update = ProgressUpdate {
+                let p = ops::Progress {
                     pages,
                     seconds,
-                    started_at: date_arg(started),
-                    finished_at: date_arg(finished),
-                    edition_id: edition,
+                    started,
+                    finished,
+                    edition,
                 };
-                if open_read.is_none() && update.started_at.is_none() {
-                    update.started_at = Some(today());
-                }
-                let mut out = WriteResult {
-                    action,
-                    dry_run: ctx.dry_run,
-                    planned: None,
-                    before,
-                    after: None,
-                    read: None,
-                };
-                if ctx.dry_run {
-                    out.planned = Some(serde_json::json!({
-                        "read_id": open_read.as_ref().map(|x| x.id),
-                        "pages": update.pages, "seconds": update.seconds,
-                        "started_at": update.started_at, "finished_at": update.finished_at, "edition_id": update.edition_id,
-                    }));
-                } else {
-                    let entry_id = match &out.before {
-                        Some(b) => b.entry.id,
-                        None => {
-                            client
-                                .library_add(r.id, ReadingStatus::CurrentlyReading, None)
-                                .await?
-                                .id
-                        }
-                    };
-                    out.read = Some(match &open_read {
-                        Some(existing) => client.read_update(existing, update).await?,
-                        None => client.read_start(entry_id, update).await?,
-                    });
-                    out.after = entry_or_none(&client, r.id).await?;
-                }
+                let (out, r) = ops::progress(&client, &identifier, p, ctx.dry_run).await?;
                 ctx.emit(
                     &out,
                     serde_json::json!({ "resolved_by": r.resolved_by }),
@@ -594,25 +361,7 @@ pub async fn run(cli: Cli) -> Result<(), CliError> {
                 );
             }
             LibraryCommand::Remove { identifier } => {
-                let r = client.resolve_book(&identifier).await?;
-                let before = client.library_entry(r.id).await?;
-                let mut out = WriteResult {
-                    action: "removed",
-                    dry_run: ctx.dry_run,
-                    planned: None,
-                    before: Some(before),
-                    after: None,
-                    read: None,
-                };
-                if ctx.dry_run {
-                    out.planned = Some(
-                        serde_json::json!({ "delete_entry_id": out.before.as_ref().unwrap().entry.id }),
-                    );
-                } else {
-                    client
-                        .library_remove(out.before.as_ref().unwrap().entry.id)
-                        .await?;
-                }
+                let (out, r) = ops::remove(&client, &identifier, ctx.dry_run).await?;
                 ctx.emit(
                     &out,
                     serde_json::json!({ "resolved_by": r.resolved_by }),

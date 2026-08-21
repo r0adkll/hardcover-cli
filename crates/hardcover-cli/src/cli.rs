@@ -99,6 +99,11 @@ pub enum Command {
         #[command(subcommand)]
         command: LibraryCommand,
     },
+    /// Model Context Protocol server exposing every command as a tool.
+    Mcp {
+        #[command(subcommand)]
+        command: McpCommand,
+    },
     /// Describe this CLI for programmatic consumers: commands, arguments, formats, error codes.
     Schema,
 }
@@ -215,4 +220,10 @@ pub enum LibraryCommand {
     },
     /// Remove a book from your library entirely (status, reads, rating and review).
     Remove { identifier: BookIdentifier },
+}
+
+#[derive(Subcommand)]
+pub enum McpCommand {
+    /// Serve MCP over stdio. Register as: command `hardcover`, args `mcp serve`.
+    Serve,
 }
