@@ -74,7 +74,13 @@ fn positioned<P: ToString>(position: Option<P>, b: &BookSummary) -> String {
 }
 
 pub async fn run(cli: Cli) -> Result<(), CliError> {
-    let ctx = Ctx { format: cli.format, raw: cli.raw, no_retry: cli.no_retry, api_url: &cli.api_url };
+    let mut config = crate::config::load();
+    let format = match (cli.format, config.format.as_deref()) {
+        (Format::Auto, Some(name)) => <Format as clap::ValueEnum>::from_str(name, true)
+            .map_err(|_| CliError::usage(format!("config.toml: unknown format {name:?}")))?,
+        (f, _) => f,
+    };
+    let ctx = Ctx { format, raw: cli.raw, no_retry: cli.no_retry, api_url: &cli.api_url };
 
     match cli.command {
         Command::Schema => {
@@ -86,12 +92,16 @@ pub async fn run(cli: Cli) -> Result<(), CliError> {
             let client = ctx.client(token.clone());
             let user = client.me().await?;
             credentials::store(&token)?;
+            config.username = Some(user.username.clone());
+            crate::config::save(&config)?;
             ctx.emit(&user, none(), |u| format!("Logged in as {}", user_line(u)));
             ctx.finish(&client);
             return Ok(());
         }
         Command::Logout => {
             credentials::clear()?;
+            config.username = None;
+            crate::config::save(&config)?;
             ctx.emit(&serde_json::json!({ "logged_out": true }), none(), |_| "Logged out".into());
             return Ok(());
         }
