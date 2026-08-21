@@ -4,11 +4,27 @@ use std::process::ExitCode;
 /// Every stable error code the CLI can emit, with its exit code. Surfaced by `hardcover schema`.
 pub const CATALOGUE: &[(&str, u8, &str)] = &[
     ("usage_error", 2, "Invalid arguments or input"),
-    ("auth_required", 3, "No token available; run `hardcover login` or set HARDCOVER_TOKEN"),
-    ("invalid_token", 3, "Token rejected or expired; run `hardcover login` again"),
-    ("insufficient_scope", 3, "Token lacks a scope the operation needs"),
+    (
+        "auth_required",
+        3,
+        "No token available; run `hardcover login` or set HARDCOVER_TOKEN",
+    ),
+    (
+        "invalid_token",
+        3,
+        "Token rejected or expired; run `hardcover login` again",
+    ),
+    (
+        "insufficient_scope",
+        3,
+        "Token lacks a scope the operation needs",
+    ),
     ("not_found", 4, "No entity matched the identifier"),
-    ("rate_limited", 5, "Upstream rate limit hit; `retry_after_secs` says when to retry"),
+    (
+        "rate_limited",
+        5,
+        "Upstream rate limit hit; `retry_after_secs` says when to retry",
+    ),
     ("network_error", 6, "Could not reach the API"),
     ("upstream_error", 6, "The API returned an error"),
     ("keychain_error", 1, "The OS keychain could not be used"),
@@ -25,12 +41,21 @@ pub struct CliError {
 }
 
 fn exit_for(code: &str) -> u8 {
-    CATALOGUE.iter().find(|(c, ..)| *c == code).map(|(_, e, _)| *e).unwrap_or(1)
+    CATALOGUE
+        .iter()
+        .find(|(c, ..)| *c == code)
+        .map(|(_, e, _)| *e)
+        .unwrap_or(1)
 }
 
 impl CliError {
     fn new(code: &'static str, message: impl Into<String>) -> Self {
-        Self { code, message: message.into(), details: Default::default(), exit: exit_for(code) }
+        Self {
+            code,
+            message: message.into(),
+            details: Default::default(),
+            exit: exit_for(code),
+        }
     }
     pub fn usage(msg: impl Into<String>) -> Self {
         Self::new("usage_error", msg)
@@ -39,7 +64,10 @@ impl CliError {
         Self::new("keychain_error", e.to_string())
     }
     pub fn auth_required() -> Self {
-        Self::new("auth_required", "no token found; run `hardcover login` or set HARDCOVER_TOKEN")
+        Self::new(
+            "auth_required",
+            "no token found; run `hardcover login` or set HARDCOVER_TOKEN",
+        )
     }
     pub fn exit_code(&self) -> ExitCode {
         ExitCode::from(self.exit)
@@ -58,7 +86,8 @@ impl From<hardcover_api::Error> for CliError {
             }
             E::RateLimited { retry_after_secs } => {
                 let mut err = Self::new("rate_limited", e.to_string());
-                err.details.insert("retry_after_secs".into(), (*retry_after_secs).into());
+                err.details
+                    .insert("retry_after_secs".into(), (*retry_after_secs).into());
                 err
             }
             E::NotFound(m) => Self::new("not_found", m.clone()),
@@ -69,5 +98,8 @@ impl From<hardcover_api::Error> for CliError {
 }
 
 pub fn report(err: &CliError) {
-    eprintln!("{}", serde_json::to_string(&serde_json::json!({ "error": err })).unwrap());
+    eprintln!(
+        "{}",
+        serde_json::to_string(&serde_json::json!({ "error": err })).unwrap()
+    );
 }

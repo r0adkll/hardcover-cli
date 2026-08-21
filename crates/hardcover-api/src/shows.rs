@@ -8,11 +8,23 @@ use crate::queries::*;
 macro_rules! resolve_by_slug {
     ($self:ident, $ident:expr, $Query:ident, $vars:ident, $field:ident, $what:literal) => {
         match $ident {
-            Identifier::Id(id) => Ok(Resolved { id: *id, resolved_by: ResolvedBy::Id }),
+            Identifier::Id(id) => Ok(Resolved {
+                id: *id,
+                resolved_by: ResolvedBy::Id,
+            }),
             Identifier::Slug(slug) => {
-                let data = $self.execute::<$Query>($vars::Variables { slug: slug.clone() }).await?;
-                let id = data.$field.first().map(|r| r.id).ok_or_else(|| Error::NotFound(format!("{} with slug {slug}", $what)))?;
-                Ok(Resolved { id, resolved_by: ResolvedBy::Slug })
+                let data = $self
+                    .execute::<$Query>($vars::Variables { slug: slug.clone() })
+                    .await?;
+                let id = data
+                    .$field
+                    .first()
+                    .map(|r| r.id)
+                    .ok_or_else(|| Error::NotFound(format!("{} with slug {slug}", $what)))?;
+                Ok(Resolved {
+                    id,
+                    resolved_by: ResolvedBy::Slug,
+                })
             }
         }
     };
@@ -20,16 +32,37 @@ macro_rules! resolve_by_slug {
 
 impl Client {
     pub async fn resolve_author(&self, ident: &Identifier) -> Result<Resolved> {
-        resolve_by_slug!(self, ident, AuthorIdBySlug, author_id_by_slug, authors, "author")
+        resolve_by_slug!(
+            self,
+            ident,
+            AuthorIdBySlug,
+            author_id_by_slug,
+            authors,
+            "author"
+        )
     }
     pub async fn resolve_series(&self, ident: &Identifier) -> Result<Resolved> {
-        resolve_by_slug!(self, ident, SeriesIdBySlug, series_id_by_slug, series, "series")
+        resolve_by_slug!(
+            self,
+            ident,
+            SeriesIdBySlug,
+            series_id_by_slug,
+            series,
+            "series"
+        )
     }
     pub async fn resolve_list(&self, ident: &Identifier) -> Result<Resolved> {
         resolve_by_slug!(self, ident, ListIdBySlug, list_id_by_slug, lists, "list")
     }
     pub async fn resolve_prompt(&self, ident: &Identifier) -> Result<Resolved> {
-        resolve_by_slug!(self, ident, PromptIdBySlug, prompt_id_by_slug, prompts, "prompt")
+        resolve_by_slug!(
+            self,
+            ident,
+            PromptIdBySlug,
+            prompt_id_by_slug,
+            prompts,
+            "prompt"
+        )
     }
 
     pub async fn author(&self, id: i64) -> Result<Author> {
@@ -65,7 +98,11 @@ impl Client {
             is_completed: s.is_completed,
             books_count: s.books_count,
             primary_books_count: s.primary_books_count,
-            author: s.author.map(|a| Contributor { id: a.id, slug: a.slug.unwrap_or_default(), name: a.name }),
+            author: s.author.map(|a| Contributor {
+                id: a.id,
+                slug: a.slug.unwrap_or_default(),
+                name: a.name,
+            }),
         })
     }
 
@@ -89,7 +126,10 @@ impl Client {
             audio_seconds: e.audio_seconds,
             release_date: e.release_date,
             language: e.language.map(|l| l.language),
-            publisher: e.publisher.map(|p| Publisher { id: p.id, name: p.name }),
+            publisher: e.publisher.map(|p| Publisher {
+                id: p.id,
+                name: p.name,
+            }),
             cover_url: cover_url(&e.cached_image),
         })
     }
@@ -110,7 +150,10 @@ impl Client {
             likes_count: l.likes_count,
             ranked: l.ranked,
             featured: l.featured,
-            owner: UserRef { id: l.user.id, username: l.user.username.unwrap_or_default() },
+            owner: UserRef {
+                id: l.user.id,
+                username: l.user.username.unwrap_or_default(),
+            },
         })
     }
 
@@ -128,13 +171,18 @@ impl Client {
             answers_count: p.answers_count,
             books_count: p.books_count,
             users_count: p.users_count,
-            owner: UserRef { id: p.user.id, username: p.user.username.unwrap_or_default() },
+            owner: UserRef {
+                id: p.user.id,
+                username: p.user.username.unwrap_or_default(),
+            },
         })
     }
 
     pub async fn user_by_username(&self, username: &str) -> Result<UserProfile> {
         let u = self
-            .execute::<UserByUsername>(user_by_username::Variables { username: username.to_string() })
+            .execute::<UserByUsername>(user_by_username::Variables {
+                username: username.to_string(),
+            })
             .await?
             .users
             .into_iter()

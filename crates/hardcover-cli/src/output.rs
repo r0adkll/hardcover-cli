@@ -35,7 +35,12 @@ struct Envelope<'a, T: Serialize> {
 }
 
 /// Emit a single entity.
-pub fn emit<T: Serialize>(format: Format, value: &T, meta: serde_json::Value, plain: impl Fn(&T) -> String) {
+pub fn emit<T: Serialize>(
+    format: Format,
+    value: &T,
+    meta: serde_json::Value,
+    plain: impl Fn(&T) -> String,
+) {
     match format.resolve() {
         Format::Json => print_envelope(value, meta),
         Format::Ndjson => println!("{}", serde_json::to_string(value).unwrap()),
@@ -45,7 +50,12 @@ pub fn emit<T: Serialize>(format: Format, value: &T, meta: serde_json::Value, pl
 }
 
 /// Emit a collection: JSON wraps the array in the envelope, NDJSON streams one row per line.
-pub fn emit_list<T: Serialize>(format: Format, items: &[T], meta: serde_json::Value, line: impl Fn(&T) -> String) {
+pub fn emit_list<T: Serialize>(
+    format: Format,
+    items: &[T],
+    meta: serde_json::Value,
+    line: impl Fn(&T) -> String,
+) {
     match format.resolve() {
         Format::Json => print_envelope(&items, meta),
         Format::Ndjson => {
@@ -63,6 +73,10 @@ pub fn emit_list<T: Serialize>(format: Format, items: &[T], meta: serde_json::Va
 }
 
 fn print_envelope<T: Serialize>(data: &T, meta: serde_json::Value) {
-    let env = Envelope { schema: SCHEMA_VERSION, data, meta };
+    let env = Envelope {
+        schema: SCHEMA_VERSION,
+        data,
+        meta,
+    };
     println!("{}", serde_json::to_string_pretty(&env).unwrap());
 }

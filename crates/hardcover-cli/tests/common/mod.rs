@@ -4,7 +4,11 @@ use wiremock::matchers::{body_partial_json, body_string_contains, method, path};
 use wiremock::{Mock, MockServer, ResponseTemplate};
 
 pub fn fixture(name: &str) -> String {
-    std::fs::read_to_string(format!("{}/../hardcover-api/tests/fixtures/{name}", env!("CARGO_MANIFEST_DIR"))).unwrap()
+    std::fs::read_to_string(format!(
+        "{}/../hardcover-api/tests/fixtures/{name}",
+        env!("CARGO_MANIFEST_DIR")
+    ))
+    .unwrap()
 }
 
 pub async fn server() -> MockServer {
@@ -15,7 +19,9 @@ pub async fn respond(server: &MockServer, body_match: serde_json::Value, fixture
     Mock::given(method("POST"))
         .and(path("/v1/graphql"))
         .and(body_partial_json(body_match))
-        .respond_with(ResponseTemplate::new(200).set_body_raw(fixture(fixture_name), "application/json"))
+        .respond_with(
+            ResponseTemplate::new(200).set_body_raw(fixture(fixture_name), "application/json"),
+        )
         .mount(server)
         .await;
 }
@@ -37,7 +43,11 @@ pub async fn run(server: &MockServer, args: &[&str]) -> (Option<i32>, serde_json
     .await
     .unwrap();
     let stdout = serde_json::from_slice(&out.stdout).unwrap_or(serde_json::Value::Null);
-    (out.status.code(), stdout, String::from_utf8_lossy(&out.stderr).into_owned())
+    (
+        out.status.code(),
+        stdout,
+        String::from_utf8_lossy(&out.stderr).into_owned(),
+    )
 }
 
 /// Run and return raw stdout.
@@ -64,7 +74,9 @@ pub async fn respond_op(server: &MockServer, op: &str, fixture_name: &str) {
     Mock::given(method("POST"))
         .and(path("/v1/graphql"))
         .and(body_string_contains(format!("query {op}")))
-        .respond_with(ResponseTemplate::new(200).set_body_raw(fixture(fixture_name), "application/json"))
+        .respond_with(
+            ResponseTemplate::new(200).set_body_raw(fixture(fixture_name), "application/json"),
+        )
         .mount(server)
         .await;
 }

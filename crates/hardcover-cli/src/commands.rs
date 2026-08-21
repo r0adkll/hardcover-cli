@@ -33,7 +33,12 @@ impl Ctx<'_> {
         }
     }
 
-    fn emit_list<T: Serialize>(&self, items: &[T], meta: serde_json::Value, line: impl Fn(&T) -> String) {
+    fn emit_list<T: Serialize>(
+        &self,
+        items: &[T],
+        meta: serde_json::Value,
+        line: impl Fn(&T) -> String,
+    ) {
         if !self.raw {
             output::emit_list(self.format, items, meta, line);
         }
@@ -42,7 +47,11 @@ impl Ctx<'_> {
     fn finish(&self, client: &Client) {
         if self.raw {
             let mut payloads = client.take_raw();
-            let value = if payloads.len() == 1 { payloads.pop().unwrap() } else { serde_json::Value::Array(payloads) };
+            let value = if payloads.len() == 1 {
+                payloads.pop().unwrap()
+            } else {
+                serde_json::Value::Array(payloads)
+            };
             println!("{}", serde_json::to_string_pretty(&value).unwrap());
         }
     }
@@ -66,11 +75,22 @@ fn user_line(u: &User) -> String {
 }
 
 fn summary_line(b: &BookSummary) -> String {
-    format!("#{:<9} {}{}", b.id, b.title, b.release_year.map(|y| format!(" ({y})")).unwrap_or_default())
+    format!(
+        "#{:<9} {}{}",
+        b.id,
+        b.title,
+        b.release_year
+            .map(|y| format!(" ({y})"))
+            .unwrap_or_default()
+    )
 }
 
 fn positioned<P: ToString>(position: Option<P>, b: &BookSummary) -> String {
-    format!("{:>5}  {}", position.map(|p| p.to_string()).unwrap_or_default(), summary_line(b))
+    format!(
+        "{:>5}  {}",
+        position.map(|p| p.to_string()).unwrap_or_default(),
+        summary_line(b)
+    )
 }
 
 pub async fn run(cli: Cli) -> Result<(), CliError> {
@@ -80,11 +100,18 @@ pub async fn run(cli: Cli) -> Result<(), CliError> {
             .map_err(|_| CliError::usage(format!("config.toml: unknown format {name:?}")))?,
         (f, _) => f,
     };
-    let ctx = Ctx { format, raw: cli.raw, no_retry: cli.no_retry, api_url: &cli.api_url };
+    let ctx = Ctx {
+        format,
+        raw: cli.raw,
+        no_retry: cli.no_retry,
+        api_url: &cli.api_url,
+    };
 
     match cli.command {
         Command::Schema => {
-            ctx.emit(&crate::schema::describe(), none(), |_| crate::schema::plain());
+            ctx.emit(&crate::schema::describe(), none(), |_| {
+                crate::schema::plain()
+            });
             return Ok(());
         }
         Command::Login => {
@@ -102,7 +129,9 @@ pub async fn run(cli: Cli) -> Result<(), CliError> {
             credentials::clear()?;
             config.username = None;
             crate::config::save(&config)?;
-            ctx.emit(&serde_json::json!({ "logged_out": true }), none(), |_| "Logged out".into());
+            ctx.emit(&serde_json::json!({ "logged_out": true }), none(), |_| {
+                "Logged out".into()
+            });
             return Ok(());
         }
         _ => {}
@@ -116,13 +145,29 @@ pub async fn run(cli: Cli) -> Result<(), CliError> {
             let user = client.me().await?;
             ctx.emit(&user, none(), user_line);
         }
-        Command::Search { query, query_type, page, per_page } => {
+        Command::Search {
+            query,
+            query_type,
+            page,
+            per_page,
+        } => {
             let r = client.search(&query, query_type, page, per_page).await?;
-            let meta = serde_json::json!({ "page": r.page, "per_page": r.per_page, "found": r.found });
+            let meta =
+                serde_json::json!({ "page": r.page, "per_page": r.per_page, "found": r.found });
             ctx.emit(&r, meta, |r| {
-                let mut lines = vec![format!("{} results for \"{}\" ({})", r.found, r.query, r.query_type.as_str())];
+                let mut lines = vec![format!(
+                    "{} results for \"{}\" ({})",
+                    r.found,
+                    r.query,
+                    r.query_type.as_str()
+                )];
                 for h in &r.hits {
-                    lines.push(format!("  #{:<8} {}  [{}]", h.id, h.label, h.slug.as_deref().unwrap_or("-")));
+                    lines.push(format!(
+                        "  #{:<8} {}  [{}]",
+                        h.id,
+                        h.label,
+                        h.slug.as_deref().unwrap_or("-")
+                    ));
                 }
                 lines.join("\n")
             });
@@ -131,10 +176,19 @@ pub async fn run(cli: Cli) -> Result<(), CliError> {
             BookCommand::Show { identifier } => {
                 let r = client.resolve_book(&identifier).await?;
                 let book = client.book(r.id).await?;
-                ctx.emit(&book, serde_json::json!({ "resolved_by": r.resolved_by }), |b| {
-                    let by = b.contributors.iter().map(|c| c.name.as_str()).collect::<Vec<_>>().join(", ");
-                    format!("{} — {} (#{}, {})", b.title, by, b.id, b.slug)
-                });
+                ctx.emit(
+                    &book,
+                    serde_json::json!({ "resolved_by": r.resolved_by }),
+                    |b| {
+                        let by = b
+                            .contributors
+                            .iter()
+                            .map(|c| c.name.as_str())
+                            .collect::<Vec<_>>()
+                            .join(", ");
+                        format!("{} — {} (#{}, {})", b.title, by, b.id, b.slug)
+                    },
+                );
             }
             BookCommand::Editions { identifier, page } => {
                 let r = client.resolve_book(&identifier).await?;
@@ -154,52 +208,94 @@ pub async fn run(cli: Cli) -> Result<(), CliError> {
             AuthorCommand::Show { identifier } => {
                 let r = client.resolve_author(&identifier).await?;
                 let a = client.author(r.id).await?;
-                ctx.emit(&a, resolved_meta(&r), |a| format!("{} (#{}, {}) — {} books", a.name, a.id, a.slug, a.books_count));
+                ctx.emit(&a, resolved_meta(&r), |a| {
+                    format!(
+                        "{} (#{}, {}) — {} books",
+                        a.name, a.id, a.slug, a.books_count
+                    )
+                });
             }
             AuthorCommand::Books { identifier, page } => {
                 let r = client.resolve_author(&identifier).await?;
                 let c = collect(&page, |p| client.author_books(r.id, p)).await?;
-                ctx.emit_list(&c.items, with_resolved(c.meta(), r.resolved_by), summary_line);
+                ctx.emit_list(
+                    &c.items,
+                    with_resolved(c.meta(), r.resolved_by),
+                    summary_line,
+                );
             }
         },
         Command::Series { command } => match command {
             SeriesCommand::Show { identifier } => {
                 let r = client.resolve_series(&identifier).await?;
                 let x = client.series(r.id).await?;
-                ctx.emit(&x, resolved_meta(&r), |x| format!("{} (#{}, {}) — {} books", x.name, x.id, x.slug, x.books_count));
+                ctx.emit(&x, resolved_meta(&r), |x| {
+                    format!(
+                        "{} (#{}, {}) — {} books",
+                        x.name, x.id, x.slug, x.books_count
+                    )
+                });
             }
             SeriesCommand::Books { identifier, page } => {
                 let r = client.resolve_series(&identifier).await?;
                 let c = collect(&page, |p| client.series_books(r.id, p)).await?;
-                ctx.emit_list(&c.items, with_resolved(c.meta(), r.resolved_by), |e| positioned(e.position, &e.book));
+                ctx.emit_list(&c.items, with_resolved(c.meta(), r.resolved_by), |e| {
+                    positioned(e.position, &e.book)
+                });
             }
         },
         Command::List { command } => match command {
             ListCommand::Show { identifier } => {
                 let r = client.resolve_list(&identifier).await?;
                 let l = client.list(r.id).await?;
-                ctx.emit(&l, resolved_meta(&r), |l| format!("{} (#{}) by {} — {} books", l.name, l.id, l.owner.username, l.books_count));
+                ctx.emit(&l, resolved_meta(&r), |l| {
+                    format!(
+                        "{} (#{}) by {} — {} books",
+                        l.name, l.id, l.owner.username, l.books_count
+                    )
+                });
             }
             ListCommand::Books { identifier, page } => {
                 let r = client.resolve_list(&identifier).await?;
                 let c = collect(&page, |p| client.list_books(r.id, p)).await?;
-                ctx.emit_list(&c.items, with_resolved(c.meta(), r.resolved_by), |e| positioned(e.position, &e.book));
+                ctx.emit_list(&c.items, with_resolved(c.meta(), r.resolved_by), |e| {
+                    positioned(e.position, &e.book)
+                });
             }
         },
-        Command::Edition { command: EditionCommand::Show { id } } => {
+        Command::Edition {
+            command: EditionCommand::Show { id },
+        } => {
             let e = client.edition(id).await?;
             ctx.emit(&e, none(), |e| {
-                format!("{} (#{}) {} {}", e.title, e.id, e.isbn_13.as_deref().or(e.isbn_10.as_deref()).unwrap_or("-"), e.edition_format.as_deref().unwrap_or(""))
+                format!(
+                    "{} (#{}) {} {}",
+                    e.title,
+                    e.id,
+                    e.isbn_13.as_deref().or(e.isbn_10.as_deref()).unwrap_or("-"),
+                    e.edition_format.as_deref().unwrap_or("")
+                )
             });
         }
-        Command::Prompt { command: PromptCommand::Show { identifier } } => {
+        Command::Prompt {
+            command: PromptCommand::Show { identifier },
+        } => {
             let r = client.resolve_prompt(&identifier).await?;
             let p = client.prompt(r.id).await?;
-            ctx.emit(&p, resolved_meta(&r), |p| format!("{} (#{}, {}) — {} answers", p.question, p.id, p.slug, p.answers_count));
+            ctx.emit(&p, resolved_meta(&r), |p| {
+                format!(
+                    "{} (#{}, {}) — {} answers",
+                    p.question, p.id, p.slug, p.answers_count
+                )
+            });
         }
-        Command::User { command: UserCommand::Show { username } } => {
+        Command::User {
+            command: UserCommand::Show { username },
+        } => {
             let u = client.user_by_username(&username).await?;
-            ctx.emit(&u, none(), |u| format!("{} (#{}) — {} books", u.username, u.id, u.books_count));
+            ctx.emit(&u, none(), |u| {
+                format!("{} (#{}) — {} books", u.username, u.id, u.books_count)
+            });
         }
     }
     ctx.finish(&client);

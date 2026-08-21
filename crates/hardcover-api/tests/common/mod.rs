@@ -4,7 +4,11 @@ use wiremock::matchers::{body_partial_json, body_string_contains, header, method
 use wiremock::{Mock, MockServer, ResponseTemplate};
 
 pub fn fixture(name: &str) -> String {
-    std::fs::read_to_string(format!("{}/tests/fixtures/{name}", env!("CARGO_MANIFEST_DIR"))).unwrap()
+    std::fs::read_to_string(format!(
+        "{}/tests/fixtures/{name}",
+        env!("CARGO_MANIFEST_DIR")
+    ))
+    .unwrap()
 }
 
 pub async fn server() -> MockServer {
@@ -17,7 +21,9 @@ pub async fn respond(server: &MockServer, body_match: serde_json::Value, fixture
         .and(path("/v1/graphql"))
         .and(header("authorization", "Bearer test-token"))
         .and(body_partial_json(body_match))
-        .respond_with(ResponseTemplate::new(200).set_body_raw(fixture(fixture_name), "application/json"))
+        .respond_with(
+            ResponseTemplate::new(200).set_body_raw(fixture(fixture_name), "application/json"),
+        )
         .mount(server)
         .await;
 }
@@ -31,7 +37,9 @@ pub async fn respond_op(server: &MockServer, op: &str, fixture_name: &str) {
     Mock::given(method("POST"))
         .and(path("/v1/graphql"))
         .and(body_string_contains(format!("query {op}")))
-        .respond_with(ResponseTemplate::new(200).set_body_raw(fixture(fixture_name), "application/json"))
+        .respond_with(
+            ResponseTemplate::new(200).set_body_raw(fixture(fixture_name), "application/json"),
+        )
         .mount(server)
         .await;
 }

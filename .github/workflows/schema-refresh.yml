@@ -1,0 +1,27 @@
+name: Refresh GraphQL schema
+on:
+  schedule:
+    - cron: "17 6 * * 1" # Mondays 06:17 UTC
+  workflow_dispatch:
+jobs:
+  introspect:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo xtask introspect
+        env:
+          HARDCOVER_TOKEN: ${{ secrets.HARDCOVER_TOKEN }}
+      - name: Verify committed queries still compile against the new schema
+        run: cargo build --workspace
+      - uses: peter-evans/create-pull-request@v6
+        with:
+          branch: chore/schema-refresh
+          title: "chore: refresh Hardcover GraphQL schema"
+          commit-message: "chore: refresh Hardcover GraphQL schema"
+          body: "Automated weekly introspection of api.hardcover.app. If this PR fails CI, a committed query no longer validates against upstream."
+          add-paths: crates/hardcover-api/schema.json

@@ -4,7 +4,12 @@ use common::*;
 #[tokio::test]
 async fn raw_flag_passes_the_upstream_payload_through() {
     let s = server().await;
-    respond(&s, serde_json::json!({"variables": {"id": 1}}), "book_by_pk_1.json").await;
+    respond(
+        &s,
+        serde_json::json!({"variables": {"id": 1}}),
+        "book_by_pk_1.json",
+    )
+    .await;
 
     let (code, json, stderr) = run(&s, &["book", "show", "1", "--raw"]).await;
 
@@ -19,9 +24,11 @@ async fn no_retry_flag_surfaces_rate_limit_with_retry_after() {
     use wiremock::matchers::{method, path};
     use wiremock::{Mock, ResponseTemplate};
     let s = server().await;
-    Mock::given(method("POST")).and(path("/v1/graphql"))
+    Mock::given(method("POST"))
+        .and(path("/v1/graphql"))
         .respond_with(ResponseTemplate::new(429).insert_header("retry-after", "7"))
-        .mount(&s).await;
+        .mount(&s)
+        .await;
 
     let (code, _, stderr) = run(&s, &["whoami", "--no-retry"]).await;
 
@@ -43,7 +50,13 @@ async fn schema_command_describes_commands_and_error_codes_without_auth() {
     assert!(cmds.iter().any(|c| c["path"] == "book show"), "{cmds:?}");
     assert!(cmds.iter().any(|c| c["path"] == "search"));
     let codes = json["data"]["error_codes"].as_array().unwrap();
-    assert!(codes.iter().any(|c| c["code"] == "rate_limited" && c["exit"] == 5));
-    assert!(json["data"]["formats"].as_array().unwrap().iter().any(|f| f == "ndjson"));
+    assert!(codes
+        .iter()
+        .any(|c| c["code"] == "rate_limited" && c["exit"] == 5));
+    assert!(json["data"]["formats"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .any(|f| f == "ndjson"));
     assert_eq!(s.received_requests().await.unwrap().len(), 0);
 }

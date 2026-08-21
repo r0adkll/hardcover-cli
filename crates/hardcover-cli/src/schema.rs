@@ -65,7 +65,10 @@ pub fn describe() -> Description {
 }
 
 fn walk(cmd: &clap::Command, prefix: &[String], out: &mut Vec<CommandDesc>) {
-    let subs: Vec<_> = cmd.get_subcommands().filter(|c| c.get_name() != "help").collect();
+    let subs: Vec<_> = cmd
+        .get_subcommands()
+        .filter(|c| c.get_name() != "help")
+        .collect();
     if subs.is_empty() {
         let path = prefix.join(" ");
         out.push(CommandDesc {
@@ -74,7 +77,9 @@ fn walk(cmd: &clap::Command, prefix: &[String], out: &mut Vec<CommandDesc>) {
             requires_auth: !NO_AUTH.contains(&path.as_str()),
             args: cmd
                 .get_arguments()
-                .filter(|a| !a.is_global_set() && !matches!(a.get_id().as_str(), "help" | "version"))
+                .filter(|a| {
+                    !a.is_global_set() && !matches!(a.get_id().as_str(), "help" | "version")
+                })
                 .map(arg_desc)
                 .collect(),
         });
@@ -88,31 +93,56 @@ fn walk(cmd: &clap::Command, prefix: &[String], out: &mut Vec<CommandDesc>) {
 }
 
 fn arg_desc(a: &clap::Arg) -> ArgDesc {
-    let name = a.get_long().map(|l| format!("--{l}")).unwrap_or_else(|| a.get_id().to_string());
+    let name = a
+        .get_long()
+        .map(|l| format!("--{l}"))
+        .unwrap_or_else(|| a.get_id().to_string());
     ArgDesc {
         name,
         kind: if a.is_positional() {
             "positional"
-        } else if matches!(a.get_action(), clap::ArgAction::SetTrue | clap::ArgAction::SetFalse) {
+        } else if matches!(
+            a.get_action(),
+            clap::ArgAction::SetTrue | clap::ArgAction::SetFalse
+        ) {
             "flag"
         } else {
             "option"
         },
         required: a.is_required_set(),
         help: a.get_help().map(|h| h.to_string()).unwrap_or_default(),
-        default: a.get_default_values().first().map(|v| v.to_string_lossy().into_owned()),
-        values: a.get_possible_values().iter().map(|v| v.get_name().to_string()).collect(),
+        default: a
+            .get_default_values()
+            .first()
+            .map(|v| v.to_string_lossy().into_owned()),
+        values: a
+            .get_possible_values()
+            .iter()
+            .map(|v| v.get_name().to_string())
+            .collect(),
     }
 }
 
 pub fn plain() -> String {
     let d = describe();
-    let mut lines = vec![format!("hardcover-cli {} (output schema {})", d.version, d.output_schema), String::new()];
+    let mut lines = vec![
+        format!(
+            "hardcover-cli {} (output schema {})",
+            d.version, d.output_schema
+        ),
+        String::new(),
+    ];
     for c in &d.commands {
         let args: Vec<String> = c
             .args
             .iter()
-            .map(|a| if a.kind == "positional" { format!("<{}>", a.name) } else { a.name.clone() })
+            .map(|a| {
+                if a.kind == "positional" {
+                    format!("<{}>", a.name)
+                } else {
+                    a.name.clone()
+                }
+            })
             .collect();
         lines.push(format!("  {:<22} {}  {}", c.path, args.join(" "), c.about));
     }

@@ -137,7 +137,10 @@ pub struct ResolvedBook {
 fn normalize_isbn(s: &str) -> Option<String> {
     let digits: String = s.chars().filter(|c| *c != '-' && *c != ' ').collect();
     let valid_shape = match digits.len() {
-        10 => digits[..9].chars().all(|c| c.is_ascii_digit()) && digits.ends_with(|c: char| c.is_ascii_digit() || c == 'X' || c == 'x'),
+        10 => {
+            digits[..9].chars().all(|c| c.is_ascii_digit())
+                && digits.ends_with(|c: char| c.is_ascii_digit() || c == 'X' || c == 'x')
+        }
         13 => digits.chars().all(|c| c.is_ascii_digit()),
         _ => false,
     };
@@ -149,13 +152,18 @@ impl std::str::FromStr for BookIdentifier {
     fn from_str(s: &str) -> std::result::Result<Self, String> {
         let s = s.trim();
         if let Some(rest) = s.strip_prefix("id:") {
-            return rest.parse().map(BookIdentifier::Id).map_err(|_| format!("not a numeric id: {rest}"));
+            return rest
+                .parse()
+                .map(BookIdentifier::Id)
+                .map_err(|_| format!("not a numeric id: {rest}"));
         }
         if let Some(rest) = s.strip_prefix("slug:") {
             return Ok(BookIdentifier::Slug(rest.to_string()));
         }
         if let Some(rest) = s.strip_prefix("isbn:") {
-            return normalize_isbn(rest).map(BookIdentifier::Isbn).ok_or_else(|| format!("not an ISBN: {rest}"));
+            return normalize_isbn(rest)
+                .map(BookIdentifier::Isbn)
+                .ok_or_else(|| format!("not an ISBN: {rest}"));
         }
         if s.is_empty() {
             return Err("empty identifier".into());
@@ -252,7 +260,10 @@ impl std::str::FromStr for Identifier {
     fn from_str(s: &str) -> std::result::Result<Self, String> {
         let s = s.trim();
         if let Some(rest) = s.strip_prefix("id:") {
-            return rest.parse().map(Identifier::Id).map_err(|_| format!("not a numeric id: {rest}"));
+            return rest
+                .parse()
+                .map(Identifier::Id)
+                .map_err(|_| format!("not a numeric id: {rest}"));
         }
         if let Some(rest) = s.strip_prefix("slug:") {
             return Ok(Identifier::Slug(rest.to_string()));

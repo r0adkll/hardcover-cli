@@ -50,7 +50,10 @@ pub fn read_login_token() -> Result<String, CliError> {
         std::io::stderr().flush().ok();
     }
     let mut line = String::new();
-    stdin.lock().read_line(&mut line).map_err(|e| CliError::usage(e.to_string()))?;
+    stdin
+        .lock()
+        .read_line(&mut line)
+        .map_err(|e| CliError::usage(e.to_string()))?;
     let token = line.trim().to_string();
     if token.is_empty() {
         return Err(CliError::usage("no token provided on stdin"));

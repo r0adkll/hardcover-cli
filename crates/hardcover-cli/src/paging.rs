@@ -52,7 +52,11 @@ where
     let mut offset = args.offset;
     let mut truncated = false;
     loop {
-        let remaining_cap = if args.all { args.max_rows - items.len() as i64 } else { args.limit };
+        let remaining_cap = if args.all {
+            args.max_rows - items.len() as i64
+        } else {
+            args.limit
+        };
         let limit = args.limit.min(remaining_cap.max(0));
         if limit == 0 {
             truncated = true;
@@ -70,5 +74,10 @@ where
         }
         offset += got;
     }
-    Ok(Collected { items, limit: args.limit, offset: args.offset, truncated })
+    Ok(Collected {
+        items,
+        limit: args.limit,
+        offset: args.offset,
+        truncated,
+    })
 }

@@ -30,13 +30,19 @@ async fn login_reads_token_from_stdin_and_reports_the_verified_user() {
     Mock::given(method("POST"))
         .and(path("/v1/graphql"))
         .and(header("authorization", "Bearer hc_pat_good"))
-        .respond_with(ResponseTemplate::new(200).set_body_raw(fixture("me.json"), "application/json"))
+        .respond_with(
+            ResponseTemplate::new(200).set_body_raw(fixture("me.json"), "application/json"),
+        )
         .mount(&server)
         .await;
 
     let out = login_with("hc_pat_good\n", &server).await;
 
-    assert!(out.status.success(), "stderr: {}", String::from_utf8_lossy(&out.stderr));
+    assert!(
+        out.status.success(),
+        "stderr: {}",
+        String::from_utf8_lossy(&out.stderr)
+    );
     let json: serde_json::Value = serde_json::from_slice(&out.stdout).unwrap();
     assert_eq!(json["data"]["username"], "r0adkll");
     assert_eq!(json["data"]["id"], 31899);
@@ -47,7 +53,10 @@ async fn login_rejects_an_invalid_token() {
     let server = MockServer::start().await;
     Mock::given(method("POST"))
         .and(path("/v1/graphql"))
-        .respond_with(ResponseTemplate::new(401).set_body_raw(fixture("me_invalid_token.json"), "application/json"))
+        .respond_with(
+            ResponseTemplate::new(401)
+                .set_body_raw(fixture("me_invalid_token.json"), "application/json"),
+        )
         .mount(&server)
         .await;
 

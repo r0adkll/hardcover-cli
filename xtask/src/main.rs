@@ -1,0 +1,61 @@
+//! Repo maintenance tasks. Run via `cargo xtask <task>`.
+use std::path::Path;
+
+const SCHEMA_PATH: &str = "crates/hardcover-api/schema.json";
+const ENDPOINT: &str = "https://api.hardcover.app/v1/graphql";
+
+fn main() {
+    let task = std::env::args().nth(1).unwrap_or_default();
+    match task.as_str() {
+        "introspect" => introspect(),
+        _ => {
+            eprintln!("usage: cargo xtask introspect\n\n  introspect   re-fetch the GraphQL schema into {SCHEMA_PATH} (needs HARDCOVER_TOKEN)");
+            std::process::exit(2);
+        }
+    }
+}
+
+fn introspect() {
+    let token = std::env::var("HARDCOVER_TOKEN").expect("HARDCOVER_TOKEN must be set");
+    let query = graphql_client_introspection_query();
+    let resp: serde_json::Value = reqwest::blocking::Client::new()
+        .post(ENDPOINT)
+        .bearer_auth(token)
+        .header(
+            "User-Agent",
+            "hardcover-cli xtask (+https://github.com/r0adkll/hardcover-cli)",
+        )
+        .json(&serde_json::json!({ "query": query }))
+        .send()
+        .expect("request")
+        .error_for_status()
+        .expect("status")
+        .json()
+        .expect("json");
+    assert!(
+        resp.get("data").and_then(|d| d.get("__schema")).is_some(),
+        "no __schema in response: {resp}"
+    );
+    let out = Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("..")
+        .join(SCHEMA_PATH);
+    let before = std::fs::read_to_string(&out).unwrap_or_default();
+    let after = serde_json::to_string(&resp).unwrap();
+    std::fs::write(&out, &after).expect("write schema");
+    println!(
+        "{} {}",
+        if before == after {
+            "unchanged"
+        } else {
+            "updated"
+        },
+        SCHEMA_PATH
+    );
+}
+
+fn graphql_client_introspection_query() -> &'static str {
+    r#"query IntrospectionQuery { __schema { queryType { name } mutationType { name } subscriptionType { name } types { ...FullType } directives { name description locations args { ...InputValue } } } }
+fragment FullType on __Type { kind name description fields(includeDeprecated: true) { name description args { ...InputValue } type { ...TypeRef } isDeprecated deprecationReason } inputFields { ...InputValue } interfaces { ...TypeRef } enumValues(includeDeprecated: true) { name description isDeprecated deprecationReason } possibleTypes { ...TypeRef } }
+fragment InputValue on __InputValue { name description type { ...TypeRef } defaultValue }
+fragment TypeRef on __Type { kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name } } } } } } } }"#
+}

@@ -1,6 +1,7 @@
 [workspace]
 resolver = "2"
-members = ["crates/hardcover-api", "crates/hardcover-cli"]
+members = ["crates/hardcover-api", "crates/hardcover-cli", "xtask"]
+default-members = ["crates/hardcover-api", "crates/hardcover-cli"]
 
 [workspace.package]
 version = "0.1.0"
@@ -16,3 +17,8 @@ thiserror = "2"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
 wiremock = "0.6"
+
+# The profile that 'dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"
