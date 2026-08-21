@@ -1,0 +1,3 @@
+query BookIdBySlug($slug: String!) {
+  books(where: {slug: {_eq: $slug}}, limit: 1) { id }
+}

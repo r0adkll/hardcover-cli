@@ -1,6 +1,6 @@
 use crate::error::{Error, Result};
-use crate::model::{Book, Contributor, SearchHit, SearchResults, SearchType, SeriesMembership, User};
-use crate::queries::{book_by_id, me, search, BookById, Me, Search};
+use crate::model::{Book, BookIdentifier, Contributor, ResolvedBook, ResolvedBy, SearchHit, SearchResults, SearchType, SeriesMembership, User};
+use crate::queries::{book_by_id, book_id_by_isbn, book_id_by_slug, me, search, BookById, BookIdByIsbn, BookIdBySlug, Me, Search};
 use reqwest::StatusCode;
 use graphql_client::{GraphQLQuery, Response};
 
@@ -102,6 +102,23 @@ impl Client {
             found: results.get("found").and_then(|f| f.as_i64()).unwrap_or(hits.len() as i64),
             hits,
         })
+    }
+
+    /// Resolve any Identifier form to a numeric book id.
+    pub async fn resolve_book(&self, ident: &BookIdentifier) -> Result<ResolvedBook> {
+        match ident {
+            BookIdentifier::Id(id) => Ok(ResolvedBook { id: *id, resolved_by: ResolvedBy::Id }),
+            BookIdentifier::Slug(slug) => {
+                let data = self.execute::<BookIdBySlug>(book_id_by_slug::Variables { slug: slug.clone() }).await?;
+                let id = data.books.first().map(|b| b.id).ok_or_else(|| Error::NotFound(format!("book with slug {slug}")))?;
+                Ok(ResolvedBook { id, resolved_by: ResolvedBy::Slug })
+            }
+            BookIdentifier::Isbn(isbn) => {
+                let data = self.execute::<BookIdByIsbn>(book_id_by_isbn::Variables { isbn: isbn.clone() }).await?;
+                let id = data.editions.first().map(|e| e.book_id).ok_or_else(|| Error::NotFound(format!("edition with ISBN {isbn}")))?;
+                Ok(ResolvedBook { id, resolved_by: ResolvedBy::Isbn })
+            }
+        }
     }
 
     pub async fn book(&self, id: i64) -> Result<Book> {

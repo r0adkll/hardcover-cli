@@ -4,7 +4,7 @@ mod output;
 
 use clap::{Parser, Subcommand};
 use error::CliError;
-use hardcover_api::model::SearchType;
+use hardcover_api::model::{BookIdentifier, SearchType};
 use hardcover_api::Client;
 use output::Format;
 use std::process::ExitCode;
@@ -60,8 +60,8 @@ enum Command {
 
 #[derive(Subcommand)]
 enum BookCommand {
-    /// Show one book by id.
-    Show { id: i64 },
+    /// Show one book by id, slug, or ISBN (prefix with id:/slug:/isbn: to force a form).
+    Show { identifier: BookIdentifier },
 }
 
 #[tokio::main]
@@ -126,9 +126,11 @@ async fn run(cli: Cli) -> Result<(), CliError> {
             let user = client.me().await?;
             output::emit(cli.format, &user, serde_json::json!({}), user_line);
         }
-        Command::Book { command: BookCommand::Show { id } } => {
-            let book = client.book(id).await?;
-            output::emit(cli.format, &book, serde_json::json!({}), |b| {
+        Command::Book { command: BookCommand::Show { identifier } } => {
+            let resolved = client.resolve_book(&identifier).await?;
+            let book = client.book(resolved.id).await?;
+            let meta = serde_json::json!({ "resolved_by": resolved.resolved_by });
+            output::emit(cli.format, &book, meta, |b| {
                 let by = b.contributors.iter().map(|c| c.name.as_str()).collect::<Vec<_>>().join(", ");
                 format!("{} — {} (#{}, {})", b.title, by, b.id, b.slug)
             });

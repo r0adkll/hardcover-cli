@@ -107,3 +107,67 @@ pub struct SearchHit {
     pub label: String,
     pub document: serde_json::Value,
 }
+
+/// How a Book may be identified on input. See CONTEXT.md "Identifier".
+///
+/// Parsing rules: `id:`, `slug:`, `isbn:` prefixes force a form. Otherwise
+/// all-digit strings are an Id, 10/13-character ISBN-shaped strings (hyphens
+/// ignored, trailing X allowed) are an Isbn, anything else is a Slug.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum BookIdentifier {
+    Id(i64),
+    Slug(String),
+    Isbn(String),
+}
+
+#[derive(Debug, Clone, Copy, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "snake_case")]
+pub enum ResolvedBy {
+    Id,
+    Slug,
+    Isbn,
+}
+
+#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
+pub struct ResolvedBook {
+    pub id: i64,
+    pub resolved_by: ResolvedBy,
+}
+
+fn normalize_isbn(s: &str) -> Option<String> {
+    let digits: String = s.chars().filter(|c| *c != '-' && *c != ' ').collect();
+    let valid_shape = match digits.len() {
+        10 => digits[..9].chars().all(|c| c.is_ascii_digit()) && digits.ends_with(|c: char| c.is_ascii_digit() || c == 'X' || c == 'x'),
+        13 => digits.chars().all(|c| c.is_ascii_digit()),
+        _ => false,
+    };
+    valid_shape.then(|| digits.to_ascii_uppercase())
+}
+
+impl std::str::FromStr for BookIdentifier {
+    type Err = String;
+    fn from_str(s: &str) -> std::result::Result<Self, String> {
+        let s = s.trim();
+        if let Some(rest) = s.strip_prefix("id:") {
+            return rest.parse().map(BookIdentifier::Id).map_err(|_| format!("not a numeric id: {rest}"));
+        }
+        if let Some(rest) = s.strip_prefix("slug:") {
+            return Ok(BookIdentifier::Slug(rest.to_string()));
+        }
+        if let Some(rest) = s.strip_prefix("isbn:") {
+            return normalize_isbn(rest).map(BookIdentifier::Isbn).ok_or_else(|| format!("not an ISBN: {rest}"));
+        }
+        if s.is_empty() {
+            return Err("empty identifier".into());
+        }
+        // 10-digit all-numeric strings are ambiguous between id and ISBN-10; ISBN-13
+        // is always 13 digits. Treat exact ISBN lengths as ISBN, other digit runs as ids.
+        if let Some(isbn) = normalize_isbn(s) {
+            return Ok(BookIdentifier::Isbn(isbn));
+        }
+        if s.chars().all(|c| c.is_ascii_digit()) {
+            return s.parse().map(BookIdentifier::Id).map_err(|e| e.to_string());
+        }
+        Ok(BookIdentifier::Slug(s.to_string()))
+    }
+}

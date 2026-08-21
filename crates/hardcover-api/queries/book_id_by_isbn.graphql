@@ -1,0 +1,3 @@
+query BookIdByIsbn($isbn: String!) {
+  editions(where: {_or: [{isbn_13: {_eq: $isbn}}, {isbn_10: {_eq: $isbn}}]}, limit: 1) { id book_id }
+}
