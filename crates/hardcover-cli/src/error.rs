@@ -28,6 +28,11 @@ pub const CATALOGUE: &[(&str, u8, &str)] = &[
     ("network_error", 6, "Could not reach the API"),
     ("upstream_error", 6, "The API returned an error"),
     ("keychain_error", 1, "The OS keychain could not be used"),
+    (
+        "config_error",
+        1,
+        "An agent host config file could not be read or written",
+    ),
 ];
 
 #[derive(Debug, Serialize)]
@@ -59,6 +64,9 @@ impl CliError {
     }
     pub fn usage(msg: impl Into<String>) -> Self {
         Self::new("usage_error", msg)
+    }
+    pub fn config(msg: impl Into<String>) -> Self {
+        Self::new("config_error", msg)
     }
     pub fn keychain(e: keyring::Error) -> Self {
         Self::new("keychain_error", e.to_string())

@@ -1,3 +1,4 @@
+mod agent;
 mod cli;
 mod commands;
 mod config;
@@ -8,6 +9,7 @@ mod ops;
 mod output;
 mod paging;
 mod schema;
+mod skills;
 
 use clap::Parser;
 use std::process::ExitCode;

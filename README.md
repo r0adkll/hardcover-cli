@@ -21,22 +21,36 @@ cargo install --git https://github.com/r0adkll/hardcover-cli hardcover-cli
 Prebuilt binaries for macOS, Linux and Windows are attached to each
 [GitHub release](https://github.com/r0adkll/hardcover-cli/releases) with shell/PowerShell installers.
 
-## MCP server
-
-The same commands are available as MCP tools for Claude Desktop, Claude Code, Cursor and
-other MCP clients:
+## Agents: one-command setup
 
 ```sh
-hardcover login                 # once
-hardcover mcp serve             # stdio transport; what the client launches
+hardcover agent setup claude-code      # also: claude-desktop, codex, cursor, gemini, vscode, windsurf
+hardcover agent setup                  # interactive: detects installed hosts and asks
+hardcover agent status                 # what's configured where
+hardcover agent remove codex
 ```
 
-Claude Code: `claude mcp add hardcover -- hardcover mcp serve`.
-Claude Desktop / generic config:
+`setup` registers the MCP server (`hardcover mcp serve`, by absolute path so GUI apps find
+it) in the host's own config — merging, never clobbering, with a one-time `.bak` — and installs
+the **shipped skills** where the host reads them:
 
-```json
-{ "mcpServers": { "hardcover": { "command": "hardcover", "args": ["mcp", "serve"] } } }
-```
+| host | MCP config | skills |
+|---|---|---|
+| claude-code | `~/.claude.json` (`--scope project`: `.mcp.json`) | `~/.claude/skills/*/SKILL.md` |
+| codex | `~/.codex/config.toml` | `~/.agents/skills/*/SKILL.md` |
+| cursor | `~/.cursor/mcp.json` (`--scope project`: `.cursor/mcp.json`) | `.cursor/rules/*.mdc` (project scope) |
+| claude-desktop, gemini, vscode, windsurf | their `mcpServers` / `servers` file | — |
+
+Skills (`hardcover agent skills`): **hardcover** (tool usage, identifiers, errors, safe
+writes), **reading-log** (what am I reading / progress / finished / rate), **book-research**
+(find a book from a vague description, series order, editions). They're embedded in the
+binary, so a new CLI version re-installs matching skills on the next `setup`.
+`--no-skills` and `--dry-run` are available. If no token is stored yet, `setup` runs `login`.
+
+## MCP server
+
+`hardcover mcp serve` speaks MCP over stdio; `agent setup` is the easy way to wire it, or
+by hand: `{ "mcpServers": { "hardcover": { "command": "hardcover", "args": ["mcp", "serve"] } } }`.
 
 Tools mirror the commands (`search`, `book_show`, `author_books`, `library_list`,
 `library_set_status`, …) and return the same `{schema, data, meta}` JSON as structured
@@ -76,7 +90,8 @@ Every request requires a token; Hardcover has no anonymous access.
 | `library remove <book>` | Delete your entry (status, reads, rating, review) |
 | `whoami` / `login` / `logout` | Credential management |
 | `schema` | Machine-readable description of every command, argument, format and error code |
-| `mcp serve` | Run as an MCP server over stdio (see above) |
+| `mcp serve` | Run as an MCP server over stdio |
+| `agent setup\|remove\|status\|skills` | Wire the server + skills into Claude Code, Codex, Cursor, … |
 
 Identifiers: all-digit → id, ISBN-10/13 (hyphens OK) → ISBN, otherwise slug.
 Force a form with `id:`, `slug:` or `isbn:` prefixes. Output always carries both `id` and `slug`,

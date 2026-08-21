@@ -117,6 +117,10 @@ pub async fn run(cli: Cli) -> Result<(), CliError> {
             });
             return Ok(());
         }
+        Command::Agent { command } => {
+            run_agent(&ctx, command, cli.api_url.clone()).await?;
+            return Ok(());
+        }
         Command::Login => {
             let token = credentials::read_login_token()?;
             let client = ctx.client(token.clone());
@@ -143,7 +147,9 @@ pub async fn run(cli: Cli) -> Result<(), CliError> {
     let client = ctx.client(credentials::resolve(cli.token)?);
 
     match cli.command {
-        Command::Schema | Command::Login | Command::Logout => unreachable!(),
+        Command::Schema | Command::Login | Command::Logout | Command::Agent { .. } => {
+            unreachable!()
+        }
         Command::Mcp {
             command: McpCommand::Serve,
         } => {
@@ -411,4 +417,143 @@ pub async fn run(cli: Cli) -> Result<(), CliError> {
     }
     ctx.finish(&client);
     Ok(())
+}
+
+async fn run_agent(
+    ctx: &Ctx<'_>,
+    command: AgentCommand,
+    api_url: Option<String>,
+) -> Result<(), CliError> {
+    use crate::agent::{self, SetupOptions};
+    match command {
+        AgentCommand::Skills => {
+            let list: Vec<_> = crate::skills::SKILLS.iter().map(|s| s.info()).collect();
+            ctx.emit_list(&list, none(), |s| {
+                format!("{:<14} {}", s.name, s.description)
+            });
+        }
+        AgentCommand::Status => {
+            let st = agent::status();
+            ctx.emit_list(&st, none(), |h| {
+                format!(
+                    "{:<15} {:<9} {:<12} skills {}/{}  {}",
+                    h.host.name(),
+                    if h.detected { "detected" } else { "-" },
+                    if h.configured { "configured" } else { "-" },
+                    h.skills_installed,
+                    h.skills_available,
+                    h.config_path.display()
+                )
+            });
+        }
+        AgentCommand::Remove { host, scope } => {
+            let r = agent::remove(host, scope, ctx.dry_run)?;
+            ctx.emit(&r, none(), setup_line);
+        }
+        AgentCommand::Setup {
+            host,
+            scope,
+            command,
+            no_skills,
+        } => {
+            let host = match host {
+                Some(h) => h,
+                None => choose_host()?,
+            };
+            let opts = SetupOptions {
+                scope,
+                command: command.unwrap_or_else(agent::default_command),
+                install_skills: !no_skills,
+                dry_run: ctx.dry_run,
+            };
+            let mut r = agent::setup(host, &opts)?;
+            // Make sure the server will actually be able to authenticate. Dry runs don't
+            // touch the keychain (it can prompt on macOS); env var is checked first because it's free.
+            if !ctx.dry_run {
+                if std::env::var_os("HARDCOVER_TOKEN").is_some() {
+                    r.notes.push("Token comes from HARDCOVER_TOKEN in this shell; GUI hosts won't see it — run `hardcover login` to store it in the keychain.".into());
+                } else if credentials::stored()?.is_none() {
+                    if std::io::IsTerminal::is_terminal(&std::io::stdin()) {
+                        let token = credentials::read_login_token()?;
+                        let user = ctx.client(token.clone()).me().await?;
+                        credentials::store(&token)?;
+                        r.notes.push(format!(
+                            "Logged in as {} and stored the token in the keychain.",
+                            user.username
+                        ));
+                    } else {
+                        r.notes.push(
+                            "No token stored; run `hardcover login` before using the server."
+                                .into(),
+                        );
+                    }
+                }
+            }
+            let _ = api_url;
+            ctx.emit(&r, none(), setup_line);
+        }
+    }
+    Ok(())
+}
+
+fn choose_host() -> Result<crate::agent::Host, CliError> {
+    use std::io::{BufRead, IsTerminal, Write};
+    let detected = crate::agent::detected_hosts();
+    let names: Vec<&str> = detected.iter().map(|h| h.name()).collect();
+    if !std::io::stdin().is_terminal() {
+        return Err(CliError::usage(format!(
+            "no host given; detected: {}. Run `hardcover agent setup <host>`.",
+            if names.is_empty() {
+                "none".to_string()
+            } else {
+                names.join(", ")
+            }
+        )));
+    }
+    if detected.is_empty() {
+        return Err(CliError::usage("no supported agent hosts detected; pass one explicitly (claude-code, claude-desktop, codex, cursor, gemini, vscode, windsurf)"));
+    }
+    eprintln!("Detected agent hosts:");
+    for (i, h) in detected.iter().enumerate() {
+        eprintln!("  {}) {}", i + 1, h.name());
+    }
+    eprint!("Set up which? [1-{}] ", detected.len());
+    std::io::stderr().flush().ok();
+    let mut line = String::new();
+    std::io::stdin()
+        .lock()
+        .read_line(&mut line)
+        .map_err(|e| CliError::usage(e.to_string()))?;
+    let n: usize = line
+        .trim()
+        .parse()
+        .map_err(|_| CliError::usage("not a number"))?;
+    detected
+        .get(n.wrapping_sub(1))
+        .copied()
+        .ok_or_else(|| CliError::usage("out of range"))
+}
+
+fn setup_line(r: &crate::agent::SetupResult) -> String {
+    let lc = |d: &dyn std::fmt::Debug| format!("{d:?}").to_lowercase();
+    let mut lines = vec![format!(
+        "{}{} ({} scope): {} {}",
+        if r.dry_run { "[dry-run] " } else { "" },
+        r.host.name(),
+        lc(&r.scope),
+        lc(&r.action),
+        r.config_path.display()
+    )];
+    for s in &r.skills {
+        lines.push(format!(
+            "  skill {:<14} {:<9} {}",
+            s.name,
+            lc(&s.action),
+            s.path.display()
+        ));
+    }
+    for n in &r.notes {
+        lines.push(format!("  note: {n}"));
+    }
+    lines.join("\n")
 }

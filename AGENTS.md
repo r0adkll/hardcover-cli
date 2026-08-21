@@ -1,5 +1,8 @@
 # Using hardcover-cli as an agent
 
+If you're reading this inside an agent host, the user can run `hardcover agent setup <host>`
+to give you the MCP tools and three skills (`hardcover`, `reading-log`, `book-research`).
+
 Two ways in: as **MCP tools** (`hardcover mcp serve` — tool names match the commands
 below with underscores, e.g. `book_show`, `library_set_status`; same JSON, same error
 codes, `dry_run` on writes) or by **running the CLI**. The rest of this file is written

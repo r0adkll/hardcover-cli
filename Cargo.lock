@@ -632,7 +632,7 @@ dependencies = [
 
 [[package]]
 name = "hardcover-api"
-version = "0.4.1"
+version = "0.5.0"
 dependencies = [
  "graphql_client",
  "reqwest",
@@ -645,7 +645,7 @@ dependencies = [
 
 [[package]]
 name = "hardcover-cli"
-version = "0.4.1"
+version = "0.5.0"
 dependencies = [
  "assert_cmd",
  "clap",
@@ -660,6 +660,7 @@ dependencies = [
  "tempfile",
  "tokio",
  "toml",
+ "toml_edit",
  "wiremock",
 ]
 

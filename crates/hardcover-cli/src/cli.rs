@@ -99,6 +99,11 @@ pub enum Command {
         #[command(subcommand)]
         command: LibraryCommand,
     },
+    /// Wire the MCP server and shipped skills into an agent host (Claude Code, Codex, Cursor, …).
+    Agent {
+        #[command(subcommand)]
+        command: AgentCommand,
+    },
     /// Model Context Protocol server exposing every command as a tool.
     Mcp {
         #[command(subcommand)]
@@ -226,4 +231,32 @@ pub enum LibraryCommand {
 pub enum McpCommand {
     /// Serve MCP over stdio. Register as: command `hardcover`, args `mcp serve`.
     Serve,
+}
+
+#[derive(Subcommand)]
+pub enum AgentCommand {
+    /// Configure a host to launch `hardcover mcp serve` and install the shipped skills.
+    /// With no host, detects installed hosts and asks (interactive only).
+    Setup {
+        host: Option<crate::agent::Host>,
+        /// user: your global config (default). project: the current directory.
+        #[arg(long, value_enum, default_value = "user")]
+        scope: crate::agent::Scope,
+        /// Command to write into the host config (default: this binary's absolute path).
+        #[arg(long)]
+        command: Option<String>,
+        /// Only register the MCP server; don't install skills/rules.
+        #[arg(long)]
+        no_skills: bool,
+    },
+    /// Remove the hardcover server entry and shipped skills from a host.
+    Remove {
+        host: crate::agent::Host,
+        #[arg(long, value_enum, default_value = "user")]
+        scope: crate::agent::Scope,
+    },
+    /// Show which hosts are detected, configured, and have skills installed.
+    Status,
+    /// List the skills shipped with this binary.
+    Skills,
 }
