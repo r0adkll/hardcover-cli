@@ -1,0 +1,130 @@
+{
+  "version": 1,
+  "default": "cli-help",
+  "configurations": [
+    {
+      "id": "cli-help",
+      "name": "CLI (--help)",
+      "icon": "terminal",
+      "command": "cargo run -q -p hardcover-cli -- --help",
+      "rerunAfterTurn": false
+    },
+    {
+      "id": "cli-whoami",
+      "name": "CLI: whoami",
+      "icon": "person.crop.circle",
+      "command": "cargo run -q -p hardcover-cli -- whoami --format json",
+      "rerunAfterTurn": false
+    },
+    {
+      "id": "cli-search",
+      "name": "CLI: search (smoke)",
+      "icon": "magnifyingglass",
+      "command": "cargo run -q -p hardcover-cli -- search mistborn --per-page 5 --format table",
+      "rerunAfterTurn": false
+    },
+    {
+      "id": "cli-schema",
+      "name": "CLI: schema",
+      "icon": "doc.text",
+      "command": "cargo run -q -p hardcover-cli -- schema --format json",
+      "rerunAfterTurn": false
+    },
+    {
+      "id": "mcp-serve",
+      "name": "MCP server (stdio)",
+      "icon": "server.rack",
+      "command": "cargo run -q -p hardcover-cli -- mcp serve",
+      "rerunAfterTurn": false
+    },
+    {
+      "id": "mcp-inspector",
+      "name": "MCP Inspector",
+      "icon": "network",
+      "command": "cargo build -q -p hardcover-cli && npx -y @modelcontextprotocol/inspector target/debug/hardcover mcp serve",
+      "rerunAfterTurn": false
+    },
+    {
+      "id": "build",
+      "name": "Build (debug)",
+      "icon": "hammer",
+      "command": "cargo build --workspace --all-targets",
+      "rerunAfterTurn": true
+    },
+    {
+      "id": "build-release",
+      "name": "Build (release)",
+      "icon": "shippingbox",
+      "command": "cargo build --release -p hardcover-cli",
+      "rerunAfterTurn": false
+    },
+    {
+      "id": "test",
+      "name": "Test",
+      "icon": "testtube.2",
+      "command": "cargo test --workspace",
+      "rerunAfterTurn": true
+    },
+    {
+      "id": "test-cli",
+      "name": "Test: hardcover-cli",
+      "icon": "testtube.2",
+      "command": "cargo test -p hardcover-cli",
+      "rerunAfterTurn": false
+    },
+    {
+      "id": "test-api",
+      "name": "Test: hardcover-api",
+      "icon": "testtube.2",
+      "command": "cargo test -p hardcover-api",
+      "rerunAfterTurn": false
+    },
+    {
+      "id": "fmt",
+      "name": "Format",
+      "icon": "text.alignleft",
+      "command": "cargo fmt --all",
+      "rerunAfterTurn": false
+    },
+    {
+      "id": "clippy",
+      "name": "Clippy",
+      "icon": "checkmark.shield",
+      "command": "cargo clippy --workspace --all-targets -- -D warnings",
+      "rerunAfterTurn": false
+    },
+    {
+      "id": "ci",
+      "name": "CI (fmt + clippy + test)",
+      "icon": "checkmark.seal",
+      "command": "cargo fmt --all --check && cargo clippy --workspace --all-targets -- -D warnings && cargo test --workspace",
+      "rerunAfterTurn": false
+    },
+    {
+      "id": "xtask-introspect",
+      "name": "xtask: refresh API schema",
+      "icon": "arrow.triangle.2.circlepath",
+      "command": "cargo xtask introspect",
+      "rerunAfterTurn": false
+    },
+    {
+      "id": "dist-plan",
+      "name": "dist: plan release",
+      "icon": "list.bullet.clipboard",
+      "command": "dist plan",
+      "rerunAfterTurn": false
+    },
+    {
+      "id": "dist-build",
+      "name": "dist: build installers (host)",
+      "icon": "archivebox",
+      "command": "dist build",
+      "rerunAfterTurn": false
+    },
+    {
+      "id": "check-all",
+      "name": "Build + Test",
+      "compound": ["build", "test"]
+    }
+  ]
+}
